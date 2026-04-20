@@ -2,23 +2,25 @@ import React, { useRef } from 'react';
 import { SITE_CONTENT } from '../data/site-content';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import useReducedMotion from '../hooks/useReducedMotion';
+import useIsMobile from '../hooks/useIsMobile';
 
 export const Gro8Platform = () => {
   const { tag, title, features } = SITE_CONTENT.gro8;
   const ref = useRef(null);
   const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile(1024);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [30, -30]);
+  const y = useTransform(scrollYProgress, [0, 1], (prefersReducedMotion || isMobile) ? [0, 0] : [30, -30]);
 
   return (
-    <section ref={ref} aria-label="GRO8 Platform features">
+    <section ref={ref} aria-label="GRO8 Platform features" style={{ overflow: 'hidden' }}>
       <motion.div className="container" style={{ y }}>
         <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>{tag}</div>
-        <h2 className="text-4xl text-navy" style={{ maxWidth: '720px', marginBottom: '60px' }}>{title}</h2>
+        <h2 className="text-4xl text-navy" style={{ maxWidth: '720px', marginBottom: isMobile ? '40px' : '60px' }}>{title}</h2>
 
         <div style={{
           display: 'grid',
@@ -66,23 +68,25 @@ export const Testimonials = () => {
   const { tag, title, description, items } = SITE_CONTENT.testimonials;
   const ref = useRef(null);
   const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile(1024);
+  const isSmallMobile = useIsMobile(768);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [40, -40]);
+  const y = useTransform(scrollYProgress, [0, 1], (prefersReducedMotion || isMobile) ? [0, 0] : [40, -40]);
 
   return (
     <section ref={ref} aria-label="Founder testimonials" style={{ backgroundColor: 'var(--primary)', color: 'white', overflow: 'hidden' }}>
       <motion.div className="container" style={{ y }}>
         <div className="text-sm" style={{ color: 'var(--bg-soft)', marginBottom: '12px', letterSpacing: '1px' }}>{tag}</div>
-        <h2 className="text-4xl" style={{ marginBottom: '16px', fontSize: window.innerWidth < 768 ? '28px' : '40px' }}>{title}</h2>
-        <p className="text-lg" style={{ opacity: 0.85, marginBottom: window.innerWidth < 768 ? '32px' : '60px', maxWidth: '750px', lineHeight: '1.6', fontSize: window.innerWidth < 768 ? '16px' : '18px' }}>{description}</p>
+        <h2 className="text-4xl" style={{ marginBottom: '16px' }}>{title}</h2>
+        <p className="text-lg" style={{ opacity: 0.85, marginBottom: isMobile ? '40px' : '60px', maxWidth: '750px', lineHeight: '1.6' }}>{description}</p>
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: window.innerWidth < 1024 ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))',
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))',
           gap: '24px'
         }}>
           {items.map((item, i) => (
@@ -95,14 +99,13 @@ export const Testimonials = () => {
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.07)',
                 borderRadius: '24px',
-                padding: '40px',
+                padding: isSmallMobile ? '24px' : '40px',
                 display: 'flex',
                 flexDirection: 'column',
                 transition: 'background-color 0.3s ease'
               }}
             >
               <div className="text-xs font-bold" style={{ marginBottom: '24px', color: 'var(--secondary)', letterSpacing: '1px' }}>{item.company.toUpperCase()}</div>
-              {/* WCAG semantic — blockquote for testimonials */}
               <blockquote style={{ flex: 1, marginBottom: '32px', margin: 0, padding: 0, border: 'none' }}>
                 <p className="text-lg" style={{ fontStyle: 'italic', lineHeight: '1.7', opacity: 0.9 }}>"{item.quote}"</p>
               </blockquote>
@@ -126,7 +129,6 @@ export const Testimonials = () => {
                 </div>
               </footer>
             </motion.div>
-
           ))}
         </div>
       </motion.div>

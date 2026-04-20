@@ -2,12 +2,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { SITE_CONTENT } from '../data/site-content';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
 import useReducedMotion from '../hooks/useReducedMotion';
+import useIsMobile from '../hooks/useIsMobile';
 
 export const Hero = () => {
   const { slides } = SITE_CONTENT.hero;
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile(768);
 
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 500], [0, prefersReducedMotion ? 0 : 200]);
@@ -32,7 +34,7 @@ export const Hero = () => {
       aria-label="Featured highlights"
       style={{
         padding: 0,
-        height: window.innerWidth < 768 ? '500px' : '700px',
+        height: isMobile ? '480px' : '700px',
         backgroundColor: 'var(--primary)',
         position: 'relative',
         display: 'flex',
@@ -41,7 +43,8 @@ export const Hero = () => {
         alignItems: 'center',
         textAlign: 'center',
         color: 'white',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        width: '100%'
       }}
     >
       <AnimatePresence mode="wait">
@@ -51,7 +54,7 @@ export const Hero = () => {
           animate={{ opacity: 1 }}
           exit={prefersReducedMotion ? {} : { opacity: 0 }}
           transition={{ duration: prefersReducedMotion ? 0 : 1 }}
-          style={{ position: 'absolute', inset: 0 }}
+          style={{ position: 'absolute', inset: 0, width: '100%' }}
           role="group"
           aria-roledescription="slide"
           aria-label={`Slide ${currentSlide + 1} of ${slides.length}`}
@@ -64,42 +67,49 @@ export const Hero = () => {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             opacity: 0.4,
-            y: y1
+            y: y1,
+            width: '100%'
           }} aria-hidden="true" />
 
           <div style={{
             position: 'absolute',
             inset: 0,
             background: 'rgba(29, 47, 111, 0.45)',
-            zIndex: 1
+            zIndex: 1,
+            width: '100%'
           }} aria-hidden="true" />
 
-          <div style={{
+          <div className="container" style={{
             position: 'relative',
             zIndex: 2,
             height: '100%',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            alignItems: 'center',
-            padding: window.innerWidth < 768 ? '0 16px' : '0 20px'
+            alignItems: 'center'
           }}>
             <motion.div
               initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: prefersReducedMotion ? 0 : 0.5, duration: prefersReducedMotion ? 0 : 0.8 }}
+              style={{ width: '100%', maxWidth: '100%' }}
             >
               <div style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.12)',
                 borderRadius: '15px',
                 padding: '6px 20px',
                 display: 'inline-block',
-                marginBottom: window.innerWidth < 768 ? '16px' : '24px'
+                marginBottom: isMobile ? '16px' : '24px'
               }}>
                 <span className="text-xs" style={{ letterSpacing: '1px' }}>{slides[currentSlide].eyebrow}</span>
               </div>
 
-              <h1 className="text-hero" style={{ maxWidth: window.innerWidth < 768 ? '100%' : '900px', margin: '0 auto 32px' }}>
+              <h1 className="text-hero" style={{ 
+                maxWidth: '100%', 
+                margin: '0 auto 32px',
+                wordWrap: 'break-word',
+                overflowWrap: 'break-word'
+              }}>
                 {slides[currentSlide].title}
               </h1>
             </motion.div>
@@ -112,11 +122,10 @@ export const Hero = () => {
         display: 'flex',
         gap: '12px',
         position: 'absolute',
-        bottom: window.innerWidth < 768 ? '24px' : '40px',
+        bottom: isMobile ? '24px' : '40px',
         zIndex: 10,
         alignItems: 'center'
       }}>
-        {/* Pause/Stop/Hide — pause button */}
         <button
           className="carousel-pause-btn"
           onClick={() => setIsPaused(!isPaused)}

@@ -3,6 +3,7 @@ import { SITE_CONTENT } from '../data/site-content';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import useReducedMotion from '../hooks/useReducedMotion';
+import useIsMobile from '../hooks/useIsMobile';
 
 export const SuperAngels = () => {
   const angels = [
@@ -14,22 +15,23 @@ export const SuperAngels = () => {
 
   const ref = useRef(null);
   const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile(768);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [30, -30]);
+  const y = useTransform(scrollYProgress, [0, 1], (prefersReducedMotion || isMobile) ? [0, 0] : [30, -30]);
 
   return (
-    <section ref={ref} aria-label="Super Angels and CXOs">
+    <section ref={ref} aria-label="Super Angels and CXOs" style={{ overflow: 'hidden' }}>
       <motion.div className="container" style={{ y }}>
         <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>OUR NETWORK</div>
-        <h2 className="text-4xl text-navy" style={{ marginBottom: window.innerWidth < 768 ? '32px' : '60px' }}>Super Angels & CXOs Investing With Us</h2>
+        <h2 className="text-4xl text-navy" style={{ marginBottom: isMobile ? '32px' : '60px' }}>Super Angels & CXOs Investing With Us</h2>
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: window.innerWidth < 480 ? '1fr' : 'repeat(auto-fit, minmax(220px, 1fr))',
+          gridTemplateColumns: isMobile ? 'repeat(auto-fit, minmax(280px, 1fr))' : 'repeat(4, 1fr)',
           gap: '24px'
         }}>
           {angels.map((angel, i) => (
@@ -42,7 +44,7 @@ export const SuperAngels = () => {
               style={{
                 backgroundColor: 'white',
                 borderRadius: '24px',
-                padding: window.innerWidth < 768 ? '32px 20px' : '40px 24px',
+                padding: isMobile ? '32px 20px' : '40px 24px',
                 textAlign: 'center',
                 boxShadow: '0 4px 25px rgba(29, 47, 111, 0.04)',
                 transition: 'all 0.3s ease'
@@ -62,7 +64,7 @@ export const SuperAngels = () => {
                   border: '4px solid var(--bg-soft)'
                 }}
               />
-              <h3 className="text-lg text-navy font-bold" style={{ fontSize: '19px' }}>{angel.name}</h3>
+              <h3 className="text-lg text-navy font-bold">{angel.name}</h3>
               <p className="text-xs text-orange" style={{ margin: '12px 0 24px', fontWeight: 600, letterSpacing: '0.5px' }}>{angel.role}</p>
               <div style={{
                 backgroundColor: '#f0f2f8',
@@ -95,12 +97,13 @@ export const PartnersMarquee = () => {
 
   const [isPaused, setIsPaused] = useState(false);
   const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile(768);
 
   return (
-    <section aria-label="Partners" style={{ backgroundColor: 'white', padding: window.innerWidth < 768 ? '60px 0' : '80px 0' }}>
+    <section aria-label="Partners" style={{ backgroundColor: 'white', padding: isMobile ? '60px 0' : '80px 0', overflow: 'hidden' }}>
       <div className="container" style={{ marginBottom: '50px' }}>
         <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>PARTNERS</div>
-        <h2 className="text-3xl text-navy" style={{ fontSize: window.innerWidth < 768 ? '24px' : '30px' }}>An Active Ecosystem of Partners</h2>
+        <h2 className="text-3xl text-navy">An Active Ecosystem of Partners</h2>
       </div>
       <div
         style={{
@@ -121,7 +124,7 @@ export const PartnersMarquee = () => {
           transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
           style={{
             display: 'flex',
-            gap: window.innerWidth < 768 ? '60px' : '100px',
+            gap: isMobile ? '60px' : '100px',
             whiteSpace: 'nowrap',
             paddingLeft: '40px',
             alignItems: 'center'
@@ -134,25 +137,15 @@ export const PartnersMarquee = () => {
               src={partner.logo} 
               alt={partner.name} 
               style={{ 
-                height: window.innerWidth < 768 ? '35px' : '45px', 
+                height: isMobile ? '35px' : '45px', 
                 width: 'auto', 
                 filter: 'grayscale(100%) opacity(0.7)',
                 transition: 'filter 0.3s ease'
               }}
-              onMouseEnter={(e) => e.target.style.filter = 'grayscale(0%) opacity(1)'}
-              onMouseLeave={(e) => e.target.style.filter = 'grayscale(100%) opacity(0.7)'}
             />
           ))}
         </motion.div>
 
-        {/* Screen reader accessible partner list */}
-        <ul className="visually-hidden">
-          {partners.map((partner, i) => (
-            <li key={i}>{partner.name}</li>
-          ))}
-        </ul>
-
-        {/* WCAG 2.2.2 Pause button */}
         <button
           className="marquee-pause-btn"
           onClick={() => setIsPaused(!isPaused)}
@@ -187,20 +180,25 @@ export const News = () => {
   const { tag, title, featured, list } = SITE_CONTENT.news;
   const ref = useRef(null);
   const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile(1024);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [30, -30]);
+  const y = useTransform(scrollYProgress, [0, 1], (prefersReducedMotion || isMobile) ? [0, 0] : [30, -30]);
 
   return (
-    <section ref={ref} aria-label="News and updates" style={{ backgroundColor: 'var(--bg-soft)' }}>
+    <section ref={ref} aria-label="News and updates" style={{ backgroundColor: 'var(--bg-soft)', overflow: 'hidden' }}>
       <motion.div className="container" style={{ y }}>
         <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>{tag}</div>
-        <h2 className="text-4xl text-navy" style={{ marginBottom: window.innerWidth < 768 ? '32px' : '60px' }}>{title}</h2>
+        <h2 className="text-4xl text-navy" style={{ marginBottom: isMobile ? '32px' : '60px' }}>{title}</h2>
 
-        <div style={{ display: 'grid', gridTemplateColumns: window.innerWidth < 1024 ? '1fr' : 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', 
+          gap: '32px' 
+        }}>
           {/* Featured News */}
           <motion.article
             whileHover={prefersReducedMotion ? {} : { y: -8 }}
@@ -209,11 +207,11 @@ export const News = () => {
             <div
               role="img"
               aria-label={featured.title}
-              style={{ height: window.innerWidth < 768 ? '240px' : '320px', backgroundImage: `url("${featured.image}")`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+              style={{ height: isMobile ? '240px' : '320px', backgroundImage: `url("${featured.image}")`, backgroundSize: 'cover', backgroundPosition: 'center' }}
             />
-            <div style={{ padding: window.innerWidth < 768 ? '24px' : '40px' }}>
+            <div style={{ padding: isMobile ? '24px' : '40px' }}>
               <div className="text-xs text-orange font-bold" style={{ marginBottom: '16px', letterSpacing: '1px' }}>{featured.category}</div>
-              <h3 className="text-2xl text-navy" style={{ marginBottom: '20px', lineHeight: '1.4', fontSize: window.innerWidth < 768 ? '22px' : '24px' }}>{featured.title}</h3>
+              <h3 className="text-2xl text-navy" style={{ marginBottom: '20px', lineHeight: '1.4' }}>{featured.title}</h3>
               <div className="text-sm text-muted" style={{ marginBottom: '24px', fontWeight: 500 }}>
                 <time>{featured.date}</time>  ·  {featured.readTime}
               </div>
@@ -230,7 +228,7 @@ export const News = () => {
                   backgroundColor: 'white', 
                   borderRadius: '20px', 
                   display: 'flex', 
-                  flexDirection: window.innerWidth < 480 ? 'column' : 'row',
+                  flexDirection: isMobile ? 'column' : 'row',
                   overflow: 'hidden', 
                   boxShadow: '0 4px 15px rgba(0,0,0,0.02)', 
                   transition: 'all 0.3s ease' 
@@ -240,9 +238,9 @@ export const News = () => {
                   role="img"
                   aria-label={item.title}
                   style={{ 
-                    width: window.innerWidth < 480 ? '100%' : '160px', 
-                    height: window.innerWidth < 480 ? '160px' : 'auto', 
-                    minWidth: window.innerWidth < 480 ? '100%' : '160px', 
+                    width: isMobile ? '100%' : '160px', 
+                    height: isMobile ? '180px' : 'auto', 
+                    minWidth: isMobile ? '100%' : '160px', 
                     backgroundImage: `url("${item.image}")`, 
                     backgroundSize: 'cover', 
                     backgroundPosition: 'center' 
@@ -264,10 +262,10 @@ export const News = () => {
 
 export const CTABanner = () => {
   const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile(768);
 
   return (
-    <section aria-label="Call to action" style={{ backgroundColor: 'var(--primary)', color: 'white', textAlign: 'center', padding: window.innerWidth < 768 ? '80px 20px' : '120px 0', position: 'relative', overflow: 'hidden' }}>
-      {/* Animated Background Decals */}
+    <section aria-label="Call to action" style={{ backgroundColor: 'var(--primary)', color: 'white', textAlign: 'center', padding: isMobile ? '80px 20px' : '120px 0', position: 'relative', overflow: 'hidden' }}>
       <motion.div
         animate={prefersReducedMotion ? {} : {
           scale: [1, 1.2, 1],
@@ -295,15 +293,15 @@ export const CTABanner = () => {
         className="container"
         style={{ position: 'relative', zIndex: 1 }}
       >
-        <h2 className="text-4xl" style={{ marginBottom: '24px', fontSize: window.innerWidth < 768 ? '32px' : '48px' }}>Be part of our ecosystem of change-makers!</h2>
-        <p className="text-lg" style={{ opacity: 0.85, marginBottom: '50px', maxWidth: '850px', margin: '0 auto 50px', lineHeight: '1.7', fontSize: window.innerWidth < 768 ? '16px' : '20px' }}>
+        <h2 className="text-4xl" style={{ marginBottom: '24px' }}>Be part of our ecosystem of change-makers!</h2>
+        <p className="text-lg" style={{ opacity: 0.85, marginBottom: '50px', maxWidth: '850px', margin: '0 auto 50px', lineHeight: '1.7' }}>
           Whether you're building or investing — join the 888vc community where ambition meets capital.
         </p>
         <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link to="/startup" style={{ textDecoration: 'none', width: window.innerWidth < 480 ? '100%' : 'auto' }}>
+          <Link to="/startup" style={{ textDecoration: 'none', width: isMobile ? '100%' : 'auto' }}>
             <motion.button whileHover={prefersReducedMotion ? {} : { scale: 1.05 }} whileTap={{ scale: 0.95 }} className="primary-btn" style={{ padding: '16px 40px', fontSize: '16px', width: '100%', justifyContent: 'center' }}>Apply as Startup →</motion.button>
           </Link>
-          <Link to="/investors" style={{ textDecoration: 'none', width: window.innerWidth < 480 ? '100%' : 'auto' }}>
+          <Link to="/investors" style={{ textDecoration: 'none', width: isMobile ? '100%' : 'auto' }}>
             <motion.button whileHover={prefersReducedMotion ? {} : { scale: 1.05, borderColor: 'white' }} whileTap={{ scale: 0.95 }} className="secondary-btn" style={{ padding: '16px 40px', fontSize: '16px', width: '100%', justifyContent: 'center' }}>Join as Investor</motion.button>
           </Link>
         </div>
@@ -312,74 +310,83 @@ export const CTABanner = () => {
   );
 };
 
-export const Footer = () => (
-  <footer role="contentinfo" style={{ backgroundColor: 'var(--primary)', color: 'white', padding: window.innerWidth < 768 ? '60px 20px 40px' : '100px 72px 40px' }}>
-    <div className="container" style={{ display: 'grid', gridTemplateColumns: window.innerWidth < 768 ? '1fr' : (window.innerWidth < 1024 ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)'), gap: '40px 60px', marginBottom: '80px' }}>
-      <div>
-        <Link to="/" aria-label="888VC Home" style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none', marginBottom: '28px' }}>
-          <div style={{ backgroundColor: 'white', padding: '6px 12px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <img src="/assets/logo.svg" alt="888VC Logo" style={{ height: '36px', width: 'auto' }} />
-          </div>
-        </Link>
-        <p className="text-base" style={{ opacity: 0.85, lineHeight: '1.8', fontSize: '15px', maxWidth: '300px' }}>
-          Backing Those Who Dare to Build Beyond Limits. Early-stage venture capital, India × US.
-        </p>
+export const Footer = () => {
+  const isMobile = useIsMobile(1024);
+  const isSmallMobile = useIsMobile(768);
+
+  return (
+    <footer role="contentinfo" style={{ backgroundColor: 'var(--primary)', color: 'white', padding: isSmallMobile ? '60px 0' : '100px 0', overflow: 'hidden' }}>
+      <div className="container" style={{ 
+        display: 'grid', 
+        gridTemplateColumns: isSmallMobile ? '1fr' : (isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)'), 
+        gap: '40px', 
+        marginBottom: '80px' 
+      }}>
+        <div>
+          <Link to="/" aria-label="888VC Home" style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none', marginBottom: '28px' }}>
+            <div style={{ backgroundColor: 'white', padding: '6px 12px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <img src="/assets/logo.svg" alt="888VC Logo" style={{ height: '36px', width: 'auto' }} />
+            </div>
+          </Link>
+          <p className="text-base" style={{ opacity: 0.85, lineHeight: '1.8', fontSize: '15px', maxWidth: '300px' }}>
+            Backing Those Who Dare to Build Beyond Limits. Early-stage venture capital, India × US.
+          </p>
+        </div>
+        <div>
+          <h4 className="text-sm text-orange" style={{ marginBottom: '20px', letterSpacing: '1px' }}>PAGES</h4>
+          <nav aria-label="Footer navigation">
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '15px' }}>
+              {[
+                { label: 'About Us', path: '/about' },
+                { label: 'Investors', path: '/investors' },
+                { label: 'Startup', path: '/startup' },
+                { label: 'Portfolio', path: '/portfolio' },
+                { label: 'Events', path: '#' },
+                { label: 'Blogs', path: '#' },
+                { label: 'Join GRO8', path: '#' }
+              ].map(link => (
+                <Link key={link.label} to={link.path} style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}>
+                  {link.label}
+                </Link>
+              ))}
+            </div>
+          </nav>
+        </div>
+        <div>
+          <h4 className="text-sm text-orange" style={{ marginBottom: '20px', letterSpacing: '1px' }}>CONTACT</h4>
+          <address style={{ fontStyle: 'normal', lineHeight: '2', fontSize: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <p style={{ color: 'rgba(255,255,255,0.85)' }}>NETWORK888 ACCELERATOR LLP</p>
+            <p style={{ color: 'rgba(255,255,255,0.85)' }}>Whitefield, Bengaluru 560066</p>
+            <a href="tel:+919731227263" style={{ color: 'var(--secondary)', fontWeight: 600, textDecoration: 'none' }}>+91 97312 27263</a>
+            <a href="mailto:info@888vc.co" style={{ color: 'var(--secondary)', fontWeight: 600, textDecoration: 'none' }}>info@888vc.co</a>
+          </address>
+        </div>
+        <div>
+           <h4 className="text-sm text-orange" style={{ marginBottom: '20px', letterSpacing: '1px' }}>FOLLOW</h4>
+           <div style={{ display: 'flex', gap: '20px' }}>
+              {[
+                { name: 'LinkedIn', url: '#' },
+                { name: 'Twitter', url: '#' },
+                { name: 'Instagram', url: '#' }
+              ].map(social => (
+                <a
+                  key={social.name}
+                  href={social.url}
+                  style={{ fontSize: '14px', color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}
+                >
+                  {social.name}
+                </a>
+              ))}
+           </div>
+        </div>
       </div>
-      <div>
-        <h4 className="text-sm text-orange" style={{ marginBottom: '20px', letterSpacing: '1px' }}>PAGES</h4>
-        <nav aria-label="Footer navigation">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '15px' }}>
-            {[
-              { label: 'About Us', path: '/about' },
-              { label: 'Investors', path: '/investors' },
-              { label: 'Startup', path: '/startup' },
-              { label: 'Portfolio', path: '/portfolio' },
-              { label: 'Events', path: '#' },
-              { label: 'Blogs', path: '#' },
-              { label: 'Join GRO8', path: '#' }
-            ].map(link => (
-              <Link key={link.label} to={link.path} style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none', transition: 'color 0.3s ease' }}>
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </nav>
+      <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '40px', display: 'flex', justifyContent: 'space-between', fontSize: '14px', fontWeight: 500, flexWrap: 'wrap', gap: '16px', paddingLeft: isSmallMobile ? '1rem' : 0, paddingRight: isSmallMobile ? '1rem' : 0 }}>
+        <div style={{ color: 'rgba(255,255,255,0.85)' }}>© 2025 888 VC. All rights reserved.</div>
+        <div style={{ display: 'flex', gap: '32px' }}>
+          <a href="#" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}>Privacy Policy</a>
+          <a href="#" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}>Terms of Service</a>
+        </div>
       </div>
-      <div>
-        <h4 className="text-sm text-orange" style={{ marginBottom: '20px', letterSpacing: '1px' }}>CONTACT</h4>
-        <address style={{ fontStyle: 'normal', lineHeight: '2', fontSize: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <p style={{ color: 'rgba(255,255,255,0.85)' }}>NETWORK888 ACCELERATOR LLP</p>
-          <p style={{ color: 'rgba(255,255,255,0.85)' }}>Whitefield, Bengaluru 560066</p>
-          <a href="tel:+919731227263" style={{ color: 'var(--secondary)', fontWeight: 600, textDecoration: 'none' }}>+91 97312 27263</a>
-          <a href="mailto:info@888vc.co" style={{ color: 'var(--secondary)', fontWeight: 600, textDecoration: 'none' }}>info@888vc.co</a>
-        </address>
-      </div>
-      <div>
-         <h4 className="text-sm text-orange" style={{ marginBottom: '20px', letterSpacing: '1px' }}>FOLLOW</h4>
-         <div style={{ display: 'flex', gap: '20px' }}>
-            {[
-              { name: 'LinkedIn', url: '#' },
-              { name: 'Twitter', url: '#' },
-              { name: 'Instagram', url: '#' }
-            ].map(social => (
-              <a
-                key={social.name}
-                href={social.url}
-                aria-label={`Follow 888VC on ${social.name}`}
-                style={{ fontSize: '14px', color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}
-              >
-                {social.name}
-              </a>
-            ))}
-         </div>
-      </div>
-    </div>
-    <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '40px', display: 'flex', justifyContent: 'space-between', fontSize: '14px', fontWeight: 500, flexWrap: 'wrap', gap: '16px' }}>
-      <div style={{ color: 'rgba(255,255,255,0.85)' }}>© 2025 888 VC. All rights reserved.</div>
-      <div style={{ display: 'flex', gap: '32px' }}>
-        <a href="#" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}>Privacy Policy</a>
-        <a href="#" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}>Terms of Service</a>
-      </div>
-    </div>
-  </footer>
-);
+    </footer>
+  );
+};

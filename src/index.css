@@ -26,6 +26,13 @@
 }
 
 /* WCAG 2.4.12 Focus Not Obscured — scroll padding for sticky elements */
+html, body {
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: hidden;
+  position: relative;
+}
+
 html {
   scroll-padding-top: 120px;
   scroll-behavior: smooth;
@@ -37,7 +44,11 @@ body {
   color: var(--text-primary);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+}
+
+.no-scroll {
+  overflow: hidden !important;
+  height: 100vh !important;
 }
 
 a {
@@ -211,7 +222,7 @@ section {
 
 @media (max-width: 1024px) {
   :root {
-    --section-padding: 3.5rem 2rem;
+    --section-padding: 3.5rem 1.5rem;
   }
   .hidden-mobile {
     display: none !important;
@@ -219,18 +230,18 @@ section {
   .visible-mobile {
     display: flex !important;
   }
-  .text-hero { font-size: 3rem; }
-  .text-4xl { font-size: 2rem; }
-  .text-3xl { font-size: 1.75rem; }
+  .text-hero { font-size: 3rem; word-wrap: break-word; }
+  .text-4xl { font-size: 2.25rem; }
+  .text-3xl { font-size: 1.875rem; }
 }
 
 @media (max-width: 768px) {
   :root {
     --section-padding: 3rem 1.25rem;
   }
-  .text-hero { font-size: 2.25rem; }
-  .text-4xl { font-size: 1.75rem; }
-  .text-3xl { font-size: 1.5rem; }
+  .text-hero { font-size: 2.5rem; line-height: 1.2; }
+  .text-4xl { font-size: 1.875rem; }
+  .text-3xl { font-size: 1.625rem; }
   .container {
     padding: 0 1.25rem;
   }
@@ -240,7 +251,7 @@ section {
   :root {
     --section-padding: 2.5rem 1rem;
   }
-  .text-hero { font-size: 2rem; }
+  .text-hero { font-size: 2.125rem; line-height: 1.2; }
   .text-4xl { font-size: 1.625rem; }
   .text-3xl { font-size: 1.375rem; }
 }

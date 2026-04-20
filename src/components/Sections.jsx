@@ -1,162 +1,116 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React from 'react';
 import { SITE_CONTENT } from '../data/site-content';
-import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import useReducedMotion from '../hooks/useReducedMotion';
-
-const CountUp = ({ value, prefix = '', suffix = '' }) => {
-  const [displayValue, setDisplayValue] = useState(0);
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
-  const prefersReducedMotion = useReducedMotion();
-
-  useEffect(() => {
-    if (isInView) {
-      if (prefersReducedMotion) {
-        setDisplayValue(value);
-        return;
-      }
-      let start = 0;
-      const duration = 2000;
-      const increment = value / (duration / 16);
-
-      const timer = setInterval(() => {
-        start += increment;
-        if (start >= value) {
-          setDisplayValue(value);
-          clearInterval(timer);
-        } else {
-          setDisplayValue(Math.floor(start));
-        }
-      }, 16);
-      return () => clearInterval(timer);
-    }
-  }, [isInView, value, prefersReducedMotion]);
-
-  return <span ref={ref}>{prefix}{displayValue}{suffix}</span>;
-};
+import useIsMobile from '../hooks/useIsMobile';
 
 export const StatsStrip = () => {
+  const { statsStrip: stats } = SITE_CONTENT;
+  const isMobile = useIsMobile(768);
+  const isSmallMobile = useIsMobile(480);
+
   return (
-    <section
-      aria-label="Key statistics"
-      style={{
-        backgroundColor: 'var(--primary)',
-        padding: window.innerWidth < 1024 ? '40px 0' : '48px 0',
-        color: 'white',
-        zIndex: 5
+    <section 
+      style={{ 
+        backgroundColor: '#f8f9fe', 
+        padding: isMobile ? '40px 0' : '60px 0',
+        borderBottom: '1px solid var(--border-muted)',
+        width: '100%',
+        overflow: 'hidden'
       }}
     >
-      <div className="container" style={{
-        display: 'grid',
-        gridTemplateColumns: window.innerWidth < 768 ? 'repeat(2, 1fr)' : (window.innerWidth < 1024 ? 'repeat(3, 1fr)' : `repeat(${SITE_CONTENT.statsStrip.length}, 1fr)`),
-        alignItems: 'center',
-        gap: window.innerWidth < 768 ? '32px 16px' : '16px'
-      }}>
-        {SITE_CONTENT.statsStrip.map((stat, i) => (
-          <React.Fragment key={i}>
+      <div className="container" style={{ width: '100%' }}>
+        <div 
+          style={{ 
+            display: 'grid', 
+            gridTemplateColumns: isSmallMobile ? '1fr' : (isMobile ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)'),
+            gap: isMobile ? '24px' : '40px',
+            alignItems: 'center',
+            textAlign: 'center',
+            width: '100%'
+          }}
+        >
+          {stats.map((stat, i) => (
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              key={i}
+              initial={{ opacity: 0, y: 10 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              style={{ textAlign: 'center' }}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                gap: '8px',
+                position: 'relative'
+              }}
             >
-              <div style={{ 
-                fontSize: window.innerWidth < 768 ? '32px' : '42px', 
-                fontWeight: 800, 
-                marginBottom: '8px' 
-              }}>
-                <CountUp value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
+              <div className="text-4xl text-navy" style={{ fontSize: isMobile ? '28px' : '36px' }}>
+                {stat.prefix}{stat.value}{stat.suffix}
               </div>
-              <div style={{ 
-                fontSize: '10px', 
-                opacity: 0.85, 
-                fontWeight: 600, 
-                letterSpacing: '0.5px',
-                textTransform: 'uppercase'
-              }}>{stat.label}</div>
+              <div className="text-sm text-muted" style={{ fontWeight: 600 }}>{stat.label}</div>
+              
+              {/* Divider for desktop/tablet */}
+              {!isSmallMobile && i < stats.length - 1 && i % (isMobile ? 2 : 4) !== (isMobile ? 1 : 3) && (
+                <div 
+                  className="hidden-mobile"
+                  style={{
+                    position: 'absolute',
+                    right: '-20px',
+                    top: '15%',
+                    height: '70%',
+                    width: '1px',
+                    backgroundColor: 'rgba(29, 47, 111, 0.1)'
+                  }} 
+                />
+              )}
             </motion.div>
-            {(window.innerWidth >= 1024 && i < SITE_CONTENT.statsStrip.length - 1) && (
-              <div style={{ 
-                position: 'absolute',
-                left: `${((i + 1) / SITE_CONTENT.statsStrip.length) * 100}%`,
-                width: '1px', 
-                height: '60px', 
-                backgroundColor: 'rgba(255,255,255,0.1)',
-                transform: 'translateX(-50%)' 
-              }} aria-hidden="true" />
-            )}
-          </React.Fragment>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );
 };
 
 export const ValueProps = () => {
-  const { tag, title, description, cards } = SITE_CONTENT.valueProps;
-  const ref = useRef(null);
-  const prefersReducedMotion = useReducedMotion();
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"]
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [50, -50]);
+  const { title, cards: items } = SITE_CONTENT.valueProps;
+  const isMobile = useIsMobile(768);
 
   return (
-    <section ref={ref} aria-label="Value propositions" style={{ backgroundColor: 'var(--bg-soft)', overflow: 'hidden' }}>
-      <motion.div className="container" style={{ y }}>
-        <motion.div
-          initial={{ opacity: 0, x: -30 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>{tag}</div>
-          <h2 className="text-4xl text-navy" style={{ maxWidth: '650px', marginBottom: '24px' }}>{title}</h2>
-          <p className="text-lg text-muted" style={{ maxWidth: '680px', marginBottom: '60px' }}>{description}</p>
-        </motion.div>
-
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '24px'
+    <section style={{ backgroundColor: 'white' }}>
+      <div className="container">
+        <h2 className="text-4xl text-navy" style={{ marginBottom: isMobile ? '40px' : '80px', textAlign: 'center' }}>{title}</h2>
+        
+        <div style={{ 
+          display: 'grid', 
+          gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, 1fr)', 
+          gap: isMobile ? '32px' : '60px' 
         }}>
-          {cards.map((card, i) => (
+          {items.map((item, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.2, duration: 0.6 }}
-              whileHover={prefersReducedMotion ? {} : { y: -10, scale: 1.02 }}
+              transition={{ delay: i * 0.1 }}
+              className="hover-lift"
               style={{
-                backgroundColor: 'white',
-                borderRadius: '20px',
-                overflow: 'hidden',
-                boxShadow: '0 10px 30px rgba(29, 47, 111, 0.05)'
+                padding: isMobile ? '32px' : '40px',
+                borderRadius: '24px',
+                backgroundColor: 'var(--bg-soft)',
+                border: '1px solid transparent',
+                transition: 'all 0.3s ease',
+                display: 'flex',
+                flexDirection: 'column'
               }}
             >
-              <div
-                role="img"
-                aria-label={card.title + ' illustration'}
-                style={{
-                  height: '200px',
-                  backgroundImage: `url("${card.image}")`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
-                }}
-              />
-              <div style={{ padding: '32px' }}>
-                <h3 className="text-xl text-navy" style={{ marginBottom: '16px' }}>{card.title}</h3>
-                <p className="text-base text-muted" style={{ marginBottom: '24px', lineHeight: '1.7' }}>{card.description}</p>
-                <Link to={card.href} aria-label={`${card.cta} — ${card.title}`} className="text-orange font-bold text-base" style={{ fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
-                  {card.cta}
-                </Link>
+              <div style={{ borderRadius: '16px', overflow: 'hidden', marginBottom: '24px', height: '180px' }}>
+                <img src={item.image} alt={item.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
+              <h3 className="text-xl text-navy" style={{ marginBottom: '16px' }}>{item.title}</h3>
+              <p className="text-base text-muted" style={{ lineHeight: '1.7', flex: 1, marginBottom: '24px' }}>{item.description}</p>
+              <Link to={item.href} style={{ color: 'var(--secondary)', fontWeight: 700, fontSize: '15px' }}>{item.cta}</Link>
             </motion.div>
           ))}
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };
