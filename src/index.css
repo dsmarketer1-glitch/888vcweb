@@ -233,25 +233,34 @@ section {
   .text-hero { font-size: 3rem; word-wrap: break-word; }
   .text-4xl { font-size: 2.25rem; }
   .text-3xl { font-size: 1.875rem; }
+
+  /* Targeted Internal Page fixes */
+  .grid-two-col { grid-template-columns: 1fr !important; gap: 40px !important; }
+  .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; }
 }
 
 @media (max-width: 768px) {
   :root {
     --section-padding: 3rem 1.25rem;
   }
-  .text-hero { font-size: 2.5rem; line-height: 1.2; }
+  .text-hero { font-size: 2.25rem; line-height: 1.2; }
   .text-4xl { font-size: 1.875rem; }
   .text-3xl { font-size: 1.625rem; }
   .container {
     padding: 0 1.25rem;
   }
+
+  /* Internal Pages Grid Stacks */
+  .responsive-stack { grid-template-columns: 1fr !important; }
+  .mobile-grid-1 { grid-template-columns: 1fr !important; }
+  .mobile-grid-2 { grid-template-columns: repeat(2, 1fr) !important; }
 }
 
 @media (max-width: 480px) {
   :root {
     --section-padding: 2.5rem 1rem;
   }
-  .text-hero { font-size: 2.125rem; line-height: 1.2; }
+  .text-hero { font-size: 2rem; line-height: 1.2; }
   .text-4xl { font-size: 1.625rem; }
   .text-3xl { font-size: 1.375rem; }
 }
