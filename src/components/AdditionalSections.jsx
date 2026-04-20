@@ -217,7 +217,7 @@ export const News = () => {
               <div className="text-sm text-muted" style={{ marginBottom: '24px', fontWeight: 500 }}>
                 <time>{featured.date}</time>  ·  {featured.readTime}
               </div>
-              <a href="#" aria-label={`Read full article: ${featured.title}`} className="text-orange font-bold text-lg">Read Full Article →</a>
+
             </div>
           </motion.article>
 
@@ -286,8 +286,12 @@ export const CTABanner = () => {
           Whether you're building or investing — join the 888vc community where ambition meets capital.
         </p>
         <div style={{ display: 'flex', gap: '24px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <motion.button whileHover={prefersReducedMotion ? {} : { scale: 1.05 }} whileTap={{ scale: 0.95 }} className="primary-btn" style={{ padding: '16px 40px', fontSize: '16px' }}>Apply as Startup →</motion.button>
-          <motion.button whileHover={prefersReducedMotion ? {} : { scale: 1.05, borderColor: 'white' }} whileTap={{ scale: 0.95 }} className="secondary-btn" style={{ padding: '16px 40px', fontSize: '16px' }}>Join as Investor</motion.button>
+          <Link to="/startup" style={{ textDecoration: 'none' }}>
+            <motion.button whileHover={prefersReducedMotion ? {} : { scale: 1.05 }} whileTap={{ scale: 0.95 }} className="primary-btn" style={{ padding: '16px 40px', fontSize: '16px' }}>Apply as Startup →</motion.button>
+          </Link>
+          <Link to="/investors" style={{ textDecoration: 'none' }}>
+            <motion.button whileHover={prefersReducedMotion ? {} : { scale: 1.05, borderColor: 'white' }} whileTap={{ scale: 0.95 }} className="secondary-btn" style={{ padding: '16px 40px', fontSize: '16px' }}>Join as Investor</motion.button>
+          </Link>
         </div>
       </motion.div>
     </section>

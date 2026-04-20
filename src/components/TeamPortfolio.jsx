@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { SITE_CONTENT } from '../data/site-content';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import useReducedMotion from '../hooks/useReducedMotion';
 
 export const Portfolio = () => {
@@ -26,7 +27,7 @@ export const Portfolio = () => {
             <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>{tag}</div>
             <h2 className="text-4xl text-navy" style={{ maxWidth: '900px' }}>{title}</h2>
           </motion.div>
-          <a href="/portfolio" aria-label="View all portfolio companies" className="text-navy font-bold text-lg" style={{ marginBottom: '10px' }}>View All →</a>
+          <Link to="/portfolio" aria-label="View all portfolio companies" className="text-navy font-bold text-lg" style={{ marginBottom: '10px' }}>View All →</Link>
         </div>
 
         <div style={{

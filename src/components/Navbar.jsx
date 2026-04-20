@@ -184,9 +184,11 @@ export const Navbar = () => {
         })}
       </div>
 
-      <button className="primary-btn" style={{ padding: '8px 20px', fontSize: '12px' }}>
-        {cta}
-      </button>
+      <Link to={SITE_CONTENT.nav.ctaHref} style={{ textDecoration: 'none' }}>
+        <button className="primary-btn" style={{ padding: '8px 20px', fontSize: '12px' }}>
+          {cta}
+        </button>
+      </Link>
     </nav>
   );
 };

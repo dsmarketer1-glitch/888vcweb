@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { SITE_CONTENT } from '../data/site-content';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import useReducedMotion from '../hooks/useReducedMotion';
 
 const CountUp = ({ value, prefix = '', suffix = '' }) => {
@@ -132,9 +133,9 @@ export const ValueProps = () => {
               <div style={{ padding: '32px' }}>
                 <h3 className="text-xl text-navy" style={{ marginBottom: '16px' }}>{card.title}</h3>
                 <p className="text-base text-muted" style={{ marginBottom: '24px', lineHeight: '1.7' }}>{card.description}</p>
-                <a href="#" aria-label={`${card.cta} — ${card.title}`} className="text-orange font-bold text-base" style={{ fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                <Link to={card.href} aria-label={`${card.cta} — ${card.title}`} className="text-orange font-bold text-base" style={{ fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                   {card.cta}
-                </a>
+                </Link>
               </div>
             </motion.div>
           ))}

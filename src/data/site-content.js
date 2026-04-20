@@ -25,7 +25,8 @@ export const SITE_CONTENT = {
       { label: "Portfolio", href: "/portfolio" },
       { label: "FAQ", href: "#" }
     ],
-    cta: "Join Our Community"
+    cta: "Join Our Community",
+    ctaHref: "/startup"
   },
   hero: {
     slides: [
@@ -68,18 +69,21 @@ export const SITE_CONTENT = {
         title: "Startups",
         description: "Fast & flexible funding built for founders. Mentorship, market access, and growth resources to expand internationally.",
         cta: "Apply Now →",
+        href: "/startup",
         image: "/assets/webimages/Homepage/ValueProps/Startup.jpg"
       },
       {
         title: "Investors",
         description: "Connect with pre-vetted startups across dynamic sectors with cross-border routes to US and UAE markets.",
         cta: "Join Network →",
+        href: "/investors",
         image: "/assets/webimages/Homepage/ValueProps/Investor.jpg"
       },
       {
         title: "Ecosystem Partners",
         description: "Curated global community of founders, investors and funds. Product credits and services at every growth stage.",
         cta: "Learn More →",
+        href: "/about",
         image: "/assets/webimages/Homepage/ValueProps/Ecosystem%20Partner.jpg"
       }
     ]
