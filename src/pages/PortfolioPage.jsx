@@ -2,6 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import usePageTitle from '../hooks/usePageTitle';
 import useReducedMotion from '../hooks/useReducedMotion';
+import useIsMobile from '../hooks/useIsMobile';
 
 // CountUp Component for stats — with reduced motion support
 const CountUp = ({ value, prefix = '', suffix = '' }) => {
@@ -56,38 +57,53 @@ const portfolioData = [
 
 const categories = ["All", "Deep Tech", "AI", "D2C", "Fintech", "Proptech", "CleanTech", "FoodTech", "EV / Mobility"];
 
-
 const PortfolioPage = () => {
   usePageTitle('Portfolio — 888VC');
   const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile(1024);
+  const isSmallMobile = useIsMobile(768);
 
   const [filter, setFilter] = useState("All");
   const filteredData = filter === "All" ? portfolioData : portfolioData.filter(item => item.category.includes(filter));
 
   const pageRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: pageRef, offset: ["start start", "end end"] });
-  const heroY = useTransform(scrollYProgress, [0, 0.2], prefersReducedMotion ? [0, 0] : [0, 100]);
+  const heroY = useTransform(scrollYProgress, [0, 0.2], (prefersReducedMotion || isMobile) ? [0, 0] : [0, 100]);
 
   return (
-    <main id="main-content" role="main" ref={pageRef}>
+    <main id="main-content" role="main" ref={pageRef} style={{ width: '100%', overflowX: 'hidden' }}>
       {/* Portfolio Hero */}
-      <section aria-label="Portfolio overview" style={{ backgroundColor: 'var(--bg-soft)', paddingTop: '100px', paddingBottom: '80px', position: 'relative', overflow: 'hidden' }}>
+      <section aria-label="Portfolio overview" style={{ backgroundColor: 'var(--bg-soft)', padding: isMobile ? '80px 0 60px' : '120px 0 80px', position: 'relative', overflow: 'hidden' }}>
         <motion.div className="container" style={{ y: heroY }}>
           <div className="text-orange text-sm font-bold" style={{ marginBottom: '16px', letterSpacing: '1px' }}>OUR PORTFOLIO</div>
-          <div style={{ display: 'grid', gridTemplateColumns: '1.4fr 0.6fr', gap: '80px', alignItems: 'center' }}>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: isMobile ? '1fr' : '1.4fr 0.6fr', 
+            gap: isMobile ? '40px' : '80px', 
+            alignItems: 'center' 
+          }}>
             <div>
-              <h1 className="text-hero" style={{ color: 'var(--primary)', marginBottom: '24px', fontSize: '60px' }}>
+              <h1 className="text-hero" style={{ 
+                color: 'var(--primary)', 
+                marginBottom: '24px', 
+                fontSize: isSmallMobile ? '38px' : (isMobile ? '48px' : '60px'),
+                lineHeight: '1.2'
+              }}>
                 Our startups are on their way to changing the world.
               </h1>
-              <p className="text-lg text-muted" style={{ maxWidth: '560px', marginBottom: '40px' }}>
+              <p className="text-lg text-muted" style={{ maxWidth: '560px', marginBottom: '40px', fontSize: isSmallMobile ? '16px' : '18px' }}>
                 From seed to Series A and beyond — 50+ companies, $1Bn+ in combined valuation, backed by 888vc and the world's best co-investors.
               </p>
-              <button className="primary-btn" style={{ padding: '16px 32px' }}>Explore Portfolio →</button>
+              <button className="primary-btn" style={{ padding: '16px 32px', width: isSmallMobile ? '100%' : 'auto', justifyContent: 'center' }}>Explore Portfolio →</button>
             </div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
+            <div style={{ 
+              display: 'grid', 
+              gridTemplateColumns: isSmallMobile ? '1fr 1fr' : 'repeat(2, 1fr)', 
+              gap: isSmallMobile ? '16px' : '20px' 
+            }}>
               {[
                 { label: 'STARTUPS FUNDED', value: '50', suffix: '+', color: 'var(--secondary)' },
-                { label: 'COMBINED VALUATION', prefix: '$', value: '1', suffix: 'Bn+', color: 'var(--primary)' },
+                { label: 'VALUATION', prefix: '$', value: '1', suffix: 'Bn+', color: 'var(--primary)' },
                 { label: 'SERIES A FUNDED', value: '10', suffix: '+', color: 'var(--primary)' },
                 { label: 'SOONICORNS', value: '3', suffix: '+', color: 'var(--primary)' },
               ].map((stat, i) => (
@@ -95,13 +111,12 @@ const PortfolioPage = () => {
                   key={i}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  style={{ backgroundColor: 'white', padding: '32px 24px', borderRadius: '20px', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}
+                  style={{ backgroundColor: 'white', padding: isSmallMobile ? '20px' : '32px 24px', borderRadius: '20px', boxShadow: '0 4px 20px rgba(0,0,0,0.03)', textAlign: 'center' }}
                 >
-                  <div style={{ fontSize: '36px', fontWeight: 800, color: stat.color, marginBottom: '8px' }}>
+                  <div style={{ fontSize: isSmallMobile ? '28px' : '36px', fontWeight: 800, color: stat.color, marginBottom: '8px' }}>
                     <CountUp value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
                   </div>
-                  {/* WCAG 1.4.6 — using compliant text-secondary color */}
-                  <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.5px' }}>{stat.label}</div>
+                  <div style={{ fontSize: '10px', fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.5px' }}>{stat.label}</div>
                 </motion.div>
               ))}
             </div>
@@ -109,10 +124,26 @@ const PortfolioPage = () => {
         </motion.div>
       </section>
 
-      {/* Filter Bar — WCAG 2.1.1 Keyboard, 4.1.2 Name/Role/Value */}
+      {/* Filter Bar */}
       <div style={{ borderBottom: '1px solid var(--border-muted)', backgroundColor: 'white', position: 'sticky', top: '70px', zIndex: 100 }} role="search" aria-label="Filter portfolio companies">
-        <div className="container" style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '16px 0' }}>
-          <div role="tablist" aria-label="Category filters" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+        <div className="container" style={{ 
+          display: 'flex', 
+          flexDirection: isSmallMobile ? 'column' : 'row',
+          alignItems: isSmallMobile ? 'flex-start' : 'center', 
+          justifyContent: 'space-between', 
+          padding: '16px 0',
+          gap: isSmallMobile ? '16px' : '0'
+        }}>
+          <div role="tablist" aria-label="Category filters" style={{ 
+            display: 'flex', 
+            gap: '12px', 
+            overflowX: isSmallMobile ? 'auto' : 'visible',
+            paddingBottom: isSmallMobile ? '8px' : '0',
+            width: isSmallMobile ? '100%' : 'auto',
+            msOverflowStyle: 'none',
+            scrollbarWidth: 'none',
+            flexWrap: isSmallMobile ? 'nowrap' : 'wrap'
+          }}>
             {categories.map(cat => (
               <button
                 key={cat}
@@ -121,34 +152,41 @@ const PortfolioPage = () => {
                 aria-controls="portfolio-grid"
                 onClick={() => setFilter(cat)}
                 style={{
-                  padding: '10px 24px',
+                  padding: '8px 20px',
                   borderRadius: '24px',
-                  fontSize: '14px',
+                  fontSize: '13px',
                   fontWeight: 600,
                   backgroundColor: filter === cat ? 'var(--primary)' : '#eef1f9',
                   color: filter === cat ? 'white' : 'var(--primary)',
-                  border: filter === cat ? '2px solid var(--primary)' : '2px solid transparent',
+                  border: 'none',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',
-                  minHeight: '44px'
+                  minHeight: '40px',
+                  whiteSpace: 'nowrap',
+                  flexShrink: 0
                 }}
               >
                 {cat}
               </button>
             ))}
           </div>
-          {/* WCAG 4.1.3 — aria-live for status message */}
           <div className="text-sm text-navy" style={{ fontWeight: 600 }} role="status" aria-live="polite">{filteredData.length} companies</div>
         </div>
       </div>
 
       {/* Portfolio Grid */}
-      <section aria-label="Portfolio companies grid" style={{ padding: '80px 0' }}>
+      <section aria-label="Portfolio companies grid" style={{ padding: isMobile ? '60px 0' : '80px 0' }}>
         <div className="container">
-          <div className="text-orange text-sm font-bold" style={{ marginBottom: '12px' }}>OUR PORTFOLIO</div>
-          <h2 className="text-3xl text-navy" style={{ marginBottom: '60px' }}>Companies we've backed</h2>
+          <div style={{ textAlign: isMobile ? 'center' : 'left', marginBottom: isMobile ? '40px' : '60px' }}>
+            <div className="text-orange text-sm font-bold" style={{ marginBottom: '12px' }}>OUR PORTFOLIO</div>
+            <h2 style={{ fontSize: isSmallMobile ? '28px' : '36px', fontWeight: 800, color: 'var(--primary)' }}>Companies we've backed</h2>
+          </div>
 
-          <div id="portfolio-grid" role="tabpanel" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
+          <div id="portfolio-grid" role="tabpanel" style={{ 
+            display: 'grid', 
+            gridTemplateColumns: isSmallMobile ? '1fr' : 'repeat(auto-fill, minmax(300px, 1fr))', 
+            gap: isSmallMobile ? '20px' : '32px' 
+          }}>
             {filteredData.map((item, i) => (
               <motion.article
                 key={item.name}
@@ -175,47 +213,52 @@ const PortfolioPage = () => {
                 </div>
                 <div style={{ padding: '32px 24px 24px' }}>
                   <div style={{ display: 'flex', gap: '8px', marginBottom: '20px', flexWrap: 'wrap' }}>
-                    <span style={{ backgroundColor: 'var(--bg-soft)', padding: '4px 12px', borderRadius: '12px', fontSize: '11px', color: 'var(--text-secondary)', fontWeight: 600 }}>{item.category}</span>
-                    <span style={{ backgroundColor: 'white', border: '1px solid var(--secondary)', padding: '4px 12px', borderRadius: '12px', fontSize: '11px', color: 'var(--secondary)', fontWeight: 600 }}>{item.stage}</span>
+                    <span style={{ backgroundColor: 'var(--bg-soft)', padding: '4px 10px', borderRadius: '12px', fontSize: '10px', color: 'var(--text-secondary)', fontWeight: 700 }}>{item.category}</span>
+                    <span style={{ backgroundColor: 'white', border: '1px solid var(--secondary)', padding: '4px 10px', borderRadius: '12px', fontSize: '10px', color: 'var(--secondary)', fontWeight: 700 }}>{item.stage}</span>
                     {item.badge && (
-                      <span style={{ backgroundColor: '#eef1f9', padding: '4px 12px', borderRadius: '12px', fontSize: '11px', color: 'var(--primary)', fontWeight: 700 }}>{item.badge}</span>
+                      <span style={{ backgroundColor: '#eef1f9', padding: '4px 10px', borderRadius: '12px', fontSize: '10px', color: 'var(--primary)', fontWeight: 800 }}>{item.badge}</span>
                     )}
                   </div>
                   <h3 className="text-xl text-navy" style={{ marginBottom: '16px', fontWeight: 700 }}>{item.name}</h3>
                   <div style={{ height: '1px', backgroundColor: 'var(--border-muted)', marginBottom: '16px' }} aria-hidden="true" />
-                  <div className="text-xs text-muted" style={{ marginBottom: '20px' }}>Co-invested: {item.coInvested}</div>
-                  <a href="#" aria-label={`Visit ${item.name} website`} className="text-orange font-bold text-sm">Visit →</a>
+                  <div className="text-xs text-muted" style={{ marginBottom: '24px' }}>Co-invested: {item.coInvested}</div>
+                  <a href="#" aria-label={`Visit ${item.name} website`} className="text-orange font-bold text-sm" style={{ textDecoration: 'none' }}>Visit →</a>
                 </div>
               </motion.article>
             ))}
-
           </div>
         </div>
       </section>
 
       {/* Success Stories Section */}
-      <section aria-label="Success stories" style={{ backgroundColor: '#f5f7fc', padding: '80px 0' }}>
+      <section aria-label="Success stories" style={{ backgroundColor: '#f5f7fc', padding: isMobile ? '80px 0' : '100px 0' }}>
         <div className="container">
-          <div className="text-orange text-sm font-bold" style={{ marginBottom: '12px' }}>SUCCESS STORIES</div>
-          <h2 className="text-3xl text-navy" style={{ marginBottom: '60px' }}>Portfolio milestones that matter.</h2>
+          <div style={{ textAlign: isMobile ? 'center' : 'left', marginBottom: '40px' }}>
+            <div className="text-orange text-sm font-bold" style={{ marginBottom: '12px' }}>SUCCESS STORIES</div>
+            <h2 style={{ fontSize: isSmallMobile ? '28px' : '36px', fontWeight: 800, color: 'var(--primary)' }}>Milestones that matter.</h2>
+          </div>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
-            <motion.article whileHover={prefersReducedMotion ? {} : { y: -5 }} style={{ backgroundColor: 'var(--primary)', color: 'white', padding: '40px', borderRadius: '24px' }}>
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: isMobile ? '1fr' : 'repeat(2, 1fr)', 
+            gap: isSmallMobile ? '20px' : '32px' 
+          }}>
+            <motion.article whileHover={prefersReducedMotion ? {} : { y: -5 }} style={{ backgroundColor: 'var(--primary)', color: 'white', padding: isSmallMobile ? '30px' : '40px', borderRadius: '24px' }}>
               <div style={{ fontSize: '11px', fontWeight: 700, opacity: 0.7, marginBottom: '24px' }}>ACQUISITION</div>
               <h3 style={{ fontSize: '24px', fontWeight: 800, marginBottom: '8px' }}>Finly</h3>
-              <div style={{ fontSize: '36px', fontWeight: 800, marginBottom: '24px' }}>Acquired</div>
+              <div style={{ fontSize: isSmallMobile ? '30px' : '36px', fontWeight: 800, marginBottom: '24px' }}>Acquired</div>
               <p style={{ fontSize: '15px', opacity: 0.85, lineHeight: '1.7', marginBottom: '32px' }}>
-                Finly's AP automation platform was successfully acquired by a large Fintech company in the US — a landmark exit that validated our early conviction.
+                Finly's AP automation platform was successfully acquired by a large Fintech company in the US — a landmark exit.
               </p>
               <div style={{ fontSize: '12px', opacity: 0.5 }}>B2B SaaS · Exit via Acquisition</div>
             </motion.article>
 
-            <motion.article whileHover={prefersReducedMotion ? {} : { y: -5 }} style={{ backgroundColor: 'white', padding: '40px', borderRadius: '24px', border: '1px solid var(--border-muted)' }}>
+            <motion.article whileHover={prefersReducedMotion ? {} : { y: -5 }} style={{ backgroundColor: 'white', padding: isSmallMobile ? '30px' : '40px', borderRadius: '24px', border: '1px solid var(--border-muted)' }}>
               <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--secondary)', marginBottom: '24px' }}>SERIES A</div>
               <h3 className="text-navy" style={{ fontSize: '24px', fontWeight: 800, marginBottom: '8px' }}>Rooter</h3>
-              <div className="text-navy" style={{ fontSize: '32px', fontWeight: 800, marginBottom: '24px' }}>Series A ✓</div>
+              <div className="text-navy" style={{ fontSize: isSmallMobile ? '30px' : '32px', fontWeight: 800, marginBottom: '24px' }}>Series A ✓</div>
               <p className="text-muted" style={{ fontSize: '15px', lineHeight: '1.7', marginBottom: '32px' }}>
-                Rooter raised a strong Series A round with marquee investors — validating 888vc's early conviction in India's gaming content sector.
+                Rooter raised a strong Series A round with marquee investors — validating 888vc's early conviction in India's gaming sector.
               </p>
               <div className="text-muted" style={{ fontSize: '12px' }}>Gaming · Series A</div>
             </motion.article>
@@ -224,17 +267,24 @@ const PortfolioPage = () => {
       </section>
 
       {/* Portfolio CTA */}
-      <section aria-label="Join 888VC" style={{ backgroundColor: 'var(--primary)', padding: '100px 0', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
+      <section aria-label="Join 888VC" style={{ backgroundColor: 'var(--primary)', padding: isMobile ? '80px 20px' : '100px 0', textAlign: 'center', position: 'relative', overflow: 'hidden' }}>
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
-          <h2 className="text-4xl text-white" style={{ marginBottom: '24px', fontSize: '42px', maxWidth: '850px', margin: '0 auto 24px' }}>
-            Be a part of our all-inclusive ecosystem of change-makers!
+          <h2 style={{ 
+            color: 'white',
+            marginBottom: '24px', 
+            fontSize: isSmallMobile ? '30px' : (isMobile ? '38px' : '42px'), 
+            maxWidth: '850px', 
+            margin: '0 auto 24px',
+            fontWeight: 800
+          }}>
+            Be a part of our ecosystem of change-makers!
           </h2>
-          <p className="text-lg text-white" style={{ opacity: 0.85, marginBottom: '40px' }}>
-            50+ startup investments · $100Mn+ syndicated · Cross-border India–US community
+          <p className="text-lg text-white" style={{ opacity: 0.85, marginBottom: '40px', fontSize: isSmallMobile ? '16px' : '18px' }}>
+            50+ startup investments · $100Mn+ syndicated · Cross-border community
           </p>
-          <button className="primary-btn" style={{ padding: '16px 40px', fontSize: '16px' }}>Join Us →</button>
+          <button className="primary-btn" style={{ padding: '16px 40px', fontSize: '16px', width: isSmallMobile ? '100%' : 'auto', justifyContent: 'center' }}>Join Us →</button>
         </div>
-        <div style={{ position: 'absolute', top: '-50%', right: '-10%', width: '500px', height: '500px', borderRadius: '50%', background: 'radial-gradient(circle, var(--secondary) 0%, transparent 70%)', opacity: 0.1 }} aria-hidden="true" />
+        <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '600px', height: '600px', borderRadius: '50%', background: 'radial-gradient(circle, var(--secondary) 0%, transparent 70%)', opacity: 0.1, zIndex: 0 }} aria-hidden="true" />
       </section>
     </main>
   );
