@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { SITE_CONTENT } from '../data/site-content';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
 import useReducedMotion from '../hooks/useReducedMotion';
 
@@ -71,9 +71,10 @@ export const Ticker = () => {
 };
 
 export const Navbar = () => {
-  const { logo, links, cta } = SITE_CONTENT.nav;
+  const { links, cta, ctaHref } = SITE_CONTENT.nav;
   const location = useLocation();
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const isActive = (link) => {
     if (location.pathname === link.href) return true;
@@ -82,6 +83,8 @@ export const Navbar = () => {
     }
     return false;
   };
+
+  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
   return (
     <nav
@@ -102,7 +105,8 @@ export const Navbar = () => {
         <img src="/assets/logo.svg" alt="888VC Logo" style={{ height: '42px', width: 'auto' }} />
       </Link>
 
-      <div style={{
+      {/* Desktop Links */}
+      <div className="hidden-mobile" style={{
         display: 'flex',
         gap: '32px',
         marginLeft: 'auto',
@@ -184,12 +188,84 @@ export const Navbar = () => {
         })}
       </div>
 
-      <Link to={SITE_CONTENT.nav.ctaHref} style={{ textDecoration: 'none' }}>
-        <button className="primary-btn" style={{ padding: '8px 20px', fontSize: '12px' }}>
-          {cta}
-        </button>
-      </Link>
+      <div className="hidden-mobile">
+        <Link to={ctaHref} style={{ textDecoration: 'none' }}>
+          <button className="primary-btn" style={{ padding: '8px 20px', fontSize: '12px' }}>
+            {cta}
+          </button>
+        </Link>
+      </div>
+
+      {/* Hamburger Button */}
+      <button
+        className="visible-mobile"
+        style={{ marginLeft: 'auto', fontSize: '24px', color: 'var(--primary)', padding: '8px' }}
+        onClick={toggleMenu}
+        aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+        aria-expanded={isMenuOpen}
+      >
+        {isMenuOpen ? '✕' : '☰'}
+      </button>
+
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            style={{
+              position: 'fixed',
+              top: '70px',
+              left: 0,
+              width: '100%',
+              backgroundColor: 'white',
+              boxShadow: '0 10px 25px rgba(0,0,0,0.1)',
+              padding: '24px',
+              zIndex: 999,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: '20px'
+            }}
+          >
+            {links.map((link, i) => (
+              <div key={i}>
+                <Link
+                  to={link.href}
+                  style={{
+                    fontSize: '18px',
+                    fontWeight: 600,
+                    color: isActive(link) ? 'var(--secondary)' : 'var(--primary)',
+                    display: 'block'
+                  }}
+                  onClick={() => !link.hasDropdown && setIsMenuOpen(false)}
+                >
+                  {link.label}
+                </Link>
+                {link.hasDropdown && (
+                  <div style={{ marginTop: '12px', paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                    {link.dropdownItems.map((item, idx) => (
+                      <Link
+                        key={idx}
+                        to={item.href}
+                        style={{ fontSize: '16px', color: 'var(--text-secondary)' }}
+                        onClick={() => setIsMenuOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+            <Link to={ctaHref} style={{ textDecoration: 'none' }} onClick={() => setIsMenuOpen(false)}>
+              <button className="primary-btn" style={{ width: '100%', justifyContent: 'center', marginTop: '10px' }}>
+                {cta}
+              </button>
+            </Link>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };
-

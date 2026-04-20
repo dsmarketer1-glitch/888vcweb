@@ -109,24 +109,24 @@ export const Team = () => {
             role="img"
             aria-label={`Photo of ${founder.name}, ${founder.role}`}
             style={{
-              width: '260px',
+              width: window.innerWidth < 768 ? '100%' : '260px',
               minHeight: '250px',
               backgroundImage: `url("${founder.image}")`,
               backgroundSize: 'cover',
               backgroundPosition: 'top center'
             }}
           />
-          <div style={{ padding: '40px', flex: 1, minWidth: '280px' }}>
-            <h3 className="text-2xl text-navy" style={{ fontSize: '28px' }}>{founder.name}</h3>
+          <div style={{ padding: window.innerWidth < 768 ? '24px' : '40px', flex: 1, minWidth: '280px' }}>
+            <h3 className="text-2xl text-navy" style={{ fontSize: window.innerWidth < 768 ? '24px' : '28px' }}>{founder.name}</h3>
             <div className="text-orange text-sm" style={{ margin: '12px 0 20px', letterSpacing: '1px' }}>{founder.role}</div>
-            <p className="text-lg text-muted" style={{ lineHeight: '1.7', fontSize: '17px' }}>{founder.bio}</p>
+            <p className="text-lg text-muted" style={{ lineHeight: '1.7', fontSize: window.innerWidth < 768 ? '16px' : '17px' }}>{founder.bio}</p>
           </div>
         </motion.div>
 
         {/* Team Members Grid */}
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
+          gridTemplateColumns: window.innerWidth < 480 ? '1fr' : (window.innerWidth < 768 ? 'repeat(2, 1fr)' : 'repeat(auto-fit, minmax(180px, 1fr))'),
           gap: '20px'
         }}>
           {members.map((member, i) => (

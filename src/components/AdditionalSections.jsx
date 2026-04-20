@@ -25,11 +25,11 @@ export const SuperAngels = () => {
     <section ref={ref} aria-label="Super Angels and CXOs">
       <motion.div className="container" style={{ y }}>
         <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>OUR NETWORK</div>
-        <h2 className="text-4xl text-navy" style={{ marginBottom: '60px' }}>Super Angels & CXOs Investing With Us</h2>
+        <h2 className="text-4xl text-navy" style={{ marginBottom: window.innerWidth < 768 ? '32px' : '60px' }}>Super Angels & CXOs Investing With Us</h2>
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
+          gridTemplateColumns: window.innerWidth < 480 ? '1fr' : 'repeat(auto-fit, minmax(220px, 1fr))',
           gap: '24px'
         }}>
           {angels.map((angel, i) => (
@@ -42,7 +42,7 @@ export const SuperAngels = () => {
               style={{
                 backgroundColor: 'white',
                 borderRadius: '24px',
-                padding: '40px 24px',
+                padding: window.innerWidth < 768 ? '32px 20px' : '40px 24px',
                 textAlign: 'center',
                 boxShadow: '0 4px 25px rgba(29, 47, 111, 0.04)',
                 transition: 'all 0.3s ease'
@@ -97,10 +97,10 @@ export const PartnersMarquee = () => {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section aria-label="Partners" style={{ backgroundColor: 'white', padding: '80px 0' }}>
+    <section aria-label="Partners" style={{ backgroundColor: 'white', padding: window.innerWidth < 768 ? '60px 0' : '80px 0' }}>
       <div className="container" style={{ marginBottom: '50px' }}>
         <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>PARTNERS</div>
-        <h2 className="text-3xl text-navy">An Active Ecosystem of Partners</h2>
+        <h2 className="text-3xl text-navy" style={{ fontSize: window.innerWidth < 768 ? '24px' : '30px' }}>An Active Ecosystem of Partners</h2>
       </div>
       <div
         style={{
@@ -121,7 +121,7 @@ export const PartnersMarquee = () => {
           transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
           style={{
             display: 'flex',
-            gap: '100px',
+            gap: window.innerWidth < 768 ? '60px' : '100px',
             whiteSpace: 'nowrap',
             paddingLeft: '40px',
             alignItems: 'center'
@@ -134,7 +134,7 @@ export const PartnersMarquee = () => {
               src={partner.logo} 
               alt={partner.name} 
               style={{ 
-                height: '45px', 
+                height: window.innerWidth < 768 ? '35px' : '45px', 
                 width: 'auto', 
                 filter: 'grayscale(100%) opacity(0.7)',
                 transition: 'filter 0.3s ease'
@@ -198,9 +198,9 @@ export const News = () => {
     <section ref={ref} aria-label="News and updates" style={{ backgroundColor: 'var(--bg-soft)' }}>
       <motion.div className="container" style={{ y }}>
         <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>{tag}</div>
-        <h2 className="text-4xl text-navy" style={{ marginBottom: '60px' }}>{title}</h2>
+        <h2 className="text-4xl text-navy" style={{ marginBottom: window.innerWidth < 768 ? '32px' : '60px' }}>{title}</h2>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: window.innerWidth < 1024 ? '1fr' : 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
           {/* Featured News */}
           <motion.article
             whileHover={prefersReducedMotion ? {} : { y: -8 }}
@@ -209,15 +209,14 @@ export const News = () => {
             <div
               role="img"
               aria-label={featured.title}
-              style={{ height: '320px', backgroundImage: `url("${featured.image}")`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+              style={{ height: window.innerWidth < 768 ? '240px' : '320px', backgroundImage: `url("${featured.image}")`, backgroundSize: 'cover', backgroundPosition: 'center' }}
             />
-            <div style={{ padding: '40px' }}>
+            <div style={{ padding: window.innerWidth < 768 ? '24px' : '40px' }}>
               <div className="text-xs text-orange font-bold" style={{ marginBottom: '16px', letterSpacing: '1px' }}>{featured.category}</div>
-              <h3 className="text-2xl text-navy" style={{ marginBottom: '20px', lineHeight: '1.4' }}>{featured.title}</h3>
+              <h3 className="text-2xl text-navy" style={{ marginBottom: '20px', lineHeight: '1.4', fontSize: window.innerWidth < 768 ? '22px' : '24px' }}>{featured.title}</h3>
               <div className="text-sm text-muted" style={{ marginBottom: '24px', fontWeight: 500 }}>
                 <time>{featured.date}</time>  ·  {featured.readTime}
               </div>
-
             </div>
           </motion.article>
 
@@ -227,12 +226,27 @@ export const News = () => {
               <motion.article
                 key={i}
                 whileHover={prefersReducedMotion ? {} : { x: 10, backgroundColor: '#fff' }}
-                style={{ backgroundColor: 'white', borderRadius: '20px', display: 'flex', overflow: 'hidden', boxShadow: '0 4px 15px rgba(0,0,0,0.02)', transition: 'all 0.3s ease' }}
+                style={{ 
+                  backgroundColor: 'white', 
+                  borderRadius: '20px', 
+                  display: 'flex', 
+                  flexDirection: window.innerWidth < 480 ? 'column' : 'row',
+                  overflow: 'hidden', 
+                  boxShadow: '0 4px 15px rgba(0,0,0,0.02)', 
+                  transition: 'all 0.3s ease' 
+                }}
               >
                 <div
                   role="img"
                   aria-label={item.title}
-                  style={{ width: '160px', minWidth: '160px', backgroundImage: `url("${item.image}")`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+                  style={{ 
+                    width: window.innerWidth < 480 ? '100%' : '160px', 
+                    height: window.innerWidth < 480 ? '160px' : 'auto', 
+                    minWidth: window.innerWidth < 480 ? '100%' : '160px', 
+                    backgroundImage: `url("${item.image}")`, 
+                    backgroundSize: 'cover', 
+                    backgroundPosition: 'center' 
+                  }}
                 />
                 <div style={{ padding: '24px', flex: 1 }}>
                   <div className="text-xs text-orange font-bold" style={{ marginBottom: '10px' }}>{item.category}</div>
@@ -252,7 +266,7 @@ export const CTABanner = () => {
   const prefersReducedMotion = useReducedMotion();
 
   return (
-    <section aria-label="Call to action" style={{ backgroundColor: 'var(--primary)', color: 'white', textAlign: 'center', padding: '120px 0', position: 'relative', overflow: 'hidden' }}>
+    <section aria-label="Call to action" style={{ backgroundColor: 'var(--primary)', color: 'white', textAlign: 'center', padding: window.innerWidth < 768 ? '80px 20px' : '120px 0', position: 'relative', overflow: 'hidden' }}>
       {/* Animated Background Decals */}
       <motion.div
         animate={prefersReducedMotion ? {} : {
@@ -281,16 +295,16 @@ export const CTABanner = () => {
         className="container"
         style={{ position: 'relative', zIndex: 1 }}
       >
-        <h2 className="text-4xl" style={{ marginBottom: '24px', fontSize: '48px' }}>Be part of our ecosystem of change-makers!</h2>
-        <p className="text-lg" style={{ opacity: 0.85, marginBottom: '50px', maxWidth: '850px', margin: '0 auto 50px', lineHeight: '1.7', fontSize: '20px' }}>
+        <h2 className="text-4xl" style={{ marginBottom: '24px', fontSize: window.innerWidth < 768 ? '32px' : '48px' }}>Be part of our ecosystem of change-makers!</h2>
+        <p className="text-lg" style={{ opacity: 0.85, marginBottom: '50px', maxWidth: '850px', margin: '0 auto 50px', lineHeight: '1.7', fontSize: window.innerWidth < 768 ? '16px' : '20px' }}>
           Whether you're building or investing — join the 888vc community where ambition meets capital.
         </p>
-        <div style={{ display: 'flex', gap: '24px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link to="/startup" style={{ textDecoration: 'none' }}>
-            <motion.button whileHover={prefersReducedMotion ? {} : { scale: 1.05 }} whileTap={{ scale: 0.95 }} className="primary-btn" style={{ padding: '16px 40px', fontSize: '16px' }}>Apply as Startup →</motion.button>
+        <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
+          <Link to="/startup" style={{ textDecoration: 'none', width: window.innerWidth < 480 ? '100%' : 'auto' }}>
+            <motion.button whileHover={prefersReducedMotion ? {} : { scale: 1.05 }} whileTap={{ scale: 0.95 }} className="primary-btn" style={{ padding: '16px 40px', fontSize: '16px', width: '100%', justifyContent: 'center' }}>Apply as Startup →</motion.button>
           </Link>
-          <Link to="/investors" style={{ textDecoration: 'none' }}>
-            <motion.button whileHover={prefersReducedMotion ? {} : { scale: 1.05, borderColor: 'white' }} whileTap={{ scale: 0.95 }} className="secondary-btn" style={{ padding: '16px 40px', fontSize: '16px' }}>Join as Investor</motion.button>
+          <Link to="/investors" style={{ textDecoration: 'none', width: window.innerWidth < 480 ? '100%' : 'auto' }}>
+            <motion.button whileHover={prefersReducedMotion ? {} : { scale: 1.05, borderColor: 'white' }} whileTap={{ scale: 0.95 }} className="secondary-btn" style={{ padding: '16px 40px', fontSize: '16px', width: '100%', justifyContent: 'center' }}>Join as Investor</motion.button>
           </Link>
         </div>
       </motion.div>
@@ -299,8 +313,8 @@ export const CTABanner = () => {
 };
 
 export const Footer = () => (
-  <footer role="contentinfo" style={{ backgroundColor: 'var(--primary)', color: 'white', padding: '100px 72px 40px' }}>
-    <div className="container" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '60px', marginBottom: '80px' }}>
+  <footer role="contentinfo" style={{ backgroundColor: 'var(--primary)', color: 'white', padding: window.innerWidth < 768 ? '60px 20px 40px' : '100px 72px 40px' }}>
+    <div className="container" style={{ display: 'grid', gridTemplateColumns: window.innerWidth < 768 ? '1fr' : (window.innerWidth < 1024 ? 'repeat(2, 1fr)' : 'repeat(4, 1fr)'), gap: '40px 60px', marginBottom: '80px' }}>
       <div>
         <Link to="/" aria-label="888VC Home" style={{ display: 'inline-flex', alignItems: 'center', textDecoration: 'none', marginBottom: '28px' }}>
           <div style={{ backgroundColor: 'white', padding: '6px 12px', borderRadius: '8px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
@@ -312,7 +326,7 @@ export const Footer = () => (
         </p>
       </div>
       <div>
-        <h4 className="text-sm text-orange" style={{ marginBottom: '28px', letterSpacing: '1px' }}>PAGES</h4>
+        <h4 className="text-sm text-orange" style={{ marginBottom: '20px', letterSpacing: '1px' }}>PAGES</h4>
         <nav aria-label="Footer navigation">
           <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '15px' }}>
             {[
@@ -332,7 +346,7 @@ export const Footer = () => (
         </nav>
       </div>
       <div>
-        <h4 className="text-sm text-orange" style={{ marginBottom: '28px', letterSpacing: '1px' }}>CONTACT</h4>
+        <h4 className="text-sm text-orange" style={{ marginBottom: '20px', letterSpacing: '1px' }}>CONTACT</h4>
         <address style={{ fontStyle: 'normal', lineHeight: '2', fontSize: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <p style={{ color: 'rgba(255,255,255,0.85)' }}>NETWORK888 ACCELERATOR LLP</p>
           <p style={{ color: 'rgba(255,255,255,0.85)' }}>Whitefield, Bengaluru 560066</p>
@@ -341,7 +355,7 @@ export const Footer = () => (
         </address>
       </div>
       <div>
-         <h4 className="text-sm text-orange" style={{ marginBottom: '28px', letterSpacing: '1px' }}>FOLLOW</h4>
+         <h4 className="text-sm text-orange" style={{ marginBottom: '20px', letterSpacing: '1px' }}>FOLLOW</h4>
          <div style={{ display: 'flex', gap: '20px' }}>
             {[
               { name: 'LinkedIn', url: '#' },

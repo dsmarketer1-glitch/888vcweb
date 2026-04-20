@@ -17,7 +17,6 @@ export const Hero = () => {
   }, []);
 
   useEffect(() => {
-    // WCAG 2.2.1 — respect pause and reduced motion
     if (isPaused || prefersReducedMotion) return;
 
     const timer = setInterval(() => {
@@ -33,7 +32,7 @@ export const Hero = () => {
       aria-label="Featured highlights"
       style={{
         padding: 0,
-        height: '700px',
+        height: window.innerWidth < 768 ? '500px' : '700px',
         backgroundColor: 'var(--primary)',
         position: 'relative',
         display: 'flex',
@@ -83,7 +82,7 @@ export const Hero = () => {
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            padding: '0 20px'
+            padding: window.innerWidth < 768 ? '0 16px' : '0 20px'
           }}>
             <motion.div
               initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
@@ -95,12 +94,12 @@ export const Hero = () => {
                 borderRadius: '15px',
                 padding: '6px 20px',
                 display: 'inline-block',
-                marginBottom: '24px'
+                marginBottom: window.innerWidth < 768 ? '16px' : '24px'
               }}>
                 <span className="text-xs" style={{ letterSpacing: '1px' }}>{slides[currentSlide].eyebrow}</span>
               </div>
 
-              <h1 className="text-hero" style={{ maxWidth: '900px', margin: '0 auto 32px' }}>
+              <h1 className="text-hero" style={{ maxWidth: window.innerWidth < 768 ? '100%' : '900px', margin: '0 auto 32px' }}>
                 {slides[currentSlide].title}
               </h1>
             </motion.div>
@@ -108,16 +107,16 @@ export const Hero = () => {
         </motion.div>
       </AnimatePresence>
 
-      {/* Slide Controls — WCAG 2.1.1 Keyboard, 2.5.8 Target Size, 4.1.2 Name/Role/Value */}
+      {/* Slide Controls */}
       <div style={{
         display: 'flex',
         gap: '12px',
         position: 'absolute',
-        bottom: '40px',
+        bottom: window.innerWidth < 768 ? '24px' : '40px',
         zIndex: 10,
         alignItems: 'center'
       }}>
-        {/* WCAG 2.2.2 Pause/Stop/Hide — pause button */}
+        {/* Pause/Stop/Hide — pause button */}
         <button
           className="carousel-pause-btn"
           onClick={() => setIsPaused(!isPaused)}
@@ -135,7 +134,6 @@ export const Hero = () => {
               aria-label={`Go to slide ${i + 1}: ${slide.title}`}
               onClick={() => goToSlide(i)}
               style={{
-                /* WCAG 2.5.8 — minimum 24×24px target */
                 width: '24px',
                 height: '24px',
                 borderRadius: '12px',

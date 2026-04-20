@@ -42,17 +42,16 @@ export const StatsStrip = () => {
       aria-label="Key statistics"
       style={{
         backgroundColor: 'var(--primary)',
-        padding: '48px 0',
+        padding: window.innerWidth < 1024 ? '40px 0' : '48px 0',
         color: 'white',
         zIndex: 5
       }}
     >
       <div className="container" style={{
-        display: 'flex',
-        justifyContent: 'space-between',
+        display: 'grid',
+        gridTemplateColumns: window.innerWidth < 768 ? 'repeat(2, 1fr)' : (window.innerWidth < 1024 ? 'repeat(3, 1fr)' : `repeat(${SITE_CONTENT.statsStrip.length}, 1fr)`),
         alignItems: 'center',
-        flexWrap: 'wrap',
-        gap: '16px'
+        gap: window.innerWidth < 768 ? '32px 16px' : '16px'
       }}>
         {SITE_CONTENT.statsStrip.map((stat, i) => (
           <React.Fragment key={i}>
@@ -60,15 +59,32 @@ export const StatsStrip = () => {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.1 }}
-              style={{ textAlign: 'center', flex: 1, minWidth: '120px' }}
+              style={{ textAlign: 'center' }}
             >
-              <div className="text-4xl" style={{ fontSize: '42px', fontWeight: 800, marginBottom: '8px' }}>
+              <div style={{ 
+                fontSize: window.innerWidth < 768 ? '32px' : '42px', 
+                fontWeight: 800, 
+                marginBottom: '8px' 
+              }}>
                 <CountUp value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
               </div>
-              <div className="text-xs" style={{ opacity: 0.85, fontWeight: 600, letterSpacing: '0.5px' }}>{stat.label}</div>
+              <div style={{ 
+                fontSize: '10px', 
+                opacity: 0.85, 
+                fontWeight: 600, 
+                letterSpacing: '0.5px',
+                textTransform: 'uppercase'
+              }}>{stat.label}</div>
             </motion.div>
-            {i < SITE_CONTENT.statsStrip.length - 1 && (
-              <div style={{ width: '1px', height: '80px', backgroundColor: 'rgba(255,255,255,0.1)' }} aria-hidden="true" />
+            {(window.innerWidth >= 1024 && i < SITE_CONTENT.statsStrip.length - 1) && (
+              <div style={{ 
+                position: 'absolute',
+                left: `${((i + 1) / SITE_CONTENT.statsStrip.length) * 100}%`,
+                width: '1px', 
+                height: '60px', 
+                backgroundColor: 'rgba(255,255,255,0.1)',
+                transform: 'translateX(-50%)' 
+              }} aria-hidden="true" />
             )}
           </React.Fragment>
         ))}

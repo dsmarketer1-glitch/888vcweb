@@ -77,12 +77,12 @@ export const Testimonials = () => {
     <section ref={ref} aria-label="Founder testimonials" style={{ backgroundColor: 'var(--primary)', color: 'white', overflow: 'hidden' }}>
       <motion.div className="container" style={{ y }}>
         <div className="text-sm" style={{ color: 'var(--bg-soft)', marginBottom: '12px', letterSpacing: '1px' }}>{tag}</div>
-        <h2 className="text-4xl" style={{ marginBottom: '16px' }}>{title}</h2>
-        <p className="text-lg" style={{ opacity: 0.85, marginBottom: '60px', maxWidth: '750px', lineHeight: '1.6' }}>{description}</p>
+        <h2 className="text-4xl" style={{ marginBottom: '16px', fontSize: window.innerWidth < 768 ? '28px' : '40px' }}>{title}</h2>
+        <p className="text-lg" style={{ opacity: 0.85, marginBottom: window.innerWidth < 768 ? '32px' : '60px', maxWidth: '750px', lineHeight: '1.6', fontSize: window.innerWidth < 768 ? '16px' : '18px' }}>{description}</p>
 
         <div style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+          gridTemplateColumns: window.innerWidth < 1024 ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))',
           gap: '24px'
         }}>
           {items.map((item, i) => (
