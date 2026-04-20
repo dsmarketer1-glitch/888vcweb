@@ -9,16 +9,17 @@ export const Hero = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const prefersReducedMotion = useReducedMotion();
-  const isMobile = useIsMobile(768);
 
   const { scrollY } = useScroll();
   const y1 = useTransform(scrollY, [0, 500], [0, prefersReducedMotion ? 0 : 200]);
+  const isSmallMobile = useIsMobile(768);
 
   const goToSlide = useCallback((index) => {
     setCurrentSlide(index);
   }, []);
 
   useEffect(() => {
+    // WCAG 2.2.1 — respect pause and reduced motion
     if (isPaused || prefersReducedMotion) return;
 
     const timer = setInterval(() => {
@@ -34,7 +35,7 @@ export const Hero = () => {
       aria-label="Featured highlights"
       style={{
         padding: 0,
-        height: isMobile ? '480px' : '700px',
+        height: isSmallMobile ? '500px' : '700px',
         backgroundColor: 'var(--primary)',
         position: 'relative',
         display: 'flex',
@@ -43,8 +44,7 @@ export const Hero = () => {
         alignItems: 'center',
         textAlign: 'center',
         color: 'white',
-        overflow: 'hidden',
-        width: '100%'
+        overflow: 'hidden'
       }}
     >
       <AnimatePresence mode="wait">
@@ -54,9 +54,6 @@ export const Hero = () => {
           animate={{ opacity: 1 }}
           exit={prefersReducedMotion ? {} : { opacity: 0 }}
           transition={{ duration: prefersReducedMotion ? 0 : 1 }}
-          style={{ position: 'absolute', inset: 0, width: '100%' }}
-          role="group"
-          aria-roledescription="slide"
           aria-label={`Slide ${currentSlide + 1} of ${slides.length}`}
         >
           {/* Parallax Background */}
@@ -67,49 +64,42 @@ export const Hero = () => {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             opacity: 0.4,
-            y: y1,
-            width: '100%'
+            y: y1
           }} aria-hidden="true" />
 
           <div style={{
             position: 'absolute',
             inset: 0,
             background: 'rgba(29, 47, 111, 0.45)',
-            zIndex: 1,
-            width: '100%'
+            zIndex: 1
           }} aria-hidden="true" />
 
-          <div className="container" style={{
+          <div style={{
             position: 'relative',
             zIndex: 2,
             height: '100%',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
-            alignItems: 'center'
+            alignItems: 'center',
+            padding: '0 20px'
           }}>
             <motion.div
               initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: prefersReducedMotion ? 0 : 0.5, duration: prefersReducedMotion ? 0 : 0.8 }}
-              style={{ width: '100%', maxWidth: '100%' }}
             >
               <div style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.12)',
                 borderRadius: '15px',
                 padding: '6px 20px',
                 display: 'inline-block',
-                marginBottom: isMobile ? '16px' : '24px'
+                marginBottom: '24px'
               }}>
                 <span className="text-xs" style={{ letterSpacing: '1px' }}>{slides[currentSlide].eyebrow}</span>
               </div>
 
-              <h1 className="text-hero" style={{ 
-                maxWidth: '100%', 
-                margin: '0 auto 32px',
-                wordWrap: 'break-word',
-                overflowWrap: 'break-word'
-              }}>
+              <h1 className="text-hero" style={{ maxWidth: '900px', margin: '0 auto 32px', fontSize: isSmallMobile ? '38px' : 'var(--font-size-hero)' }}>
                 {slides[currentSlide].title}
               </h1>
             </motion.div>
@@ -117,15 +107,16 @@ export const Hero = () => {
         </motion.div>
       </AnimatePresence>
 
-      {/* Slide Controls */}
+      {/* Slide Controls — WCAG 2.1.1 Keyboard, 2.5.8 Target Size, 4.1.2 Name/Role/Value */}
       <div style={{
         display: 'flex',
         gap: '12px',
         position: 'absolute',
-        bottom: isMobile ? '24px' : '40px',
+        bottom: '40px',
         zIndex: 10,
         alignItems: 'center'
       }}>
+        {/* WCAG 2.2.2 Pause/Stop/Hide — pause button */}
         <button
           className="carousel-pause-btn"
           onClick={() => setIsPaused(!isPaused)}
@@ -143,6 +134,7 @@ export const Hero = () => {
               aria-label={`Go to slide ${i + 1}: ${slide.title}`}
               onClick={() => goToSlide(i)}
               style={{
+                /* WCAG 2.5.8 — minimum 24×24px target */
                 width: '24px',
                 height: '24px',
                 borderRadius: '12px',

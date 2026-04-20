@@ -3,6 +3,7 @@ import { SITE_CONTENT } from '../data/site-content';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import useReducedMotion from '../hooks/useReducedMotion';
+import useIsMobile from '../hooks/useIsMobile';
 
 export const Portfolio = () => {
   const { tag, title, items } = SITE_CONTENT.portfolio;
@@ -13,26 +14,28 @@ export const Portfolio = () => {
     offset: ["start end", "end start"]
   });
 
+  const isMobile = useIsMobile(1024);
+  const isSmallMobile = useIsMobile(768);
   const y = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [30, -30]);
 
   return (
     <section ref={ref} aria-label="Portfolio companies">
       <motion.div className="container" style={{ y }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: '40px' }}>
+        <div className="responsive-stack" style={{ display: 'flex', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'flex-end', marginBottom: '40px', gap: isMobile ? '16px' : '0' }}>
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
             <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>{tag}</div>
-            <h2 className="text-4xl text-navy" style={{ maxWidth: '900px' }}>{title}</h2>
+            <h2 className="text-4xl text-navy" style={{ maxWidth: '900px', fontSize: isSmallMobile ? '32px' : 'var(--font-size-2xl)' }}>{title}</h2>
           </motion.div>
-          <Link to="/portfolio" aria-label="View all portfolio companies" className="text-navy font-bold text-lg" style={{ marginBottom: '10px' }}>View All →</Link>
+          <Link to="/portfolio" aria-label="View all portfolio companies" className="text-navy font-bold text-lg" style={{ marginBottom: isMobile ? '0' : '10px' }}>View All →</Link>
         </div>
 
-        <div style={{
+        <div className="mobile-grid-1" style={{
           display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))',
+          gridTemplateColumns: isSmallMobile ? '1fr' : 'repeat(auto-fit, minmax(240px, 1fr))',
           gap: '20px'
         }}>
           {items.map((item, i) => (
@@ -76,6 +79,7 @@ export const Team = () => {
   const { tag, title, founder, members } = SITE_CONTENT.team;
   const ref = useRef(null);
   const prefersReducedMotion = useReducedMotion();
+  const isSmallMobile = useIsMobile(768);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
@@ -87,7 +91,7 @@ export const Team = () => {
     <section ref={ref} aria-label="Team members" style={{ backgroundColor: 'var(--bg-soft)' }}>
       <motion.div className="container" style={{ y }}>
         <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>{tag}</div>
-        <h2 className="text-4xl text-navy" style={{ marginBottom: '60px' }}>{title}</h2>
+        <h2 className="text-4xl text-navy" style={{ marginBottom: '60px', fontSize: isSmallMobile ? '32px' : 'var(--font-size-2xl)' }}>{title}</h2>
 
         {/* Founder Card */}
         <motion.div
@@ -107,26 +111,27 @@ export const Team = () => {
         >
           <div
             role="img"
+            className="mobile-grid-1"
             aria-label={`Photo of ${founder.name}, ${founder.role}`}
             style={{
-              width: window.innerWidth < 768 ? '100%' : '260px',
+              width: isSmallMobile ? '100%' : '260px',
               minHeight: '250px',
               backgroundImage: `url("${founder.image}")`,
               backgroundSize: 'cover',
               backgroundPosition: 'top center'
             }}
           />
-          <div style={{ padding: window.innerWidth < 768 ? '24px' : '40px', flex: 1, minWidth: '280px' }}>
-            <h3 className="text-2xl text-navy" style={{ fontSize: window.innerWidth < 768 ? '24px' : '28px' }}>{founder.name}</h3>
+          <div style={{ padding: '40px', flex: 1, minWidth: '280px' }}>
+            <h3 className="text-2xl text-navy" style={{ fontSize: '28px' }}>{founder.name}</h3>
             <div className="text-orange text-sm" style={{ margin: '12px 0 20px', letterSpacing: '1px' }}>{founder.role}</div>
-            <p className="text-lg text-muted" style={{ lineHeight: '1.7', fontSize: window.innerWidth < 768 ? '16px' : '17px' }}>{founder.bio}</p>
+            <p className="text-lg text-muted" style={{ lineHeight: '1.7', fontSize: '17px' }}>{founder.bio}</p>
           </div>
         </motion.div>
 
         {/* Team Members Grid */}
-        <div style={{
+        <div className="mobile-grid-1" style={{
           display: 'grid',
-          gridTemplateColumns: window.innerWidth < 480 ? '1fr' : (window.innerWidth < 768 ? 'repeat(2, 1fr)' : 'repeat(auto-fit, minmax(180px, 1fr))'),
+          gridTemplateColumns: isSmallMobile ? '1fr' : 'repeat(auto-fit, minmax(180px, 1fr))',
           gap: '20px'
         }}>
           {members.map((member, i) => (
