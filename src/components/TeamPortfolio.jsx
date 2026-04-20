@@ -61,13 +61,6 @@ export const Portfolio = () => {
                 }}
               />
               <div style={{ padding: '20px', backgroundColor: 'white', marginTop: '-12px', borderRadius: '14px 14px 0 0', position: 'relative' }}>
-                <div style={{
-                  width: '60px',
-                  height: '24px',
-                  backgroundColor: '#f0f2f8',
-                  borderRadius: '4px',
-                  marginBottom: '12px'
-                }} aria-hidden="true" />
                 <h3 className="text-base text-navy font-bold" style={{ fontWeight: 700 }}>{item.name}</h3>
                 <p className="text-xs text-muted" style={{ marginTop: '4px', fontWeight: 500 }}>{item.category}</p>
               </div>
