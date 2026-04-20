@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { SITE_CONTENT } from '../data/site-content';
 import { PartnersMarquee } from '../components/AdditionalSections';
 import usePageTitle from '../hooks/usePageTitle';
@@ -105,8 +106,12 @@ const AboutPage = () => {
                 888vc is an early-stage venture capital firm backing founders building category-defining, technology-led businesses. A peer network of leaders across the globe.
               </p>
               <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-                <button className="primary-btn">View Portfolio →</button>
-                <button className="secondary-btn" style={{ borderColor: 'rgba(29,47,111,0.15)', color: 'var(--primary)', fontWeight: 700 }}>Join our Community</button>
+                <Link to="/portfolio" style={{ textDecoration: 'none' }}>
+                  <button className="primary-btn">View Portfolio →</button>
+                </Link>
+                <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                  <button className="secondary-btn" style={{ borderColor: 'rgba(29,47,111,0.15)', color: 'var(--primary)', fontWeight: 700 }}>Join our Community</button>
+                </a>
               </div>
             </motion.div>
 
@@ -424,14 +429,18 @@ const AboutPage = () => {
             Whether you're building something extraordinary or looking for your next investment — the 888vc community is where ambition meets capital.
           </p>
           <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <button className="primary-btn" style={{ padding: '16px 40px', fontSize: '16px' }}>Apply as Startup →</button>
-            <button className="secondary-btn" style={{
-              borderColor: 'rgba(255,255,255,0.3)',
-              color: 'white',
-              padding: '16px 40px',
-              fontSize: '16px',
-              backgroundColor: 'rgba(255,255,255,0.05)'
-            }}>Join as Investor</button>
+            <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+              <button className="primary-btn" style={{ padding: '16px 40px', fontSize: '16px' }}>Apply as Startup →</button>
+            </a>
+            <a href="https://forms.gle/RNPwKDHfkdeaffvo7" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+              <button className="secondary-btn" style={{
+                borderColor: 'rgba(255,255,255,0.3)',
+                color: 'white',
+                padding: '16px 40px',
+                fontSize: '16px',
+                backgroundColor: 'rgba(255,255,255,0.05)'
+              }}>Join as Investor</button>
+            </a>
           </div>
         </div>
 

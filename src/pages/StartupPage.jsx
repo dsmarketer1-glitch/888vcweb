@@ -182,8 +182,9 @@ const StartupPage = () => {
               The 888vc × GRO8 AI-Enabled 12-Week Venture Accelerator — integrating capital, mentorship, and global networks to take your startup from product to scale.
             </p>
             <div style={{ display: 'flex', gap: 16, marginBottom: 24, flexWrap: 'wrap' }}>
-              <button className="primary-btn" style={{ padding: '12px 28px', fontSize: 15 }}>Apply Now →</button>
-              <button style={{ backgroundColor: '#eef1f9', color: 'var(--primary)', padding: '12px 28px', borderRadius: 8, fontWeight: 600, fontSize: 14, border: 'none', cursor: 'pointer', minHeight: '44px' }}>View the Program</button>
+              <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                <button className="primary-btn" style={{ padding: '12px 28px', fontSize: 15 }}>Apply Now →</button>
+              </a>
             </div>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
               {['12 Weeks', 'India × US × UAE', 'AI-Enabled', 'Demo Day: 200+ Investors'].map((b, i) => (
@@ -337,7 +338,9 @@ const StartupPage = () => {
               ))}
             </div>
 
-            <button className="primary-btn" style={{ padding: '10px 28px', fontSize: 14 }}>Apply for Next Cohort →</button>
+            <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+              <button className="primary-btn" style={{ padding: '10px 28px', fontSize: 14 }}>Apply for Next Cohort →</button>
+            </a>
           </div>
 
           <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: isSmallMobile ? '1fr' : (isMobile ? 'repeat(2, 1fr)' : '264px 1fr'), gap: 16, height: isMobile ? 'auto' : 492 }}>

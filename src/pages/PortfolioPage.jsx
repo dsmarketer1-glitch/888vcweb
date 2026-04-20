@@ -39,19 +39,19 @@ const CountUp = ({ value, prefix = '', suffix = '' }) => {
 
 // Figma Design Assets
 const portfolioData = [
-  { name: "Babai Tiffins", category: "FoodTech", stage: "Seed", coInvested: "Partner Funds & Others", image: "/assets/webimages/Portfolio/Thumbnail/Babai%20Tiffins.png", logo: "/assets/webimages/Portfolio/Logo/Babai%20Tiffins.png" },
-  { name: "Multipl", category: "Fintech", stage: "Series A", coInvested: "Blume, Flourish", image: "/assets/webimages/Portfolio/Thumbnail/Multipl.png", logo: "/assets/webimages/Portfolio/Logo/Multipl.png", badge: "Series A" },
-  { name: "DaanVeda", category: "Social Impact", stage: "Seed", coInvested: "100Unicorns", image: "/assets/webimages/Portfolio/Thumbnail/DaanVeda.png", logo: "/assets/webimages/Portfolio/Logo/DaanVeda.png" },
-  { name: "UKHI", category: "CleanTech", stage: "Seed", coInvested: "Impact Funds", image: "/assets/webimages/Portfolio/Thumbnail/UKHI.png", logo: "/assets/webimages/Portfolio/Logo/UKHI.png" },
-  { name: "GetCrest.ai", category: "AI", stage: "Pre-Series A", coInvested: "IPV", image: "/assets/webimages/Portfolio/Thumbnail/GetCrest%20ai.png", logo: "/assets/webimages/Portfolio/Logo/GetCrest.png" },
-  { name: "HomeCapital", category: "Proptech", stage: "Seed", coInvested: "AngelList", image: "/assets/webimages/Portfolio/Thumbnail/HomeCapital.png", logo: "/assets/webimages/Portfolio/Logo/HomeCapital.png" },
-  { name: "Pick My Work", category: "Gig Economy", stage: "Seed", coInvested: "Venture Catalysts", image: "/assets/webimages/Portfolio/Thumbnail/Pick%20My%20Work.png", logo: "/assets/webimages/Portfolio/Logo/Pick%20My%20Work.png" },
-  { name: "EcoRatings", category: "ESG / AI", stage: "Seed", coInvested: "Sovereign Funds", image: "/assets/webimages/Portfolio/Thumbnail/EcoRatings.png", logo: "/assets/webimages/Portfolio/Logo/EcoRatings.png" },
-  { name: "Datazip", category: "Data / AI", stage: "Seed", coInvested: "Better Capital", image: "/assets/webimages/Portfolio/Thumbnail/Datazip.png", logo: "/assets/webimages/Portfolio/Logo/Datazip.png" },
-  { name: "G.O.A.T Brand Labs", category: "D2C", stage: "Soonicorn", coInvested: "Tiger Global, Mayfield", image: "/assets/webimages/Portfolio/Thumbnail/G.O.A.T%20Brand%20Labs.png", logo: "/assets/webimages/Portfolio/Logo/G.O.A.T%20Brand%20Labs.png", badge: "Soonicorn" },
-  { name: "Sanfe", category: "FemTech", stage: "Series A", coInvested: "LetsVenture", image: "/assets/webimages/Portfolio/Thumbnail/Sanfe.png", logo: "/assets/webimages/Portfolio/Logo/Sanfe.png" },
-  { name: "IGoWise", category: "EV / Mobility", stage: "Seed", coInvested: "Cross-Border India–US", image: "/assets/webimages/Portfolio/Thumbnail/IGoWise.png", logo: "/assets/webimages/Portfolio/Logo/IGoWise.png" },
-  { name: "Rooter", category: "Gaming", stage: "Series A", coInvested: "Partner Funds & Others", image: "/assets/webimages/Portfolio/Thumbnail/Rooter.png", logo: "/assets/webimages/Portfolio/Logo/Rooter.png", badge: "Series A" },
+  { name: "Babai Tiffins", url: "https://www.babaitiffins.com/", category: "FoodTech", stage: "Seed", coInvested: "Partner Funds & Others", image: "/assets/webimages/Portfolio/Thumbnail/Babai%20Tiffins.png", logo: "/assets/webimages/Portfolio/Logo/Babai%20Tiffins.png" },
+  { name: "Multipl", url: "https://multipl.in/", category: "Fintech", stage: "Series A", coInvested: "Blume, Flourish", image: "/assets/webimages/Portfolio/Thumbnail/Multipl.png", logo: "/assets/webimages/Portfolio/Logo/Multipl.png", badge: "Series A" },
+  { name: "DaanVeda", url: "https://daanveda.com/", category: "Social Impact", stage: "Seed", coInvested: "100Unicorns", image: "/assets/webimages/Portfolio/Thumbnail/DaanVeda.png", logo: "/assets/webimages/Portfolio/Logo/DaanVeda.png" },
+  { name: "UKHI", url: "https://ukhi.com", category: "CleanTech", stage: "Seed", coInvested: "Impact Funds", image: "/assets/webimages/Portfolio/Thumbnail/UKHI.png", logo: "/assets/webimages/Portfolio/Logo/UKHI.png" },
+  { name: "GetCrest.ai", url: "https://getcrest.ai", category: "AI", stage: "Pre-Series A", coInvested: "IPV", image: "/assets/webimages/Portfolio/Thumbnail/GetCrest%20ai.png", logo: "/assets/webimages/Portfolio/Logo/GetCrest.png" },
+  { name: "HomeCapital", url: "https://homecapital.in", category: "Proptech", stage: "Seed", coInvested: "AngelList", image: "/assets/webimages/Portfolio/Thumbnail/HomeCapital.png", logo: "/assets/webimages/Portfolio/Logo/HomeCapital.png" },
+  { name: "Pick My Work", url: "https://pickmywork.com", category: "Gig Economy", stage: "Seed", coInvested: "Venture Catalysts", image: "/assets/webimages/Portfolio/Thumbnail/Pick%20My%20Work.png", logo: "/assets/webimages/Portfolio/Logo/Pick%20My%20Work.png" },
+  { name: "EcoRatings", url: "https://www.ecoratings.ai/", category: "ESG / AI", stage: "Seed", coInvested: "Sovereign Funds", image: "/assets/webimages/Portfolio/Thumbnail/EcoRatings.png", logo: "/assets/webimages/Portfolio/Logo/EcoRatings.png" },
+  { name: "Datazip", url: "https://datazip.io", category: "Data / AI", stage: "Seed", coInvested: "Better Capital", image: "/assets/webimages/Portfolio/Thumbnail/Datazip.png", logo: "/assets/webimages/Portfolio/Logo/Datazip.png" },
+  { name: "G.O.A.T Brand Labs", url: "https://goatbrandlabs.com", category: "D2C", stage: "Soonicorn", coInvested: "Tiger Global, Mayfield", image: "/assets/webimages/Portfolio/Thumbnail/G.O.A.T%20Brand%20Labs.png", logo: "/assets/webimages/Portfolio/Logo/G.O.A.T%20Brand%20Labs.png", badge: "Soonicorn" },
+  { name: "Sanfe", url: "https://sanfe.in", category: "FemTech", stage: "Series A", coInvested: "LetsVenture", image: "/assets/webimages/Portfolio/Thumbnail/Sanfe.png", logo: "/assets/webimages/Portfolio/Logo/Sanfe.png" },
+  { name: "IGoWise", url: "https://igowise.com/", category: "EV / Mobility", stage: "Seed", coInvested: "Cross-Border India–US", image: "/assets/webimages/Portfolio/Thumbnail/IGoWise.png", logo: "/assets/webimages/Portfolio/Logo/IGoWise.png" },
+  { name: "Rooter", url: "https://www.rooter.gg/", category: "Gaming", stage: "Series A", coInvested: "Partner Funds & Others", image: "/assets/webimages/Portfolio/Thumbnail/Rooter.png", logo: "/assets/webimages/Portfolio/Logo/Rooter.png", badge: "Series A" },
 ];
 
 const categories = ["All", "Deep Tech", "AI", "D2C", "Fintech", "Proptech", "CleanTech", "FoodTech", "EV / Mobility"];
@@ -86,7 +86,9 @@ const PortfolioPage = () => {
               <p className="text-lg text-muted" style={{ maxWidth: '560px', marginBottom: '40px' }}>
                 From seed to Series A and beyond — 50+ companies, $1Bn+ in combined valuation, backed by 888vc and the world's best co-investors.
               </p>
-              <button className="primary-btn" style={{ padding: '16px 32px' }}>Explore Portfolio →</button>
+              <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                <button className="primary-btn" style={{ padding: '16px 32px' }}>Join Our Community →</button>
+              </a>
             </div>
             <div className="mobile-grid-2" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: isSmallMobile ? '16px' : '20px' }}>
               {[
@@ -188,7 +190,7 @@ const PortfolioPage = () => {
                   <h3 className="text-xl text-navy" style={{ marginBottom: '16px', fontWeight: 700 }}>{item.name}</h3>
                   <div style={{ height: '1px', backgroundColor: 'var(--border-muted)', marginBottom: '16px' }} aria-hidden="true" />
                   <div className="text-xs text-muted" style={{ marginBottom: '20px' }}>Co-invested: {item.coInvested}</div>
-                  <a href="#" aria-label={`Visit ${item.name} website`} className="text-orange font-bold text-sm">Visit →</a>
+                  <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${item.name} website`} className="text-orange font-bold text-sm">Visit →</a>
                 </div>
               </motion.article>
             ))}
@@ -236,7 +238,9 @@ const PortfolioPage = () => {
           <p className="text-lg text-white" style={{ opacity: 0.85, marginBottom: '40px' }}>
             50+ startup investments · $100Mn+ syndicated · Cross-border India–US community
           </p>
-          <button className="primary-btn" style={{ padding: '16px 40px', fontSize: '16px' }}>Join Us →</button>
+          <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+            <button className="primary-btn" style={{ padding: '16px 40px', fontSize: '16px' }}>Join Us →</button>
+          </a>
         </div>
         <div style={{ position: 'absolute', top: '-50%', right: '-10%', width: '500px', height: '500px', borderRadius: '50%', background: 'radial-gradient(circle, var(--secondary) 0%, transparent 70%)', opacity: 0.1 }} aria-hidden="true" />
       </section>
