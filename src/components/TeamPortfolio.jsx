@@ -146,7 +146,7 @@ export const Team = () => {
               <img
                 src={member.image}
                 alt={`Photo of ${member.name}, ${member.role}`}
-                style={{ width: '100%', height: '180px', objectFit: 'cover', display: 'block' }}
+                style={{ width: '100%', height: '180px', objectFit: 'cover', objectPosition: 'top', display: 'block' }}
               />
               <div style={{ padding: '20px' }}>
                 <h3 className="text-lg text-navy font-bold">{member.name}</h3>
