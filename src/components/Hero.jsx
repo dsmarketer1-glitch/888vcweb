@@ -99,7 +99,7 @@ export const Hero = () => {
                 <span className="text-xs" style={{ letterSpacing: '1px' }}>{slides[currentSlide].eyebrow}</span>
               </div>
 
-              <h1 className="text-hero" style={{ maxWidth: '900px', margin: '0 auto 32px', fontSize: isSmallMobile ? '38px' : 'var(--font-size-hero)' }}>
+              <h1 className="text-hero" style={{ maxWidth: '900px', margin: '0 auto 32px', fontSize: isSmallMobile ? '38px' : undefined }}>
                 {slides[currentSlide].title}
               </h1>
             </motion.div>

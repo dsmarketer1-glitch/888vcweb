@@ -20,7 +20,7 @@ export const Gro8Platform = () => {
     <section ref={ref} aria-label="GRO8 Platform features">
       <motion.div className="container" style={{ y }}>
         <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>{tag}</div>
-        <h2 className="text-4xl text-navy" style={{ maxWidth: '720px', marginBottom: '60px', fontSize: isSmallMobile ? '32px' : '38px' }}>{title}</h2>
+        <h2 className="text-4xl text-navy" style={{ maxWidth: '720px', marginBottom: '60px', fontSize: isSmallMobile ? '32px' : undefined }}>{title}</h2>
 
         <div className="mobile-grid-1" style={{
           display: 'grid',
@@ -80,7 +80,7 @@ export const Testimonials = () => {
     <section ref={ref} aria-label="Founder testimonials" style={{ backgroundColor: 'var(--primary)', color: 'white', overflow: 'hidden' }}>
       <motion.div className="container" style={{ y }}>
         <div className="text-sm" style={{ color: 'var(--bg-soft)', marginBottom: '12px', letterSpacing: '1px' }}>{tag}</div>
-        <h2 className="text-4xl" style={{ marginBottom: '16px', fontSize: isSmallMobile ? '32px' : '38px' }}>{title}</h2>
+        <h2 className="text-4xl" style={{ marginBottom: '16px', fontSize: isSmallMobile ? '32px' : undefined }}>{title}</h2>
         <p className="text-lg" style={{ opacity: 0.85, marginBottom: '60px', maxWidth: '750px', lineHeight: '1.6', fontSize: isSmallMobile ? '16px' : '18px' }}>{description}</p>
 
         <div className="mobile-grid-1" style={{

@@ -28,7 +28,7 @@ export const SuperAngels = () => {
     <section ref={ref} aria-label="Super Angels and CXOs">
       <motion.div className="container" style={{ y }}>
         <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>OUR NETWORK</div>
-        <h2 className="text-4xl text-navy" style={{ marginBottom: '60px', fontSize: isSmallMobile ? '32px' : '38px' }}>Super Angels & CXOs Investing With Us</h2>
+        <h2 className="text-4xl text-navy" style={{ marginBottom: '60px', fontSize: isSmallMobile ? '32px' : undefined }}>Super Angels & CXOs Investing With Us</h2>
 
         <div className="mobile-grid-1" style={{
           display: 'grid',
@@ -104,7 +104,7 @@ export const PartnersMarquee = () => {
     <section aria-label="Partners" style={{ backgroundColor: 'white', padding: '80px 0' }}>
       <div className="container" style={{ marginBottom: '50px' }}>
         <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>PARTNERS</div>
-        <h2 className="text-3xl text-navy" style={{ fontSize: isSmallMobile ? '28px' : '36px' }}>An Active Ecosystem of Partners</h2>
+        <h2 className="text-3xl text-navy" style={{ fontSize: isSmallMobile ? '28px' : undefined }}>An Active Ecosystem of Partners</h2>
       </div>
       <div
         style={{
@@ -204,7 +204,7 @@ export const News = () => {
     <section ref={ref} aria-label="News and updates" style={{ backgroundColor: 'var(--bg-soft)' }}>
       <motion.div className="container" style={{ y }}>
         <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>{tag}</div>
-        <h2 className="text-4xl text-navy" style={{ marginBottom: '60px', fontSize: isSmallMobile ? '32px' : 'var(--font-size-2xl)' }}>{title}</h2>
+        <h2 className="text-4xl text-navy" style={{ marginBottom: '60px', fontSize: isSmallMobile ? '32px' : undefined }}>{title}</h2>
 
         <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
           {/* Featured News */}

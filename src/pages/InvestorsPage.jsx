@@ -127,10 +127,14 @@ const InvestorsPage = () => {
             </p>
 
             <div style={{ display: 'flex', gap: 16, marginBottom: 32, flexWrap: 'wrap' }}>
-              <button className="primary-btn" style={{ padding: '12px 28px', fontSize: 15 }}>Join as Investor →</button>
-              <button style={{ backgroundColor: '#eef1f9', color: 'var(--primary)', padding: '12px 28px', borderRadius: 8, fontWeight: 600, fontSize: 14, border: 'none', cursor: 'pointer', minHeight: '44px' }}>
-                Explore GRO8 Club
-              </button>
+              <a href="https://forms.gle/RNPwKDHfkdeaffvo7" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                <button className="primary-btn" style={{ padding: '12px 28px', fontSize: 15 }}>Join as Investor →</button>
+              </a>
+              <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                <button style={{ backgroundColor: '#eef1f9', color: 'var(--primary)', padding: '12px 28px', borderRadius: 8, fontWeight: 600, fontSize: 14, border: 'none', cursor: 'pointer', minHeight: '44px' }}>
+                  Explore GRO8 Club
+                </button>
+              </a>
             </div>
 
             {/* Trust Badges */}
@@ -450,20 +454,24 @@ const InvestorsPage = () => {
               Connect with enthusiastic innovators who are ambitious to break conformity and redesign the rules of the new world using tech. Join our investor network today.
             </p>
             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-              <button className="primary-btn" style={{ padding: '12px 28px', fontSize: 15 }}>Join as Investor →</button>
-              <button style={{
-                backgroundColor: '#eef1f9',
-                border: '1px solid rgba(29,47,111,0.15)',
-                color: 'var(--primary)',
-                padding: '12px 28px',
-                borderRadius: 8,
-                fontWeight: 600,
-                fontSize: 14,
-                cursor: 'pointer',
-                minHeight: '44px',
-              }}>
-                Explore GRO8 Club
-              </button>
+              <a href="https://forms.gle/RNPwKDHfkdeaffvo7" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                <button className="primary-btn" style={{ padding: '12px 28px', fontSize: 15 }}>Join as Investor →</button>
+              </a>
+              <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
+                <button style={{
+                  backgroundColor: '#eef1f9',
+                  border: '1px solid rgba(29,47,111,0.15)',
+                  color: 'var(--primary)',
+                  padding: '12px 28px',
+                  borderRadius: 8,
+                  fontWeight: 600,
+                  fontSize: 14,
+                  cursor: 'pointer',
+                  minHeight: '44px',
+                }}>
+                  Explore GRO8 Club
+                </button>
+              </a>
             </div>
           </div>
 

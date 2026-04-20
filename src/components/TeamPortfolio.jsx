@@ -28,7 +28,7 @@ export const Portfolio = () => {
             transition={{ duration: 0.8 }}
           >
             <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>{tag}</div>
-            <h2 className="text-4xl text-navy" style={{ maxWidth: '900px', fontSize: isSmallMobile ? '32px' : 'var(--font-size-2xl)' }}>{title}</h2>
+            <h2 className="text-4xl text-navy" style={{ maxWidth: '900px', fontSize: isSmallMobile ? '32px' : undefined }}>{title}</h2>
           </motion.div>
           <Link to="/portfolio" aria-label="View all portfolio companies" className="text-navy font-bold text-lg" style={{ marginBottom: isMobile ? '0' : '10px' }}>View All →</Link>
         </div>
@@ -91,7 +91,7 @@ export const Team = () => {
     <section ref={ref} aria-label="Team members" style={{ backgroundColor: 'var(--bg-soft)' }}>
       <motion.div className="container" style={{ y }}>
         <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>{tag}</div>
-        <h2 className="text-4xl text-navy" style={{ marginBottom: '60px', fontSize: isSmallMobile ? '32px' : 'var(--font-size-2xl)' }}>{title}</h2>
+        <h2 className="text-4xl text-navy" style={{ marginBottom: '60px', fontSize: isSmallMobile ? '32px' : undefined }}>{title}</h2>
 
         {/* Founder Card */}
         <motion.div

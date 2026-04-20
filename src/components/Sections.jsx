@@ -83,7 +83,6 @@ export const ValueProps = () => {
   const { tag, title, description, cards } = SITE_CONTENT.valueProps;
   const ref = useRef(null);
   const prefersReducedMotion = useReducedMotion();
-  const isMobile = useIsMobile(1024);
   const isSmallMobile = useIsMobile(768);
   
   const { scrollYProgress } = useScroll({
@@ -102,7 +101,7 @@ export const ValueProps = () => {
           transition={{ duration: 0.8 }}
         >
           <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>{tag}</div>
-          <h2 className="text-4xl text-navy" style={{ maxWidth: '650px', marginBottom: '24px', fontSize: isSmallMobile ? '32px' : '38px' }}>{title}</h2>
+          <h2 className="text-4xl text-navy" style={{ maxWidth: '650px', marginBottom: '24px', fontSize: isSmallMobile ? '32px' : undefined }}>{title}</h2>
           <p className="text-lg text-muted" style={{ maxWidth: '680px', marginBottom: '60px', fontSize: isSmallMobile ? '16px' : '18px' }}>{description}</p>
         </motion.div>
 
