@@ -1,19 +1,19 @@
 import React, { useRef } from 'react';
 import { SITE_CONTENT } from '../data/site-content';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import useReducedMotion from '../hooks/useReducedMotion';
+import { useAccessibility } from '../context/AccessibilityContext';
 import useIsMobile from '../hooks/useIsMobile';
 
 export const Gro8Platform = () => {
   const { tag, title, features } = SITE_CONTENT.gro8;
   const ref = useRef(null);
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [30, -30]);
+  const y = useTransform(scrollYProgress, [0, 1], !motionEnabled ? [0, 0] : [30, -30]);
   const isSmallMobile = useIsMobile(768);
 
   return (
@@ -30,10 +30,10 @@ export const Gro8Platform = () => {
           {features.map((feature, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={!motionEnabled ? {} : { opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={prefersReducedMotion ? {} : { y: -5, boxShadow: '0 10px 30px rgba(29, 47, 111, 0.05)' }}
+              transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
+              whileHover={!motionEnabled ? {} : { y: -5, boxShadow: '0 10px 30px rgba(29, 47, 111, 0.05)' }}
               style={{
                 backgroundColor: 'var(--bg-soft)',
                 borderRadius: '18px',
@@ -67,13 +67,13 @@ export const Gro8Platform = () => {
 export const Testimonials = () => {
   const { tag, title, description, items } = SITE_CONTENT.testimonials;
   const ref = useRef(null);
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [40, -40]);
+  const y = useTransform(scrollYProgress, [0, 1], !motionEnabled ? [0, 0] : [40, -40]);
   const isSmallMobile = useIsMobile(768);
 
   return (
@@ -91,10 +91,10 @@ export const Testimonials = () => {
           {items.map((item, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
+              initial={!motionEnabled ? {} : { opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={prefersReducedMotion ? {} : { y: -8, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
+              transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
+              whileHover={!motionEnabled ? {} : { y: -8, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.07)',
                 borderRadius: '24px',

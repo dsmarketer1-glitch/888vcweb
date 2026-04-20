@@ -1,18 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
+import { useAccessibility } from '../context/AccessibilityContext';
 import usePageTitle from '../hooks/usePageTitle';
-import useReducedMotion from '../hooks/useReducedMotion';
+import useIsMobile from '../hooks/useIsMobile';
 
-// CountUp Component for stats — with reduced motion support
+// CountUp Component for stats — with accessibility support
 const CountUp = ({ value, prefix = '', suffix = '' }) => {
   const [displayValue, setDisplayValue] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
 
   useEffect(() => {
     if (isInView) {
-      if (prefersReducedMotion) {
+      if (!motionEnabled) {
         setDisplayValue(parseInt(value));
         return;
       }
@@ -32,7 +33,7 @@ const CountUp = ({ value, prefix = '', suffix = '' }) => {
       }, 16);
       return () => clearInterval(timer);
     }
-  }, [isInView, value, prefersReducedMotion]);
+  }, [isInView, value, motionEnabled]);
 
   return <span ref={ref}>{prefix}{displayValue}{suffix}</span>;
 };
@@ -57,11 +58,9 @@ const portfolioData = [
 const categories = ["All", "Deep Tech", "AI", "D2C", "Fintech", "Proptech", "CleanTech", "FoodTech", "EV / Mobility"];
 
 
-import useIsMobile from '../hooks/useIsMobile';
-
 const PortfolioPage = () => {
   usePageTitle('Portfolio — 888VC');
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
   const isMobile = useIsMobile(1024);
   const isSmallMobile = useIsMobile(768);
 
@@ -70,7 +69,7 @@ const PortfolioPage = () => {
 
   const pageRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: pageRef, offset: ["start start", "end end"] });
-  const heroY = useTransform(scrollYProgress, [0, 0.2], prefersReducedMotion ? [0, 0] : [0, 100]);
+  const heroY = useTransform(scrollYProgress, [0, 0.2], !motionEnabled ? [0, 0] : [0, 100]);
 
   return (
     <main id="main-content" role="main" ref={pageRef}>
@@ -86,8 +85,8 @@ const PortfolioPage = () => {
               <p className="text-lg text-muted" style={{ maxWidth: '560px', marginBottom: '40px' }}>
                 From seed to Series A and beyond — 50+ companies, $1Bn+ in combined valuation, backed by 888vc and the world's best co-investors.
               </p>
-              <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-                <button className="primary-btn" style={{ padding: '16px 32px' }}>Join Our Community →</button>
+              <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" className="primary-btn" style={{ textDecoration: 'none', display: 'inline-block' }}>
+                Join Our Community →
               </a>
             </div>
             <div className="mobile-grid-2" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: isSmallMobile ? '16px' : '20px' }}>
@@ -99,7 +98,7 @@ const PortfolioPage = () => {
               ].map((stat, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={!motionEnabled ? {} : { opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   style={{ backgroundColor: 'white', padding: '32px 24px', borderRadius: '20px', boxShadow: '0 4px 20px rgba(0,0,0,0.03)' }}
                 >
@@ -158,10 +157,10 @@ const PortfolioPage = () => {
             {filteredData.map((item, i) => (
               <motion.article
                 key={item.name}
-                initial={{ opacity: 0, scale: 0.95 }}
+                initial={!motionEnabled ? {} : { opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4 }}
-                whileHover={prefersReducedMotion ? {} : { y: -10 }}
+                whileHover={!motionEnabled ? {} : { y: -10 }}
                 style={{
                   backgroundColor: 'white',
                   borderRadius: '24px',
@@ -206,7 +205,7 @@ const PortfolioPage = () => {
           <h2 className="text-3xl text-navy" style={{ marginBottom: '60px' }}>Portfolio milestones that matter.</h2>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
-            <motion.article whileHover={prefersReducedMotion ? {} : { y: -5 }} style={{ backgroundColor: 'var(--primary)', color: 'white', padding: '40px', borderRadius: '24px' }}>
+            <motion.article whileHover={!motionEnabled ? {} : { y: -5 }} style={{ backgroundColor: 'var(--primary)', color: 'white', padding: '40px', borderRadius: '24px' }}>
               <div style={{ fontSize: '11px', fontWeight: 700, opacity: 0.7, marginBottom: '24px' }}>ACQUISITION</div>
               <h3 style={{ fontSize: '24px', fontWeight: 800, marginBottom: '8px' }}>Finly</h3>
               <div style={{ fontSize: '36px', fontWeight: 800, marginBottom: '24px' }}>Acquired</div>
@@ -216,7 +215,7 @@ const PortfolioPage = () => {
               <div style={{ fontSize: '12px', opacity: 0.5 }}>B2B SaaS · Exit via Acquisition</div>
             </motion.article>
 
-            <motion.article whileHover={prefersReducedMotion ? {} : { y: -5 }} style={{ backgroundColor: 'white', padding: '40px', borderRadius: '24px', border: '1px solid var(--border-muted)' }}>
+            <motion.article whileHover={!motionEnabled ? {} : { y: -5 }} style={{ backgroundColor: 'white', padding: '40px', borderRadius: '24px', border: '1px solid var(--border-muted)' }}>
               <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--secondary)', marginBottom: '24px' }}>SERIES A</div>
               <h3 className="text-navy" style={{ fontSize: '24px', fontWeight: 800, marginBottom: '8px' }}>Rooter</h3>
               <div className="text-navy" style={{ fontSize: '32px', fontWeight: 800, marginBottom: '24px' }}>Series A ✓</div>
@@ -238,8 +237,8 @@ const PortfolioPage = () => {
           <p className="text-lg text-white" style={{ opacity: 0.85, marginBottom: '40px' }}>
             50+ startup investments · $100Mn+ syndicated · Cross-border India–US community
           </p>
-          <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-            <button className="primary-btn" style={{ padding: '16px 40px', fontSize: '16px' }}>Join Us →</button>
+          <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" className="primary-btn" style={{ textDecoration: 'none', display: 'inline-block', padding: '16px 40px', fontSize: '16px' }}>
+            Join Us →
           </a>
         </div>
         <div style={{ position: 'absolute', top: '-50%', right: '-10%', width: '500px', height: '500px', borderRadius: '50%', background: 'radial-gradient(circle, var(--secondary) 0%, transparent 70%)', opacity: 0.1 }} aria-hidden="true" />

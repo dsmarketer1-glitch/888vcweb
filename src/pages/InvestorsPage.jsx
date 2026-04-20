@@ -2,19 +2,20 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Globe, Users, Target, FileText, UserPlus, Building, Briefcase, Award, TrendingUp, DollarSign, Handshake } from 'lucide-react';
+import { useAccessibility } from '../context/AccessibilityContext';
 import usePageTitle from '../hooks/usePageTitle';
-import useReducedMotion from '../hooks/useReducedMotion';
+import useIsMobile from '../hooks/useIsMobile';
 
-/* ─── CountUp — with reduced motion support ─── */
+/* ─── CountUp — with accessibility support ─── */
 const CountUp = ({ value, prefix = '', suffix = '' }) => {
   const [display, setDisplay] = useState(0);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0.5 });
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
 
   useEffect(() => {
     if (!inView) return;
-    if (prefersReducedMotion) {
+    if (!motionEnabled) {
       setDisplay(parseInt(value));
       return;
     }
@@ -27,13 +28,12 @@ const CountUp = ({ value, prefix = '', suffix = '' }) => {
       else setDisplay(Math.floor(cur));
     }, 16);
     return () => clearInterval(id);
-  }, [inView, value, prefersReducedMotion]);
+  }, [inView, value, motionEnabled]);
 
   return <span ref={ref}>{prefix}{display}{suffix}</span>;
 };
 
 /* ─── Figma Assets ─── */
-// Deco rings have been replaced with CSS
 const imgAngel1 = '/assets/webimages/Investors/SUPER%20ANGELS/Akash%20Gupta.png';
 const imgAngel2 = '/assets/webimages/Investors/SUPER%20ANGELS/Gaurav%20Mangla.png';
 const imgAngel3 = '/assets/webimages/Investors/SUPER%20ANGELS/Dinesh%20Kumar.png';
@@ -89,11 +89,9 @@ const sectorColors = ['#eb3a1b', '#1d2f6f', '#2aa86b', '#e67e22', '#9b59b6', '#3
 
 /* ═══════════════════════════════ COMPONENT ═══════════════════════════════ */
 
-import useIsMobile from '../hooks/useIsMobile';
-
 const InvestorsPage = () => {
   usePageTitle('For Investors — 888VC');
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
   const isMobile = useIsMobile(1024);
   const isSmallMobile = useIsMobile(768);
   const pageRef = useRef(null);
@@ -103,7 +101,6 @@ const InvestorsPage = () => {
 
       {/* ──────────────── 1 · HERO BANNER ──────────────── */}
       <section aria-label="Investor overview" style={{ backgroundColor: '#f0f4fb', padding: '100px 0 80px', position: 'relative', overflow: 'hidden' }}>
-        {/* Deco Rings — decorative */}
         <div aria-hidden="true" style={{ position: 'absolute', width: 520, height: 520, right: -40, top: -130, opacity: 0.05, border: '2px solid var(--primary)', borderRadius: '50%', pointerEvents: 'none' }} />
         <div aria-hidden="true" style={{ position: 'absolute', width: 380, height: 380, right: 30, top: -60, opacity: 0.05, border: '2px solid var(--primary)', borderRadius: '50%', pointerEvents: 'none' }} />
         <div aria-hidden="true" style={{ position: 'absolute', width: 220, height: 220, right: 110, top: 20, opacity: 0.1, border: '2px solid var(--secondary)', borderRadius: '50%', pointerEvents: 'none' }} />
@@ -111,12 +108,11 @@ const InvestorsPage = () => {
 
         <div className="container hero-grid" style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 480px', gap: isMobile ? '40px' : '60px', alignItems: 'start' }}>
           {/* Left */}
-          <motion.div initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+          <motion.div initial={!motionEnabled ? {} : { opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <div style={{ backgroundColor: 'rgba(235,58,27,0.1)', display: 'inline-block', padding: '6px 20px', borderRadius: 15, marginBottom: 24 }}>
               <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--primary)' }}>INVEST IN INDIA'S NEXT WAVE</span>
             </div>
 
-            {/* WCAG fix: merged duplicate H1 into single H1 with spans */}
             <h1 style={{ fontSize: isSmallMobile ? '38px' : (isMobile ? '48px' : 68), fontWeight: 800, lineHeight: 1.1, marginBottom: 24 }}>
               <span style={{ color: 'var(--primary)', display: 'block' }}>Back the builders</span>
               <span style={{ color: 'var(--secondary)' }}>defining tomorrow.</span>
@@ -127,13 +123,11 @@ const InvestorsPage = () => {
             </p>
 
             <div style={{ display: 'flex', gap: 16, marginBottom: 32, flexWrap: 'wrap' }}>
-              <a href="https://forms.gle/RNPwKDHfkdeaffvo7" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-                <button className="primary-btn" style={{ padding: '12px 28px', fontSize: 15 }}>Join as Investor →</button>
+              <a href="https://forms.gle/RNPwKDHfkdeaffvo7" target="_blank" rel="noopener noreferrer" className="primary-btn" style={{ textDecoration: 'none', display: 'inline-block' }}>
+                Join as Investor →
               </a>
-              <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-                <button style={{ backgroundColor: '#eef1f9', color: 'var(--primary)', padding: '12px 28px', borderRadius: 8, fontWeight: 600, fontSize: 14, border: 'none', cursor: 'pointer', minHeight: '44px' }}>
-                  Explore GRO8 Club
-                </button>
+              <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', borderRadius: '12px', padding: '14px 28px', backgroundColor: '#eef1f9', color: 'var(--primary)', fontWeight: 600, fontSize: 14, display: 'inline-block' }}>
+                Explore GRO8 Club
               </a>
             </div>
 
@@ -160,7 +154,7 @@ const InvestorsPage = () => {
             ].map((s, i) => (
               <motion.div
                 key={i}
-                initial={prefersReducedMotion ? {} : { opacity: 0, x: 40 }}
+                initial={!motionEnabled ? {} : { opacity: 0, x: 40 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 + i * 0.1 }}
                 style={{
@@ -217,7 +211,7 @@ const InvestorsPage = () => {
             {whyCards.map((c, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={!motionEnabled ? {} : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.08 }}
                 style={{
@@ -260,7 +254,7 @@ const InvestorsPage = () => {
               {steps.map((s, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 20 }}
+                  initial={!motionEnabled ? {} : { opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
                 >
@@ -299,10 +293,10 @@ const InvestorsPage = () => {
             {investorTypes.map((t, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={!motionEnabled ? {} : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
-                whileHover={prefersReducedMotion ? {} : { y: -8 }}
+                whileHover={!motionEnabled ? {} : { y: -8 }}
                 style={{
                   backgroundColor: 'rgba(255,255,255,0.07)',
                   border: '1px solid rgba(255,255,255,0.12)',
@@ -364,10 +358,8 @@ const InvestorsPage = () => {
             <p style={{ fontSize: 15, fontWeight: 600, color: 'white', opacity: 0.85, maxWidth: 880 }}>
               We're sector-agnostic but technology-obsessed. If you're using tech to create a defensible moat, we want to hear from you.
             </p>
-            <Link to="/portfolio" aria-label="View all portfolio companies">
-              <button className="primary-btn" style={{ padding: '10px 24px', fontSize: 14, whiteSpace: 'nowrap' }}>
-                View All Portfolio →
-              </button>
+            <Link to="/portfolio" className="primary-btn" aria-label="View all portfolio companies" style={{ textDecoration: 'none', display: 'inline-block', padding: '10px 24px', fontSize: 14 }}>
+              View All Portfolio →
             </Link>
           </div>
         </div>
@@ -385,7 +377,7 @@ const InvestorsPage = () => {
             {testimonials.map((t, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={!motionEnabled ? {} : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.1 }}
                 style={{
@@ -421,7 +413,7 @@ const InvestorsPage = () => {
             {angels.map((a, i) => (
               <motion.div
                 key={i}
-                whileHover={prefersReducedMotion ? {} : { y: -8 }}
+                whileHover={!motionEnabled ? {} : { y: -8 }}
                 style={{
                   backgroundColor: 'white',
                   border: '1px solid rgba(29,47,111,0.1)',
@@ -454,23 +446,11 @@ const InvestorsPage = () => {
               Connect with enthusiastic innovators who are ambitious to break conformity and redesign the rules of the new world using tech. Join our investor network today.
             </p>
             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-              <a href="https://forms.gle/RNPwKDHfkdeaffvo7" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-                <button className="primary-btn" style={{ padding: '12px 28px', fontSize: 15 }}>Join as Investor →</button>
+              <a href="https://forms.gle/RNPwKDHfkdeaffvo7" target="_blank" rel="noopener noreferrer" className="primary-btn" style={{ textDecoration: 'none', display: 'inline-block' }}>
+                Join as Investor →
               </a>
-              <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-                <button style={{
-                  backgroundColor: '#eef1f9',
-                  border: '1px solid rgba(29,47,111,0.15)',
-                  color: 'var(--primary)',
-                  padding: '12px 28px',
-                  borderRadius: 8,
-                  fontWeight: 600,
-                  fontSize: 14,
-                  cursor: 'pointer',
-                  minHeight: '44px',
-                }}>
-                  Explore GRO8 Club
-                </button>
+              <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'inline-block', backgroundColor: '#eef1f9', border: '1px solid rgba(29,47,111,0.15)', color: 'var(--primary)', padding: '12px 28px', borderRadius: 8, fontWeight: 600, fontSize: 14 }}>
+                Explore GRO8 Club
               </a>
             </div>
           </div>

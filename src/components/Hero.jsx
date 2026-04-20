@@ -1,17 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { SITE_CONTENT } from '../data/site-content';
 import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
-import useReducedMotion from '../hooks/useReducedMotion';
+import { useAccessibility } from '../context/AccessibilityContext';
 import useIsMobile from '../hooks/useIsMobile';
 
 export const Hero = () => {
   const { slides } = SITE_CONTENT.hero;
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
 
   const { scrollY } = useScroll();
-  const y1 = useTransform(scrollY, [0, 500], [0, prefersReducedMotion ? 0 : 200]);
+  const y1 = useTransform(scrollY, [0, 500], [0, !motionEnabled ? 0 : 200]);
   const isSmallMobile = useIsMobile(768);
 
   const goToSlide = useCallback((index) => {
@@ -20,13 +20,13 @@ export const Hero = () => {
 
   useEffect(() => {
     // WCAG 2.2.1 — respect pause and reduced motion
-    if (isPaused || prefersReducedMotion) return;
+    if (isPaused || !motionEnabled) return;
 
     const timer = setInterval(() => {
       setCurrentSlide((prev) => (prev + 1) % slides.length);
     }, 5000);
     return () => clearInterval(timer);
-  }, [slides.length, isPaused, prefersReducedMotion]);
+  }, [slides.length, isPaused, motionEnabled]);
 
   return (
     <section
@@ -50,11 +50,12 @@ export const Hero = () => {
       <AnimatePresence mode="wait">
         <motion.div
           key={currentSlide}
-          initial={prefersReducedMotion ? {} : { opacity: 0 }}
+          initial={!motionEnabled ? {} : { opacity: 0 }}
           animate={{ opacity: 1 }}
-          exit={prefersReducedMotion ? {} : { opacity: 0 }}
-          transition={{ duration: prefersReducedMotion ? 0 : 1 }}
+          exit={!motionEnabled ? {} : { opacity: 0 }}
+          transition={{ duration: !motionEnabled ? 0 : 1 }}
           aria-label={`Slide ${currentSlide + 1} of ${slides.length}`}
+          style={{ width: '100%', height: '100%' }}
         >
           {/* Parallax Background */}
           <motion.div style={{
@@ -85,9 +86,9 @@ export const Hero = () => {
             padding: '0 20px'
           }}>
             <motion.div
-              initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }}
+              initial={!motionEnabled ? {} : { opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: prefersReducedMotion ? 0 : 0.5, duration: prefersReducedMotion ? 0 : 0.8 }}
+              transition={{ delay: !motionEnabled ? 0 : 0.5, duration: !motionEnabled ? 0 : 0.8 }}
             >
               <div style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.12)',
@@ -162,7 +163,7 @@ export const Hero = () => {
         <motion.div
           key={currentSlide}
           initial={{ width: 0 }}
-          animate={(isPaused || prefersReducedMotion) ? {} : { width: '100%' }}
+          animate={(isPaused || !motionEnabled) ? {} : { width: '100%' }}
           transition={{ duration: 5, ease: "linear" }}
           style={{
             height: '100%',

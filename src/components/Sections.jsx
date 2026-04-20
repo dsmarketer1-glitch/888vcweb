@@ -2,18 +2,18 @@ import React, { useEffect, useState, useRef } from 'react';
 import { SITE_CONTENT } from '../data/site-content';
 import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import useReducedMotion from '../hooks/useReducedMotion';
+import { useAccessibility } from '../context/AccessibilityContext';
 import useIsMobile from '../hooks/useIsMobile';
 
 const CountUp = ({ value, prefix = '', suffix = '' }) => {
   const [displayValue, setDisplayValue] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
 
   useEffect(() => {
     if (isInView) {
-      if (prefersReducedMotion) {
+      if (!motionEnabled) {
         setDisplayValue(value);
         return;
       }
@@ -32,13 +32,15 @@ const CountUp = ({ value, prefix = '', suffix = '' }) => {
       }, 16);
       return () => clearInterval(timer);
     }
-  }, [isInView, value, prefersReducedMotion]);
+  }, [isInView, value, motionEnabled]);
 
   return <span ref={ref}>{prefix}{displayValue}{suffix}</span>;
 };
 
 export const StatsStrip = () => {
   const isSmallMobile = useIsMobile(768);
+  const { motionEnabled } = useAccessibility();
+  
   return (
     <section
       aria-label="Key statistics"
@@ -59,9 +61,9 @@ export const StatsStrip = () => {
         {SITE_CONTENT.statsStrip.map((stat, i) => (
           <React.Fragment key={i}>
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
+              initial={!motionEnabled ? {} : { opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
+              transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
               style={{ textAlign: 'center', flex: 1, minWidth: '120px' }}
             >
               <div className="text-4xl" style={{ fontSize: isSmallMobile ? '32px' : '42px', fontWeight: 800, marginBottom: '8px' }}>
@@ -82,7 +84,7 @@ export const StatsStrip = () => {
 export const ValueProps = () => {
   const { tag, title, description, cards } = SITE_CONTENT.valueProps;
   const ref = useRef(null);
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
   const isSmallMobile = useIsMobile(768);
   
   const { scrollYProgress } = useScroll({
@@ -90,13 +92,13 @@ export const ValueProps = () => {
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [50, -50]);
+  const y = useTransform(scrollYProgress, [0, 1], !motionEnabled ? [0, 0] : [50, -50]);
 
   return (
     <section ref={ref} aria-label="Value propositions" style={{ backgroundColor: 'var(--bg-soft)', overflow: 'hidden' }}>
       <motion.div className="container" style={{ y }}>
         <motion.div
-          initial={{ opacity: 0, x: -30 }}
+          initial={!motionEnabled ? {} : { opacity: 0, x: -30 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8 }}
         >
@@ -113,10 +115,10 @@ export const ValueProps = () => {
           {cards.map((card, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 50 }}
+              initial={!motionEnabled ? {} : { opacity: 0, y: 50 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.2, duration: 0.6 }}
-              whileHover={prefersReducedMotion ? {} : { y: -10, scale: 1.02 }}
+              transition={{ delay: !motionEnabled ? 0 : i * 0.2, duration: 0.6 }}
+              whileHover={!motionEnabled ? {} : { y: -10, scale: 1.02 }}
               style={{
                 backgroundColor: 'white',
                 borderRadius: '20px',

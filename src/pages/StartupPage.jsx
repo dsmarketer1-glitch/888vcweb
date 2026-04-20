@@ -2,19 +2,20 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Cpu, Bot, ShoppingBag, HeartPulse, Recycle, Factory, Wallet, Cloud } from 'lucide-react';
+import { useAccessibility } from '../context/AccessibilityContext';
 import usePageTitle from '../hooks/usePageTitle';
-import useReducedMotion from '../hooks/useReducedMotion';
+import useIsMobile from '../hooks/useIsMobile';
 
-/* ─── CountUp — with reduced motion support ─── */
+/* ─── CountUp — with accessibility support ─── */
 const CountUp = ({ value, prefix = '', suffix = '', isText = false }) => {
   const [display, setDisplay] = useState(0);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0.5 });
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
 
   useEffect(() => {
     if (!inView || isText) return;
-    if (prefersReducedMotion) {
+    if (!motionEnabled) {
       setDisplay(parseInt(value));
       return;
     }
@@ -27,7 +28,7 @@ const CountUp = ({ value, prefix = '', suffix = '', isText = false }) => {
       else setDisplay(Math.floor(cur));
     }, 16);
     return () => clearInterval(id);
-  }, [inView, value, isText, prefersReducedMotion]);
+  }, [inView, value, isText, motionEnabled]);
 
   if (isText) return <span ref={ref}>{prefix}{value}{suffix}</span>;
   return <span ref={ref}>{prefix}{display}{suffix}</span>;
@@ -41,8 +42,6 @@ const imgGroupPhoto = '/assets/webimages/Startup/WHAT%20YOU%20GET/888vc%20Event.
 const imgRohitHeadshot = '/assets/webimages/Startup/WHO%20SHOULD%20JOIN/Rohit%20Bafna.jpg';
 const imgDemoDay = '/assets/webimages/Startup/WHO%20SHOULD%20JOIN/888vc1.jpg';
 const imgNetworking = '/assets/webimages/Startup/WHO%20SHOULD%20JOIN/888vc2.jpg';
-
-// Industry icons loaded via lucide-react
 
 // Portfolio thumbs
 const imgPF0 = '/assets/webimages/Startup/PORTFOLIO/Rooter.png';
@@ -70,9 +69,6 @@ const imgAngel0 = '/assets/webimages/Startup/SUPER%20ANGELS/Akash%20Gupta.png';
 const imgAngel1 = '/assets/webimages/Startup/SUPER%20ANGELS/Gaurav%20Mangla.png';
 const imgAngel2 = '/assets/webimages/Startup/SUPER%20ANGELS/Dinesh%20Kumar.png';
 const imgAngel3 = '/assets/webimages/Startup/SUPER%20ANGELS/Sripad%20Vaidya.png';
-
-// Deco rings
-// Replaced with CSS equivalents
 
 /* ─── Data ─── */
 const statsStrip = [
@@ -146,12 +142,9 @@ const angels = [
   { name: 'Sripad Vaidya', role1: 'COO, Ixigo Trains', role2: '& Confirmtkt', img: imgAngel3 },
 ];
 
-/* ─── COMPONENT ─── */
-import useIsMobile from '../hooks/useIsMobile';
-
 const StartupPage = () => {
   usePageTitle('For Startups — 888VC');
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
   const isMobile = useIsMobile(1024);
   const isSmallMobile = useIsMobile(768);
 
@@ -168,22 +161,20 @@ const StartupPage = () => {
 
         <div className="container hero-grid" style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 572px', gap: isMobile ? '40px' : 40, alignItems: 'start' }}>
           {/* Left */}
-          <motion.div initial={prefersReducedMotion ? {} : { opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
+          <motion.div initial={!motionEnabled ? {} : { opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
             <div style={{ backgroundColor: 'rgba(235,58,27,0.1)', display: 'inline-block', padding: '6px 20px', borderRadius: 15, marginBottom: 24 }}>
               <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--secondary)' }}>888VC × GRO8 AI-ENABLED ACCELERATOR</span>
             </div>
-            {/* WCAG fix: merged duplicate H1 into single H1 with span for color */}
             <h1 style={{ fontSize: isSmallMobile ? '38px' : (isMobile ? '48px' : 68), fontWeight: 800, lineHeight: 1.1, marginBottom: 24 }}>
               <span style={{ color: 'var(--primary)', display: 'block' }}>Built for Founders</span>
               <span style={{ color: 'var(--secondary)' }}>Who Build Beyond.</span>
             </h1>
-            {/* WCAG fix: #6878a8 → var(--text-secondary) */}
             <p style={{ fontSize: 17, color: 'var(--text-secondary)', lineHeight: 1.6, maxWidth: 580, marginBottom: 32 }}>
               The 888vc × GRO8 AI-Enabled 12-Week Venture Accelerator — integrating capital, mentorship, and global networks to take your startup from product to scale.
             </p>
             <div style={{ display: 'flex', gap: 16, marginBottom: 24, flexWrap: 'wrap' }}>
-              <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-                <button className="primary-btn" style={{ padding: '12px 28px', fontSize: 15 }}>Apply Now →</button>
+              <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" className="primary-btn" style={{ textDecoration: 'none', display: 'inline-block' }}>
+                Apply Now →
               </a>
             </div>
             <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
@@ -195,9 +186,9 @@ const StartupPage = () => {
 
           {/* Right — Cards */}
           <motion.div
-            initial={prefersReducedMotion ? {} : { opacity: 0, x: 30 }}
+            initial={!motionEnabled ? {} : { opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.7, delay: 0.2 }}
+            transition={{ duration: 0.7, delay: !motionEnabled ? 0 : 0.2 }}
             className="mobile-grid-1"
             style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(auto-fit, minmax(280px, 1fr))' : '1fr', gap: 14 }}
           >
@@ -255,7 +246,7 @@ const StartupPage = () => {
             </p>
             <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: isSmallMobile ? '1fr' : '1fr 1fr', gap: 16 }}>
               {whatYouGet.map((w, i) => (
-                <motion.div key={i} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
+                <motion.div key={i} initial={!motionEnabled ? {} : { opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: !motionEnabled ? 0 : i * 0.08 }}
                   style={{ backgroundColor: '#f5f7fc', border: '1px solid rgba(29,47,111,0.1)', borderRadius: 16, padding: '14px 19px 16px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 10 }}>
                     <div style={{ width: 40, height: 40, borderRadius: 10, backgroundColor: 'var(--primary)', flexShrink: 0 }} aria-hidden="true" />
@@ -295,7 +286,7 @@ const StartupPage = () => {
             {!isMobile && <div style={{ position: 'absolute', top: 46, left: 86, right: 86, height: 2, backgroundColor: '#eb3a1b', opacity: 0.35 }} aria-hidden="true" />}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 22 }}>
               {phases.map((p, i) => (
-                <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
+                <motion.div key={i} initial={!motionEnabled ? {} : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
                   style={{ backgroundColor: 'white', border: '1px solid rgba(29,47,111,0.1)', borderRadius: 18, padding: 15, position: 'relative', zIndex: 2 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
                     <div style={{ width: 60, height: 60, borderRadius: '50%', backgroundColor: p.color, display: 'flex', alignItems: 'center', justifyContent: 'center' }} aria-hidden="true">
@@ -305,7 +296,7 @@ const StartupPage = () => {
                   <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 4 }}>Weeks {p.weeks}</div>
                   <h3 style={{ fontSize: 15, fontWeight: 700, color: 'var(--primary)', marginBottom: 6, margin: 0 }}>{p.title}</h3>
                   <p style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: 10 }}>{p.desc}</p>
-                  <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-secondary)' }}>{p.sub}</div>
+                  <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-secondary)' }}>{w.sub}</div>
                 </motion.div>
               ))}
             </div>
@@ -327,7 +318,7 @@ const StartupPage = () => {
 
             <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: isSmallMobile ? '1fr' : '1fr 1fr', gap: 16, marginBottom: 20 }}>
               {criteria.map((c, i) => (
-                <motion.div key={i} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.08 }}
+                <motion.div key={i} initial={!motionEnabled ? {} : { opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: !motionEnabled ? 0 : i * 0.08 }}
                   style={{ backgroundColor: '#f5f7fc', border: '1px solid rgba(29,47,111,0.1)', borderRadius: 14, padding: '15px' }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
                     <div style={{ width: 28, height: 28, borderRadius: 9, backgroundColor: 'rgba(235,58,27,0.12)', flexShrink: 0 }} aria-hidden="true" />
@@ -338,8 +329,8 @@ const StartupPage = () => {
               ))}
             </div>
 
-            <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-              <button className="primary-btn" style={{ padding: '10px 28px', fontSize: 14 }}>Apply for Next Cohort →</button>
+            <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" className="primary-btn" style={{ textDecoration: 'none', display: 'inline-block', padding: '10px 28px', fontSize: 14 }}>
+              Apply for Next Cohort →
             </a>
           </div>
 
@@ -372,7 +363,7 @@ const StartupPage = () => {
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 22 }}>
             {industries.map((ind, i) => (
-              <motion.div key={i} whileHover={prefersReducedMotion ? {} : { y: -6 }}
+              <motion.div key={i} whileHover={!motionEnabled ? {} : { y: -6 }}
                 style={{ backgroundColor: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 16, padding: '19px', display: 'flex', alignItems: 'flex-start', gap: 14 }}>
                 <div style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: 'rgba(255,255,255,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }} aria-hidden="true">
                   <ind.icon color="white" size={24} />
@@ -400,7 +391,7 @@ const StartupPage = () => {
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 16, marginBottom: 16 }}>
             {portfolio.map((p, i) => (
-              <motion.div key={i} whileHover={prefersReducedMotion ? {} : { y: -6 }}
+              <motion.div key={i} whileHover={!motionEnabled ? {} : { y: -6 }}
                 style={{ backgroundColor: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 14, overflow: 'hidden' }}>
                 <div style={{ height: 140, overflow: 'hidden' }}>
                   <img src={p.img} alt={`${p.name} — ${p.cat}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -423,7 +414,7 @@ const StartupPage = () => {
                 <div style={{ fontSize: 11, color: 'white', opacity: 0.65, marginTop: 2 }}>Gig Economy</div>
               </div>
             </div>
-            <Link to="/portfolio" aria-label="View full portfolio of 50+ companies" style={{ display: 'block' }}>
+            <Link to="/portfolio" aria-label="View full portfolio of 50+ companies" style={{ display: 'block', textDecoration: 'none' }}>
               <div style={{ backgroundColor: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 14, overflow: 'hidden', height: '100%' }}>
                 <div style={{ height: 140, overflow: 'hidden' }}>
                   <img src={imgPF5} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
@@ -448,7 +439,7 @@ const StartupPage = () => {
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 22 }}>
             {testimonials.map((t, i) => (
-              <motion.div key={i} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.1 }}
+              <motion.div key={i} initial={!motionEnabled ? {} : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
                 style={{ backgroundColor: 'white', border: '1px solid rgba(29,47,111,0.1)', borderRadius: 18, padding: 19 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
                   <img src={t.avatar} alt={`Photo of ${t.author}`} style={{ width: 44, height: 44, borderRadius: '50%', objectFit: 'cover' }} />
@@ -481,7 +472,7 @@ const StartupPage = () => {
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: 22 }}>
             {venturePartners.map((vp, i) => (
-              <motion.div key={i} whileHover={prefersReducedMotion ? {} : { y: -6 }}
+              <motion.div key={i} whileHover={!motionEnabled ? {} : { y: -6 }}
                 style={{ backgroundColor: '#f5f7fc', border: '1px solid rgba(29,47,111,0.1)', borderRadius: 18, overflow: 'hidden' }}>
                 <div style={{ height: 184, overflow: 'hidden' }}>
                   <img src={vp.img} alt={`Photo of ${vp.name}, ${vp.role}`} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
@@ -507,7 +498,7 @@ const StartupPage = () => {
           </p>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: 22 }}>
             {angels.map((a, i) => (
-              <motion.div key={i} whileHover={prefersReducedMotion ? {} : { y: -6 }}
+              <motion.div key={i} whileHover={!motionEnabled ? {} : { y: -6 }}
                 style={{ backgroundColor: 'white', border: '1px solid rgba(29,47,111,0.1)', borderRadius: 16, padding: '13px 16px 18px', textAlign: 'center' }}>
                 <div style={{ width: 72, height: 72, borderRadius: '50%', overflow: 'hidden', margin: '0 auto 10px' }}>
                   <img src={a.img} alt={`Photo of ${a.name}, ${a.role1} ${a.role2}`} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />

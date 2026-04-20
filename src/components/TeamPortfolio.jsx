@@ -2,13 +2,13 @@ import React, { useRef } from 'react';
 import { SITE_CONTENT } from '../data/site-content';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import useReducedMotion from '../hooks/useReducedMotion';
+import { useAccessibility } from '../context/AccessibilityContext';
 import useIsMobile from '../hooks/useIsMobile';
 
 export const Portfolio = () => {
   const { tag, title, items } = SITE_CONTENT.portfolio;
   const ref = useRef(null);
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
@@ -16,14 +16,14 @@ export const Portfolio = () => {
 
   const isMobile = useIsMobile(1024);
   const isSmallMobile = useIsMobile(768);
-  const y = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [30, -30]);
+  const y = useTransform(scrollYProgress, [0, 1], !motionEnabled ? [0, 0] : [30, -30]);
 
   return (
     <section ref={ref} aria-label="Portfolio companies">
       <motion.div className="container" style={{ y }}>
         <div className="responsive-stack" style={{ display: 'flex', justifyContent: 'space-between', alignItems: isMobile ? 'flex-start' : 'flex-end', marginBottom: '40px', gap: isMobile ? '16px' : '0' }}>
           <motion.div
-            initial={{ opacity: 0, x: -20 }}
+            initial={!motionEnabled ? {} : { opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
@@ -41,10 +41,10 @@ export const Portfolio = () => {
           {items.map((item, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, scale: 0.95 }}
+              initial={!motionEnabled ? {} : { opacity: 0, scale: 0.95 }}
               whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={prefersReducedMotion ? {} : { scale: 1.02 }}
+              transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
+              whileHover={!motionEnabled ? {} : { scale: 1.02 }}
               style={{
                 backgroundColor: 'var(--bg-soft)',
                 borderRadius: '14px',
@@ -78,14 +78,14 @@ export const Portfolio = () => {
 export const Team = () => {
   const { tag, title, founder, members } = SITE_CONTENT.team;
   const ref = useRef(null);
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
   const isSmallMobile = useIsMobile(768);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [40, -40]);
+  const y = useTransform(scrollYProgress, [0, 1], !motionEnabled ? [0, 0] : [40, -40]);
 
   return (
     <section ref={ref} aria-label="Team members" style={{ backgroundColor: 'var(--bg-soft)' }}>
@@ -95,10 +95,10 @@ export const Team = () => {
 
         {/* Founder Card */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={!motionEnabled ? {} : { opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          whileHover={prefersReducedMotion ? {} : { y: -5, boxShadow: '0 20px 40px rgba(29, 47, 111, 0.1)' }}
+          whileHover={!motionEnabled ? {} : { y: -5, boxShadow: '0 20px 40px rgba(29, 47, 111, 0.1)' }}
           style={{
             backgroundColor: 'white',
             borderRadius: '24px',
@@ -137,10 +137,10 @@ export const Team = () => {
           {members.map((member, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 30 }}
+              initial={!motionEnabled ? {} : { opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={prefersReducedMotion ? {} : { y: -8 }}
+              transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
+              whileHover={!motionEnabled ? {} : { y: -8 }}
               style={{
                 backgroundColor: 'white',
                 borderRadius: '20px',

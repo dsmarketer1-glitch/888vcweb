@@ -3,19 +3,20 @@ import { motion, useScroll, useTransform, useInView } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { SITE_CONTENT } from '../data/site-content';
 import { PartnersMarquee } from '../components/AdditionalSections';
+import { useAccessibility } from '../context/AccessibilityContext';
 import usePageTitle from '../hooks/usePageTitle';
-import useReducedMotion from '../hooks/useReducedMotion';
+import useIsMobile from '../hooks/useIsMobile';
 
-// CountUp Component — with reduced motion support
+// CountUp Component — with accessibility context support
 const CountUp = ({ value, prefix = '', suffix = '' }) => {
   const [displayValue, setDisplayValue] = useState(0);
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, amount: 0.5 });
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
 
   useEffect(() => {
     if (isInView) {
-      if (prefersReducedMotion) {
+      if (!motionEnabled) {
         setDisplayValue(parseInt(value));
         return;
       }
@@ -35,14 +36,12 @@ const CountUp = ({ value, prefix = '', suffix = '' }) => {
       }, 16);
       return () => clearInterval(timer);
     }
-  }, [isInView, value, prefersReducedMotion]);
+  }, [isInView, value, motionEnabled]);
 
   return <span ref={ref}>{prefix}{displayValue}{suffix}</span>;
 };
 
 // Figma Design Assets
-// Local Assets
-// Fixed broken path
 const imgImageArea = "/assets/webimages/About%20Us/Our%20Story%20Section/Image%20area.jpg";
 
 const portfolioDataSummary = [
@@ -63,20 +62,18 @@ const countries = [
   { name: 'Germany', flag: '🇩🇪' }
 ];
 
-import useIsMobile from '../hooks/useIsMobile';
-
 const AboutPage = () => {
   usePageTitle('About Us — 888VC');
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
   const isMobile = useIsMobile(1024);
   const isSmallMobile = useIsMobile(768);
 
   const pageRef = useRef(null);
   const { scrollYProgress } = useScroll({ target: pageRef, offset: ["start start", "end end"] });
 
-  // Parallax effects — disabled for reduced motion
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.15], prefersReducedMotion ? [1, 1] : [1, 0]);
-  const heroY = useTransform(scrollYProgress, [0, 0.2], prefersReducedMotion ? [0, 0] : [0, 50]);
+  // Parallax effects — disabled if motion is not enabled
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.15], !motionEnabled ? [1, 1] : [1, 0]);
+  const heroY = useTransform(scrollYProgress, [0, 0.2], !motionEnabled ? [0, 0] : [0, 50]);
 
   return (
     <main id="main-content" role="main" ref={pageRef}>
@@ -106,11 +103,11 @@ const AboutPage = () => {
                 888vc is an early-stage venture capital firm backing founders building category-defining, technology-led businesses. A peer network of leaders across the globe.
               </p>
               <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-                <Link to="/portfolio" style={{ textDecoration: 'none' }}>
-                  <button className="primary-btn">View Portfolio →</button>
+                <Link to="/portfolio" className="primary-btn" style={{ textDecoration: 'none', display: 'inline-block' }}>
+                  View Portfolio →
                 </Link>
-                <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-                  <button className="secondary-btn" style={{ borderColor: 'rgba(29,47,111,0.15)', color: 'var(--primary)', fontWeight: 700 }}>Join our Community</button>
+                <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" className="secondary-btn" style={{ textDecoration: 'none', borderRadius: '14px', padding: '14px 28px', display: 'inline-block', borderColor: 'rgba(29,47,111,0.15)', color: 'var(--primary)', fontWeight: 700 }}>
+                  Join our Community
                 </a>
               </div>
             </motion.div>
@@ -120,15 +117,14 @@ const AboutPage = () => {
               {portfolioDataSummary.map((stat, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={!motionEnabled ? {} : { opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
+                  transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
                   style={{ backgroundColor: 'white', padding: '32px 24px', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)' }}
                 >
                   <div style={{ fontSize: '36px', fontWeight: 800, color: stat.color, marginBottom: '8px' }}>
                     <CountUp value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
                   </div>
-                  {/* WCAG fix: #6878a8 → var(--text-secondary) */}
                   <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.5px' }}>{stat.label}</div>
                 </motion.div>
               ))}
@@ -143,7 +139,7 @@ const AboutPage = () => {
           <div className="responsive-stack" style={{ display: 'grid', gridTemplateColumns: '1fr 1.2fr', gap: isMobile ? '40px' : '100px', alignItems: 'center' }}>
             <div style={{ position: 'relative' }}>
               <motion.div
-                initial={{ opacity: 0, x: -50 }}
+                initial={!motionEnabled ? {} : { opacity: 0, x: -50 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8 }}
                 style={{ borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.1)' }}
@@ -262,7 +258,6 @@ const AboutPage = () => {
                 ].map((s, i) => (
                   <div key={i}>
                     <div style={{ fontSize: '32px', fontWeight: 800, marginBottom: '8px' }}>{s.value}</div>
-                    {/* WCAG fix: opacity 0.6 → 0.7 for better contrast on dark bg */}
                     <div style={{ fontSize: '11px', fontWeight: 700, opacity: 0.7 }}>{s.label}</div>
                   </div>
                 ))}
@@ -296,9 +291,9 @@ const AboutPage = () => {
             ].map((belief, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 20 }}
+                initial={!motionEnabled ? {} : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                whileHover={prefersReducedMotion ? {} : { y: -5 }}
+                whileHover={!motionEnabled ? {} : { y: -5 }}
                 style={{ backgroundColor: 'white', padding: '40px', borderRadius: '24px', border: '1px solid rgba(29,47,111,0.08)' }}
               >
                 <div style={{ fontSize: '40px', fontWeight: 800, color: '#eef1f9', marginBottom: '-15px' }} aria-hidden="true">{belief.id}</div>
@@ -320,7 +315,7 @@ const AboutPage = () => {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
             {SITE_CONTENT.team.members.map((member, i) => (
-              <motion.div key={i} whileHover={prefersReducedMotion ? {} : { y: -10 }} style={{ backgroundColor: 'white', border: '1px solid rgba(29,47,111,0.08)', borderRadius: '20px', overflow: 'hidden' }}>
+              <motion.div key={i} whileHover={!motionEnabled ? {} : { y: -10 }} style={{ backgroundColor: 'white', border: '1px solid rgba(29,47,111,0.08)', borderRadius: '20px', overflow: 'hidden' }}>
                 <div style={{ aspectRatio: '1/1.2', overflow: 'hidden' }}>
                   <img src={member.image} alt={`Photo of ${member.name}, ${member.role}`} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
                 </div>
@@ -394,7 +389,7 @@ const AboutPage = () => {
             {countries.map((country, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, scale: 0.9 }}
+                initial={!motionEnabled ? {} : { opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 transition={{ delay: i * 0.05 }}
                 style={{
@@ -429,18 +424,18 @@ const AboutPage = () => {
             Whether you're building something extraordinary or looking for your next investment — the 888vc community is where ambition meets capital.
           </p>
           <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-              <button className="primary-btn" style={{ padding: '16px 40px', fontSize: '16px' }}>Apply as Startup →</button>
+            <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" className="primary-btn" style={{ textDecoration: 'none', display: 'inline-block' }}>
+              Apply as Startup →
             </a>
-            <a href="https://forms.gle/RNPwKDHfkdeaffvo7" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none' }}>
-              <button className="secondary-btn" style={{
+            <a href="https://forms.gle/RNPwKDHfkdeaffvo7" target="_blank" rel="noopener noreferrer" className="secondary-btn" style={{
+                textDecoration: 'none',
+                display: 'inline-block',
                 borderColor: 'rgba(255,255,255,0.3)',
                 color: 'white',
                 padding: '16px 40px',
                 fontSize: '16px',
                 backgroundColor: 'rgba(255,255,255,0.05)'
-              }}>Join as Investor</button>
-            </a>
+              }}>Join as Investor</a>
           </div>
         </div>
 

@@ -2,9 +2,8 @@ import React, { useRef, useState } from 'react';
 import { SITE_CONTENT } from '../data/site-content';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import useReducedMotion from '../hooks/useReducedMotion';
+import { useAccessibility } from '../context/AccessibilityContext';
 import useIsMobile from '../hooks/useIsMobile';
-import usePageTitle from '../hooks/usePageTitle';
 
 export const SuperAngels = () => {
   const angels = [
@@ -15,13 +14,13 @@ export const SuperAngels = () => {
   ];
 
   const ref = useRef(null);
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [30, -30]);
+  const y = useTransform(scrollYProgress, [0, 1], !motionEnabled ? [0, 0] : [30, -30]);
   const isSmallMobile = useIsMobile(768);
 
   return (
@@ -38,10 +37,10 @@ export const SuperAngels = () => {
           {angels.map((angel, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
+              initial={!motionEnabled ? {} : { opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.1 }}
-              whileHover={prefersReducedMotion ? {} : { y: -8, boxShadow: '0 15px 35px rgba(29, 47, 111, 0.08)' }}
+              transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
+              whileHover={!motionEnabled ? {} : { y: -8, boxShadow: '0 15px 35px rgba(29, 47, 111, 0.08)' }}
               style={{
                 backgroundColor: 'white',
                 borderRadius: '24px',
@@ -98,7 +97,7 @@ export const PartnersMarquee = () => {
   ];
 
   const [isPaused, setIsPaused] = useState(false);
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
 
   return (
     <section aria-label="Partners" style={{ backgroundColor: 'white', padding: '80px 0' }}>
@@ -121,7 +120,7 @@ export const PartnersMarquee = () => {
         onBlur={() => setIsPaused(false)}
       >
         <motion.div
-          animate={(isPaused || prefersReducedMotion) ? {} : { x: [0, -1500] }}
+          animate={(isPaused || !motionEnabled) ? {} : { x: [0, -1500] }}
           transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
           style={{
             display: 'flex',
@@ -190,13 +189,13 @@ export const PartnersMarquee = () => {
 export const News = () => {
   const { tag, title, featured, list } = SITE_CONTENT.news;
   const ref = useRef(null);
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"]
   });
 
-  const y = useTransform(scrollYProgress, [0, 1], prefersReducedMotion ? [0, 0] : [30, -30]);
+  const y = useTransform(scrollYProgress, [0, 1], !motionEnabled ? [0, 0] : [30, -30]);
   const isSmallMobile = useIsMobile(768);
   const isMobile = useIsMobile(1024);
 
@@ -209,7 +208,7 @@ export const News = () => {
         <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
           {/* Featured News */}
           <motion.article
-            whileHover={prefersReducedMotion ? {} : { y: -8 }}
+            whileHover={!motionEnabled ? {} : { y: -8 }}
             style={{ backgroundColor: 'white', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.03)' }}
           >
             <div
@@ -232,7 +231,7 @@ export const News = () => {
             {list.map((item, i) => (
               <motion.article
                 key={i}
-                whileHover={prefersReducedMotion ? {} : { x: 10, backgroundColor: '#fff' }}
+                whileHover={!motionEnabled ? {} : { x: 10, backgroundColor: '#fff' }}
                 style={{ backgroundColor: 'white', borderRadius: '20px', display: 'flex', overflow: 'hidden', boxShadow: '0 4px 15px rgba(0,0,0,0.02)', transition: 'all 0.3s ease' }}
               >
                 <div
@@ -255,14 +254,14 @@ export const News = () => {
 };
 
 export const CTABanner = () => {
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
   const isSmallMobile = useIsMobile(768);
 
   return (
     <section aria-label="Call to action" style={{ backgroundColor: 'var(--primary)', color: 'white', textAlign: 'center', padding: '120px 0', position: 'relative', overflow: 'hidden' }}>
       {/* Animated Background Decals */}
       <motion.div
-        animate={prefersReducedMotion ? {} : {
+        animate={!motionEnabled ? {} : {
           scale: [1, 1.2, 1],
           rotate: [0, 90, 0],
           opacity: [0.1, 0.2, 0.1]
@@ -282,7 +281,7 @@ export const CTABanner = () => {
       />
 
       <motion.div
-        initial={{ opacity: 0, scale: 0.9 }}
+        initial={!motionEnabled ? {} : { opacity: 0, scale: 0.9 }}
         whileInView={{ opacity: 1, scale: 1 }}
         transition={{ duration: 0.8 }}
         className="container"
@@ -293,11 +292,11 @@ export const CTABanner = () => {
           Whether you're building or investing — join the 888vc community where ambition meets capital.
         </p>
         <div style={{ display: 'flex', gap: '24px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link to="/startup" style={{ textDecoration: 'none' }}>
-            <motion.button whileHover={prefersReducedMotion ? {} : { scale: 1.05 }} whileTap={{ scale: 0.95 }} className="primary-btn" style={{ padding: '16px 40px', fontSize: '16px' }}>Apply as Startup →</motion.button>
+          <Link to="/startup" className="primary-btn" style={{ padding: '16px 40px', fontSize: '16px', display: 'inline-block', textDecoration: 'none' }}>
+            Apply as Startup →
           </Link>
-          <Link to="/investors" style={{ textDecoration: 'none' }}>
-            <motion.button whileHover={prefersReducedMotion ? {} : { scale: 1.05, borderColor: 'white' }} whileTap={{ scale: 0.95 }} className="secondary-btn" style={{ padding: '16px 40px', fontSize: '16px' }}>Join as Investor</motion.button>
+          <Link to="/investors" className="secondary-btn" style={{ padding: '16px 40px', fontSize: '16px', display: 'inline-block', textDecoration: 'none' }}>
+            Join as Investor
           </Link>
         </div>
       </motion.div>
@@ -381,3 +380,4 @@ export const Footer = () => {
     </footer>
   );
 };
+

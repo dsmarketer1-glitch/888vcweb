@@ -1,12 +1,12 @@
 :root {
   /* Colors */
   --primary: #1d2f6f;
-  --secondary: #eb3a1b;
+  --secondary: #d43015; /* WCAG AA: 4.57:1 on white (Original: #eb3a1b, 4.07:1) */
   --bg-soft: #f5f7fc;
   --bg-white: #ffffff;
   --text-primary: #1d2f6f;
-  --text-secondary: #3d4e7a; /* WCAG AAA: 7.1:1 on white, ~5.4:1 on #f5f7fc */
-  --accent-light: rgba(235, 58, 27, 0.12);
+  --text-secondary: #3d4e7a; /* WCAG AAA: 7.1:1 on white */
+  --accent-light: rgba(212, 48, 21, 0.1);
   --border-muted: rgba(29, 47, 111, 0.12);
   --focus-color: #1d2f6f;
 
@@ -98,11 +98,12 @@ textarea:focus-visible {
   z-index: 10000;
   text-decoration: none;
   transition: top 0.2s ease;
+  box-shadow: 0 4px 12px rgba(212, 48, 21, 0.3);
 }
-.skip-to-content:focus {
+.skip-to-content:focus-visible {
   top: 0;
-  outline: 3px solid var(--focus-color);
-  outline-offset: 2px;
+  outline: 3px solid var(--primary);
+  outline-offset: 4px;
 }
 
 /* ─── Visually Hidden — screen reader only (WCAG 1.3.1) ─── */
@@ -148,27 +149,33 @@ textarea:focus-visible {
 .primary-btn {
   background-color: var(--secondary);
   color: white;
-  padding: 0.75rem 1.5rem;
+  padding: 0 1.5rem; /* Removed vertical padding to rely on min-height and flex alignment */
   border-radius: 0.5rem;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
+  line-height: normal; /* Standardizes line height for centering */
   /* WCAG 2.5.8 Target Size — min 24px, aim 44px */
-  min-height: 44px;
+  min-height: 48px; /* Increased slightly for better feel */
+  transition: all 0.3s ease;
 }
 
 .secondary-btn {
   background-color: transparent;
   border: 2px solid rgba(255, 255, 255, 0.3);
   color: white;
-  padding: 0.75rem 1.5rem;
+  padding: 0 1.5rem;
   border-radius: 0.5rem;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  min-height: 44px;
+  line-height: normal;
+  min-height: 48px;
+  transition: all 0.3s ease;
 }
 
 section {
@@ -200,16 +207,23 @@ section {
   background: rgba(255, 255, 255, 0.25);
 }
 
-/* ─── WCAG 2.3.3 — Reduced Motion ─── */
+/* ─── WCAG 2.3.3 — Reduced Motion (System & App Level) ─── */
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, ::before, ::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+.reduce-motion *,
+.reduce-motion ::before,
+.reduce-motion ::after {
+  animation-duration: 0.01ms !important;
+  animation-iteration-count: 1 !important;
+  transition-duration: 0.01ms !important;
+  scroll-behavior: auto !important;
 }
 
 /* ─── Responsive Utilities ─── */

@@ -17,11 +17,15 @@ const ScrollToTop = () => {
   return null;
 };
 
+import { AccessibilityProvider } from './context/AccessibilityContext';
+import AccessibilityDrawer from './components/AccessibilityDrawer';
+
 function App() {
   return (
-    <BrowserRouter>
-      <ScrollToTop />
-      <div className="app">
+    <AccessibilityProvider>
+      <BrowserRouter>
+        <ScrollToTop />
+        <div className="app">
         {/* WCAG 2.4.1 Bypass Blocks — Skip to main content link */}
         <a href="#main-content" className="skip-to-content">
           Skip to main content
@@ -29,6 +33,7 @@ function App() {
 
         <Ticker />
         <Navbar />
+        <AccessibilityDrawer />
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/portfolio" element={<PortfolioPage />} />
@@ -38,7 +43,8 @@ function App() {
         </Routes>
         <Footer />
       </div>
-    </BrowserRouter>
+      </BrowserRouter>
+    </AccessibilityProvider>
   );
 }
 

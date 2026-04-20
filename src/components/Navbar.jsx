@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SITE_CONTENT } from '../data/site-content';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation } from 'react-router-dom';
-import useReducedMotion from '../hooks/useReducedMotion';
+import { useAccessibility } from '../context/AccessibilityContext';
 import useIsMobile from '../hooks/useIsMobile';
 
 export const Ticker = () => {
   const [isPaused, setIsPaused] = useState(false);
-  const prefersReducedMotion = useReducedMotion();
+  const { motionEnabled } = useAccessibility();
   const isMobile = useIsMobile(768);
 
   return (
@@ -32,7 +32,7 @@ export const Ticker = () => {
     >
       <motion.div
         className="ticker-content"
-        animate={(isPaused || prefersReducedMotion) ? {} : { x: [0, -1000] }}
+        animate={(isPaused || !motionEnabled) ? {} : { x: [0, -1000] }}
         transition={{
           duration: 30,
           repeat: Infinity,
@@ -77,6 +77,7 @@ export const Navbar = () => {
   const location = useLocation();
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { motionEnabled, toggleMotion } = useAccessibility();
   const isMobile = useIsMobile(1024);
 
   const isActive = (link) => {
@@ -89,7 +90,6 @@ export const Navbar = () => {
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
 
-  // Lock scroll when mobile menu is open
   useEffect(() => {
     if (isMenuOpen) {
       document.body.classList.add('no-scroll');
@@ -116,7 +116,8 @@ export const Navbar = () => {
       }}
     >
       <Link to="/" aria-label="888VC Home" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-        <img src="/assets/logo.svg" alt="888VC Logo" style={{ height: isMobile ? '36px' : '42px', width: 'auto' }} />
+        <img src="/assets/logo.svg" alt="" aria-hidden="true" style={{ height: isMobile ? '36px' : '42px', width: 'auto' }} />
+        <span className="visually-hidden">888VC Home</span>
       </Link>
 
       {/* Desktop Links */}
@@ -135,10 +136,13 @@ export const Navbar = () => {
                 style={{ position: 'relative' }}
                 onMouseEnter={() => link.hasDropdown && setActiveDropdown(i)}
                 onMouseLeave={() => setActiveDropdown(null)}
+                onFocusCapture={() => link.hasDropdown && setActiveDropdown(i)}
               >
                 <Link
                   to={link.href}
                   className={`nav-link ${active ? 'text-orange font-bold' : 'text-navy'}`}
+                  aria-haspopup={link.hasDropdown ? "true" : undefined}
+                  aria-expanded={link.hasDropdown ? activeDropdown === i : undefined}
                   style={{
                     fontSize: '15px',
                     fontWeight: active ? 700 : 500,
@@ -146,38 +150,44 @@ export const Navbar = () => {
                     display: 'flex',
                     alignItems: 'center',
                     gap: '4px',
-                    height: '70px'
+                    height: '70px',
+                    minWidth: '44px'
                   }}
                 >
                   {link.label}
-                  {link.hasDropdown && <span style={{ fontSize: '10px' }}>▼</span>}
+                  {link.hasDropdown && <span style={{ fontSize: '10px' }} aria-hidden="true">▼</span>}
                 </Link>
 
                 {link.hasDropdown && activeDropdown === i && (
-                  <div style={{
-                    position: 'absolute',
-                    top: '70px',
-                    left: '0',
-                    backgroundColor: 'white',
-                    boxShadow: '0 10px 25px rgba(29, 47, 111, 0.1)',
-                    borderRadius: '8px',
-                    padding: '12px 0',
-                    minWidth: '220px',
-                    zIndex: 1001,
-                    border: '1px solid var(--border-muted)'
-                  }}>
+                  <div 
+                    role="menu"
+                    style={{
+                      position: 'absolute',
+                      top: '70px',
+                      left: '0',
+                      backgroundColor: 'white',
+                      boxShadow: '0 10px 25px rgba(29, 47, 111, 0.1)',
+                      borderRadius: '8px',
+                      padding: '12px 0',
+                      minWidth: '220px',
+                      zIndex: 1001,
+                      border: '1px solid var(--border-muted)'
+                    }}
+                  >
                     {link.dropdownItems.map((item, idx) => {
                       const isExternal = item.href.startsWith('http');
                       const linkProps = {
                         key: idx,
+                        role: "menuitem",
                         style: {
                           display: 'block',
-                          padding: '10px 20px',
+                          padding: '12px 24px',
                           textDecoration: 'none',
                           color: location.pathname === item.href ? 'var(--secondary)' : 'var(--primary)',
                           fontSize: '14px',
                           fontWeight: location.pathname === item.href ? 700 : 500,
-                          transition: 'background 0.2s'
+                          transition: 'background 0.2s',
+                          minHeight: '44px'
                         }
                       };
 
@@ -199,18 +209,24 @@ export const Navbar = () => {
         </div>
       )}
 
+
       {!isMobile && (
-        <Link to={ctaHref} style={{ textDecoration: 'none' }}>
-          <button className="primary-btn" style={{ padding: '8px 20px', fontSize: '12px' }}>
-            {cta}
-          </button>
+        <Link 
+          to={ctaHref} 
+          className="primary-btn" 
+          style={{ 
+            fontSize: '12px', 
+            textDecoration: 'none' 
+          }}
+        >
+          {cta}
         </Link>
       )}
 
       {/* Hamburger Button */}
       {isMobile && (
         <button
-          style={{ marginLeft: 'auto', fontSize: '24px', color: 'var(--primary)', padding: '8px' }}
+          style={{ marginLeft: 'auto', fontSize: '24px', color: 'var(--primary)', padding: '12px' }}
           onClick={toggleMenu}
           aria-label={isMenuOpen ? "Close menu" : "Open menu"}
           aria-expanded={isMenuOpen}
@@ -223,9 +239,9 @@ export const Navbar = () => {
       <AnimatePresence>
         {isMobile && isMenuOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
+            initial={motionEnabled ? { opacity: 0, height: 0 } : { opacity: 1, height: 'auto' }}
             animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
+            exit={motionEnabled ? { opacity: 0, height: 0 } : { opacity: 0 }}
             transition={{ duration: 0.3 }}
             style={{
               position: 'fixed',
@@ -242,6 +258,7 @@ export const Navbar = () => {
               overflow: 'hidden'
             }}
           >
+
             {links.map((link, i) => (
               <div key={i}>
                 <Link
@@ -250,19 +267,20 @@ export const Navbar = () => {
                     fontSize: '18px',
                     fontWeight: 600,
                     color: isActive(link) ? 'var(--secondary)' : 'var(--primary)',
-                    display: 'block'
+                    display: 'block',
+                    padding: '8px 0'
                   }}
                   onClick={() => !link.hasDropdown && setIsMenuOpen(false)}
                 >
                   {link.label}
                 </Link>
                 {link.hasDropdown && (
-                  <div style={{ marginTop: '12px', paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  <div style={{ marginTop: '12px', paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
                     {link.dropdownItems.map((item, idx) => (
                       <Link
                         key={idx}
                         to={item.href}
-                        style={{ fontSize: '16px', color: 'var(--text-secondary)', fontWeight: 500 }}
+                        style={{ fontSize: '16px', color: 'var(--text-secondary)', fontWeight: 500, padding: '4px 0' }}
                         onClick={() => setIsMenuOpen(false)}
                       >
                         {item.label}
@@ -272,10 +290,18 @@ export const Navbar = () => {
                 )}
               </div>
             ))}
-            <Link to={ctaHref} style={{ textDecoration: 'none', width: '100%' }} onClick={() => setIsMenuOpen(false)}>
-              <button className="primary-btn" style={{ width: '100%', justifyContent: 'center', marginTop: '10px' }}>
-                {cta}
-              </button>
+            <Link 
+              to={ctaHref} 
+              className="primary-btn" 
+              style={{ 
+                width: '100%', 
+                justifyContent: 'center', 
+                marginTop: '10px',
+                textDecoration: 'none'
+              }} 
+              onClick={() => setIsMenuOpen(false)}
+            >
+              {cta}
             </Link>
           </motion.div>
         )}
