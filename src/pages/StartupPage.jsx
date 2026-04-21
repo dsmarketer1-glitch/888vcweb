@@ -296,7 +296,7 @@ const StartupPage = () => {
                   <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 4 }}>Weeks {p.weeks}</div>
                   <h3 style={{ fontSize: 15, fontWeight: 700, color: 'var(--primary)', marginBottom: 6, margin: 0 }}>{p.title}</h3>
                   <p style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: 10 }}>{p.desc}</p>
-                  <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-secondary)' }}>{w.sub}</div>
+                  <div style={{ fontSize: 10, fontWeight: 600, color: 'var(--text-secondary)' }}>{p.sub}</div>
                 </motion.div>
               ))}
             </div>
@@ -437,25 +437,38 @@ const StartupPage = () => {
           <p style={{ fontSize: 16, color: 'var(--text-secondary)', marginBottom: 40, maxWidth: 740 }}>
             From seed to Series A — here's what happens when ambition meets the right community.
           </p>
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 22 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
             {testimonials.map((t, i) => (
               <motion.div key={i} initial={!motionEnabled ? {} : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
-                style={{ backgroundColor: 'white', border: '1px solid rgba(29,47,111,0.1)', borderRadius: 18, padding: 19 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 8 }}>
-                  <img src={t.avatar} alt={`Photo of ${t.author}`} style={{ width: 44, height: 44, borderRadius: '50%', objectFit: 'cover' }} />
-                  <div>
-                    <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--primary)' }}>{t.company}</div>
-                    <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--secondary)' }}>{t.cat}</div>
-                  </div>
+                style={{ 
+                  backgroundColor: 'white', 
+                  border: '1px solid rgba(29,47,111,0.1)', 
+                  borderRadius: 24, 
+                  padding: isMobile ? 24 : 40,
+                  display: 'flex',
+                  flexDirection: isSmallMobile ? 'column' : 'row',
+                  gap: isSmallMobile ? 24 : 40,
+                  alignItems: 'center'
+                }}>
+                <div style={{ flexShrink: 0 }}>
+                  <img src={t.avatar} alt={`Photo of ${t.author}`} style={{ width: isSmallMobile ? 120 : 160, height: isSmallMobile ? 120 : 180, borderRadius: 20, objectFit: 'cover', boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }} />
                 </div>
-                <div style={{ fontSize: 13, color: 'var(--secondary)', marginBottom: 8 }} aria-hidden="true">★★★★★</div>
-                <blockquote style={{ margin: 0, padding: 0, border: 'none' }}>
-                  <p style={{ fontSize: 13, color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: 16 }}>"{t.quote}"</p>
-                </blockquote>
-                <footer>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--primary)' }}>{t.author}</div>
-                  <div style={{ fontSize: 11, color: 'var(--text-secondary)', marginTop: 2 }}><cite style={{ fontStyle: 'normal' }}>{t.role}</cite></div>
-                </footer>
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
+                    <div>
+                      <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--primary)' }}>{t.company}</div>
+                      <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--secondary)' }}>{t.cat}</div>
+                    </div>
+                  </div>
+                  <div style={{ fontSize: 14, color: 'var(--secondary)', marginBottom: 12 }} aria-hidden="true">★★★★★</div>
+                  <blockquote style={{ margin: 0, padding: 0, border: 'none' }}>
+                    <p style={{ fontSize: isSmallMobile ? 14 : 16, color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: 20 }}>"{t.quote}"</p>
+                  </blockquote>
+                  <footer>
+                    <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--primary)' }}>{t.author}</div>
+                    <div style={{ fontSize: 12, color: 'var(--text-secondary)', marginTop: 2 }}><cite style={{ fontStyle: 'normal' }}>{t.role}</cite></div>
+                  </footer>
+                </div>
               </motion.div>
             ))}
           </div>

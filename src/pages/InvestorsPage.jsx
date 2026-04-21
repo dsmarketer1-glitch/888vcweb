@@ -73,9 +73,9 @@ const investorTypes = [
 const sectors = ['Deep Tech', 'AI & ML', 'Consumer', 'Healthtech', 'Sustainability', 'Manufacturing', 'Fintech', 'SaaS / B2B'];
 
 const testimonials = [
-  { company: 'EcoRatings', quote: 'We are grateful to 888vc for investing in us and building our fund raise. They brought in much needed guidance and great connects through their network.', author: 'Aditi Balbir', role: 'Co-Founder, EcoRatings' },
-  { company: 'getcrest.ai', quote: '888 not only provided us with funds but much needed mentorship and guidance. The team genuinely goes above and beyond for their portfolio companies.', author: 'Rahul Vishwakarma', role: 'Founder, getcrest.ai' },
-  { company: 'PickMyWork', quote: 'We got the pleasure to meet 888vc, who assisted us by participating in our first round of fundraising and constructing the entire round for us.', author: 'Vidyarthi Baddireddy', role: 'Founder, PickMyWork' },
+  { company: 'EcoRatings', quote: 'We are grateful to 888vc for investing in us and building our fund raise. They brought in much needed guidance and great connects through their network.', author: 'Aditi Balbir', role: 'Co-Founder, EcoRatings', avatar: '/assets/webimages/Startup/TESTIMONIALS/Aditi%20Balbir.png' },
+  { company: 'getcrest.ai', quote: '888 not only provided us with funds but much needed mentorship and guidance. The team genuinely goes above and beyond for their portfolio companies.', author: 'Rahul Vishwakarma', role: 'Founder, getcrest.ai', avatar: '/assets/webimages/Startup/TESTIMONIALS/Rahul%20Vishwakarma.png' },
+  { company: 'PickMyWork', quote: 'We got the pleasure to meet 888vc, who assisted us by participating in our first round of fundraising and constructing the entire round for us.', author: 'Vidyarthi Baddireddy', role: 'Founder, PickMyWork', avatar: '/assets/webimages/Startup/TESTIMONIALS/Vidyarthi%20Baddireddy.png' },
 ];
 
 const angels = [
@@ -373,7 +373,7 @@ const InvestorsPage = () => {
             What our founders say about working with us.
           </h2>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24 }}>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
             {testimonials.map((t, i) => (
               <motion.div
                 key={i}
@@ -383,18 +383,27 @@ const InvestorsPage = () => {
                 style={{
                   backgroundColor: 'rgba(255,255,255,0.08)',
                   border: '1px solid rgba(255,255,255,0.12)',
-                  borderRadius: 18,
-                  padding: '20px',
+                  borderRadius: 24,
+                  padding: isMobile ? 24 : 40,
+                  display: 'flex',
+                  flexDirection: isSmallMobile ? 'column' : 'row',
+                  gap: isSmallMobile ? 24 : 40,
+                  alignItems: 'center'
                 }}
               >
-                <div style={{ fontSize: 11, fontWeight: 700, color: 'white', marginBottom: 8 }}>{t.company}</div>
-                <blockquote style={{ margin: 0, padding: 0, border: 'none' }}>
-                  <p style={{ fontSize: 13, color: 'white', lineHeight: 1.6, marginBottom: 20 }}>"{t.quote}"</p>
-                </blockquote>
-                <footer style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 12 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: 'white' }}>{t.author}</div>
-                  <div style={{ fontSize: 12, color: 'white', opacity: 0.75, marginTop: 2 }}><cite style={{ fontStyle: 'normal' }}>{t.role}</cite></div>
-                </footer>
+                <div style={{ flexShrink: 0 }}>
+                  <img src={t.avatar} alt={`Photo of ${t.author}`} style={{ width: isSmallMobile ? 120 : 160, height: isSmallMobile ? 120 : 180, borderRadius: 20, objectFit: 'cover', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }} />
+                </div>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--secondary)', marginBottom: 12 }}>{t.company.toUpperCase()}</div>
+                  <blockquote style={{ margin: 0, padding: 0, border: 'none' }}>
+                    <p style={{ fontSize: isSmallMobile ? 14 : 17, color: 'white', lineHeight: 1.6, marginBottom: 24 }}>"{t.quote}"</p>
+                  </blockquote>
+                  <footer style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 16 }}>
+                    <div style={{ fontSize: 16, fontWeight: 700, color: 'white' }}>{t.author}</div>
+                    <div style={{ fontSize: 13, color: 'white', opacity: 0.7, marginTop: 4 }}><cite style={{ fontStyle: 'normal' }}>{t.role}</cite></div>
+                  </footer>
+                </div>
               </motion.div>
             ))}
           </div>

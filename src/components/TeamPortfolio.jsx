@@ -60,12 +60,42 @@ export const Portfolio = () => {
                   height: '140px',
                   backgroundImage: `url("${item.image}")`,
                   backgroundSize: 'cover',
-                  backgroundPosition: 'center'
+                  backgroundPosition: 'center',
+                  position: 'relative'
                 }}
-              />
-              <div style={{ padding: '20px', backgroundColor: 'white', marginTop: '-12px', borderRadius: '14px 14px 0 0', position: 'relative' }}>
-                <h3 className="text-base text-navy font-bold" style={{ fontWeight: 700 }}>{item.name}</h3>
-                <p className="text-xs text-muted" style={{ marginTop: '4px', fontWeight: 500 }}>{item.category}</p>
+              >
+                {/* Floating Founder Card */}
+                <div style={{
+                  position: 'absolute',
+                  bottom: '-30px',
+                  right: '15px',
+                  width: '100px',
+                  backgroundColor: 'white',
+                  borderRadius: '12px',
+                  boxShadow: '0 10px 25px rgba(0,0,0,0.15)',
+                  padding: '8px',
+                  zIndex: 2,
+                  textAlign: 'center'
+                }}>
+                  {/* Portrait (Rectangle) */}
+                  <div style={{
+                    width: '100%',
+                    height: '84px',
+                    borderRadius: '8px',
+                    overflow: 'hidden',
+                    marginBottom: '8px'
+                  }}>
+                    <img src={item.founderPhoto} alt={`Photo of ${item.founderName}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                  {/* Name (Just the name) */}
+                  <div style={{ fontSize: '11px', fontWeight: 800, color: 'var(--primary)', lineHeight: '1.2', wordBreak: 'break-word' }}>
+                    {item.founderName}
+                  </div>
+                </div>
+              </div>
+              <div style={{ padding: '24px 20px 20px', backgroundColor: 'white', position: 'relative' }}>
+                <h3 className="text-base text-navy font-bold" style={{ fontWeight: 700, marginBottom: '4px' }}>{item.name}</h3>
+                <p className="text-xs text-muted" style={{ fontWeight: 500 }}>{item.category}</p>
               </div>
             </motion.div>
           ))}

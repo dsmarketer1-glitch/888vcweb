@@ -83,10 +83,10 @@ export const Testimonials = () => {
         <h2 className="text-4xl" style={{ marginBottom: '16px', fontSize: isSmallMobile ? '32px' : undefined }}>{title}</h2>
         <p className="text-lg" style={{ opacity: 0.85, marginBottom: '60px', maxWidth: '750px', lineHeight: '1.6', fontSize: isSmallMobile ? '16px' : '18px' }}>{description}</p>
 
-        <div className="mobile-grid-1" style={{
-          display: 'grid',
-          gridTemplateColumns: isSmallMobile ? '1fr' : 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '24px'
+        <div style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '32px'
         }}>
           {items.map((item, i) => (
             <motion.div
@@ -97,39 +97,60 @@ export const Testimonials = () => {
               whileHover={!motionEnabled ? {} : { y: -8, backgroundColor: 'rgba(255, 255, 255, 0.1)' }}
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.07)',
-                borderRadius: '24px',
-                padding: '40px',
+                borderRadius: '32px',
+                padding: isSmallMobile ? '32px' : '48px',
                 display: 'flex',
-                flexDirection: 'column',
-                transition: 'background-color 0.3s ease'
+                flexDirection: isSmallMobile ? 'column' : 'row',
+                alignItems: isSmallMobile ? 'center' : 'stretch',
+                gap: isSmallMobile ? '32px' : '48px',
+                transition: 'background-color 0.3s ease',
+                textAlign: isSmallMobile ? 'center' : 'left'
               }}
             >
-              <div className="text-xs font-bold" style={{ marginBottom: '24px', color: 'var(--secondary)', letterSpacing: '1px' }}>{item.company.toUpperCase()}</div>
-              {/* WCAG semantic — blockquote for testimonials */}
-              <blockquote style={{ flex: 1, marginBottom: '32px', margin: 0, padding: 0, border: 'none' }}>
-                <p className="text-lg" style={{ fontStyle: 'italic', lineHeight: '1.7', opacity: 0.9 }}>"{item.quote}"</p>
-              </blockquote>
-              <footer style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
+              {/* Photo Side */}
+              <div style={{ flexShrink: 0 }}>
                 {item.image && (
-                  <img 
-                    src={item.image} 
-                    alt={`Founder ${item.author}`} 
-                    style={{ 
-                      width: '56px', 
-                      height: '56px', 
-                      borderRadius: '50%', 
-                      objectFit: 'cover',
-                      border: '2px solid rgba(255,255,255,0.2)'
-                    }} 
-                  />
+                  <div style={{ position: 'relative' }}>
+                    <img 
+                      src={item.image} 
+                      alt={`Founder ${item.author}`} 
+                      style={{ 
+                        width: isSmallMobile ? '120px' : '180px', 
+                        height: isSmallMobile ? '120px' : '220px', 
+                        borderRadius: '24px', 
+                        objectFit: 'cover',
+                        boxShadow: '0 12px 30px rgba(0,0,0,0.2)'
+                      }} 
+                    />
+                    <div style={{ 
+                      position: 'absolute', 
+                      inset: 0, 
+                      borderRadius: '24px', 
+                      border: '1px solid rgba(255,255,255,0.1)', 
+                      pointerEvents: 'none' 
+                    }} />
+                  </div>
                 )}
-                <div>
-                  <div className="text-base font-bold" style={{ fontSize: '18px' }}>{item.author}</div>
-                  <div className="text-sm" style={{ opacity: 0.7, marginTop: '2px' }}><cite style={{ fontStyle: 'normal' }}>{item.role}</cite></div>
-                </div>
-              </footer>
-            </motion.div>
+              </div>
 
+              {/* Content Side */}
+              <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center' }}>
+                <div className="text-xs font-bold" style={{ marginBottom: '16px', color: 'var(--secondary)', letterSpacing: '2px' }}>{item.company.toUpperCase()}</div>
+                <blockquote style={{ flex: 1, marginBottom: '24px', margin: 0, padding: 0, border: 'none' }}>
+                  <p className="text-lg" style={{ 
+                    fontStyle: 'normal', 
+                    lineHeight: '1.6', 
+                    opacity: 0.95, 
+                    fontSize: isSmallMobile ? '18px' : '22px',
+                    fontWeight: 500
+                  }}>"{item.quote}"</p>
+                </blockquote>
+                <footer>
+                  <div className="text-base font-bold" style={{ fontSize: '20px', marginBottom: '4px' }}>{item.author}</div>
+                  <div className="text-sm" style={{ opacity: 0.7 }}><cite style={{ fontStyle: 'normal' }}>{item.role}</cite></div>
+                </footer>
+              </div>
+            </motion.div>
           ))}
         </div>
       </motion.div>
