@@ -62,7 +62,7 @@ export const SITE_CONTENT = {
   ],
   valueProps: {
     tag: "WHAT WE OFFER",
-    title: "India's Top Global Accelerator Fund",
+    title: "Top Global Accelerator Fund",
     description: "A global community of successful founders and strategic angels — supporting early-stage startups with funding, business development, and global networking.",
     cards: [
       {
@@ -174,15 +174,42 @@ export const SITE_CONTENT = {
     tag: "LATEST NEWS",
     title: "888vc in the News",
     featured: {
-      category: "FUNDING",
-      title: "888vc Completes $10M Syndication Round Across 5 Portfolio Companies",
-      date: "Jan 15, 2025",
-      readTime: "5 min read",
-      image: "/assets/webimages/Homepage/News/888vc%20Completes%20$10M.png"
+      category: "INC42",
+      title: "888VC Launches INR 175 Cr Fund To Back Early Stage Deeptech Startups",
+      date: "Sep 22, 2025",
+      readTime: "3 min read",
+      image: "https://asset.inc42.com/2025/09/888vc-760x570.jpg",
+      url: "https://inc42.com/buzz/888vc-launches-inr-175-cr-fund-to-back-early-stage-deeptech-startups/"
     },
     list: [
-      { category: "FOUNDER TALK", title: "Why this is the right time for Consumer Internet Startups to Boom", date: "Dec 22, 2025", image: "/assets/webimages/Homepage/News/Why%20this%20is%20the%20right%20time.png" },
-      { category: "NEWS", title: "Can JioMart become the largest homegrown Indian ecommerce company ?", date: "Dec 25, 2025", image: "/assets/webimages/Homepage/News/Can%20JioMart%20become.png" }
+      { 
+        category: "VCCIRCLE", 
+        title: "Cross-Border Investment Platform 888VC Floats Maiden VC Fund", 
+        date: "Sep 22, 2025", 
+        image: "https://assets.vccircle.com/uploads/2022/08/Venturecapitalrfxl.jpg",
+        url: "https://www.vccircle.com/crossborder-investment-platform-888vc-floats-maiden-vc-fund"
+      },
+      { 
+        category: "TICE NEWS", 
+        title: "888VC Bets Big On India’s Deeptech With Maiden ₹175 Cr Fund", 
+        date: "Sep 22, 2025", 
+        image: "https://img-cdn.publive.online/fit-in/1200x675/tice-news-prod/media/media_files/2025/09/22/888vc-bets-big-on-indian-deeptech-startups-2025-09-22-21-23-00.jpg",
+        url: "https://www.tice.news/tice-trending/888vc-bets-big-on-indias-deeptech-with-maiden-175-cr-fund-10490304"
+      },
+      { 
+        category: "SILICONINDIA", 
+        title: "888VC Launches Rs 175 Crore Fund for AI, Deep-Tech & Sustainability Startups", 
+        date: "Sep 23, 2025", 
+        image: "https://www.siliconindia.com//news/newsimages/vJ1Gnby5.jpg",
+        url: "https://www.siliconindia.com/news/startups/888vc-launches-rs-175-crore-fund-for-ai-deeptech--sustainability-startups-nid-237815-cid-19.html"
+      },
+      { 
+        category: "YOURSTORY", 
+        title: "Early-stage VC firm 888VC launches Rs 175 Cr fund to back deeptech startups", 
+        date: "Sep 22, 2025", 
+        image: "https://images.yourstory.com/cs/2/220356402d6d11e9aa979329348d4c3e/funding-1738596571214.png?mode=fit&crop=faces&ar=16%3A9&format=auto&w=1920&q=75",
+        url: "https://yourstory.com/2025/09/early-stage-vc-firm-888vc-launches-rs-175-cr-fund"
+      }
     ]
   }
 };

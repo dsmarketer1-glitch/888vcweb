@@ -207,44 +207,57 @@ export const News = () => {
 
         <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
           {/* Featured News */}
-          <motion.article
-            whileHover={!motionEnabled ? {} : { y: -8 }}
-            style={{ backgroundColor: 'white', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.03)' }}
+          <a 
+            href={featured.url} 
+            target="_blank" 
+            rel="noopener noreferrer"
+            style={{ textDecoration: 'none', display: 'block' }}
           >
-            <div
-              role="img"
-              aria-label={featured.title}
-              style={{ height: '320px', backgroundImage: `url("${featured.image}")`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-            />
-            <div style={{ padding: '40px' }}>
-              <div className="text-xs text-orange font-bold" style={{ marginBottom: '16px', letterSpacing: '1px' }}>{featured.category}</div>
-              <h3 className="text-2xl text-navy" style={{ marginBottom: '20px', lineHeight: '1.4' }}>{featured.title}</h3>
-              <div className="text-sm text-muted" style={{ marginBottom: '24px', fontWeight: 500 }}>
-                <time>{featured.date}</time>  ·  {featured.readTime}
+            <motion.article
+              whileHover={!motionEnabled ? {} : { y: -8, boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}
+              style={{ backgroundColor: 'white', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s ease' }}
+            >
+              <div
+                role="img"
+                aria-label={featured.title}
+                style={{ height: '320px', backgroundImage: `url("${featured.image}")`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+              />
+              <div style={{ padding: '40px' }}>
+                <div className="text-xs text-orange font-bold" style={{ marginBottom: '16px', letterSpacing: '1px' }}>{featured.category}</div>
+                <h3 className="text-2xl text-navy" style={{ marginBottom: '20px', lineHeight: '1.4' }}>{featured.title}</h3>
+                <div className="text-sm text-muted" style={{ marginBottom: '24px', fontWeight: 500 }}>
+                  <time>{featured.date}</time>  ·  {featured.readTime}
+                </div>
               </div>
-
-            </div>
-          </motion.article>
+            </motion.article>
+          </a>
 
           {/* News List */}
           <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
             {list.map((item, i) => (
-              <motion.article
-                key={i}
-                whileHover={!motionEnabled ? {} : { x: 10, backgroundColor: '#fff' }}
-                style={{ backgroundColor: 'white', borderRadius: '20px', display: 'flex', overflow: 'hidden', boxShadow: '0 4px 15px rgba(0,0,0,0.02)', transition: 'all 0.3s ease' }}
+              <a 
+                key={i} 
+                href={item.url} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                style={{ textDecoration: 'none', display: 'block' }}
               >
-                <div
-                  role="img"
-                  aria-label={item.title}
-                  style={{ width: isSmallMobile ? '100px' : '160px', minWidth: isSmallMobile ? '100px' : '160px', backgroundImage: `url("${item.image}")`, backgroundSize: 'cover', backgroundPosition: 'center' }}
-                />
-                <div style={{ padding: '24px', flex: 1 }}>
-                  <div className="text-xs text-orange font-bold" style={{ marginBottom: '10px' }}>{item.category}</div>
-                  <h3 className="text-base text-navy font-bold" style={{ marginBottom: '12px', lineHeight: '1.4' }}>{item.title}</h3>
-                  <div className="text-xs text-muted" style={{ fontWeight: 500 }}><time>{item.date}</time></div>
-                </div>
-              </motion.article>
+                <motion.article
+                  whileHover={!motionEnabled ? {} : { x: 10, backgroundColor: '#fff', boxShadow: '0 8px 25px rgba(0,0,0,0.05)' }}
+                  style={{ backgroundColor: 'white', borderRadius: '20px', display: 'flex', overflow: 'hidden', boxShadow: '0 4px 15px rgba(0,0,0,0.02)', transition: 'all 0.3s ease' }}
+                >
+                  <div
+                    role="img"
+                    aria-label={item.title}
+                    style={{ width: isSmallMobile ? '100px' : '160px', minWidth: isSmallMobile ? '100px' : '160px', backgroundImage: `url("${item.image}")`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+                  />
+                  <div style={{ padding: '24px', flex: 1 }}>
+                    <div className="text-xs text-orange font-bold" style={{ marginBottom: '10px' }}>{item.category}</div>
+                    <h3 className="text-base text-navy font-bold" style={{ marginBottom: '12px', lineHeight: '1.4' }}>{item.title}</h3>
+                    <div className="text-xs text-muted" style={{ fontWeight: 500 }}><time>{item.date}</time></div>
+                  </div>
+                </motion.article>
+              </a>
             ))}
           </div>
         </div>
