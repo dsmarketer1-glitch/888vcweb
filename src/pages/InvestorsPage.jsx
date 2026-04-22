@@ -85,7 +85,7 @@ const angels = [
   { name: 'Sripad Vaidya', role: 'COO, Ixigo Trains & Confirmtkt', img: imgAngel4 },
 ];
 
-const sectorColors = ['#eb3a1b', '#1d2f6f', '#2aa86b', '#e67e22', '#9b59b6', '#3498db', '#e74c3c', '#1abc9c'];
+const sectorColors = ['var(--secondary)', '#1d2f6f', '#2aa86b', '#e67e22', '#9b59b6', '#3498db', '#e74c3c', '#1abc9c'];
 
 /* ═══════════════════════════════ COMPONENT ═══════════════════════════════ */
 
@@ -123,10 +123,10 @@ const InvestorsPage = () => {
             </p>
 
             <div style={{ display: 'flex', gap: 16, marginBottom: 32, flexWrap: 'wrap' }}>
-              <a href="https://forms.gle/RNPwKDHfkdeaffvo7" target="_blank" rel="noopener noreferrer" className="primary-btn" style={{ textDecoration: 'none', display: 'inline-block' }}>
+              <a href="https://forms.gle/RNPwKDHfkdeaffvo7" target="_blank" rel="noopener noreferrer" className="primary-btn" aria-label="Investors Join as Investor CTA" style={{ textDecoration: 'none', display: 'inline-block' }}>
                 Join as Investor →
               </a>
-              <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', borderRadius: '12px', padding: '14px 28px', backgroundColor: '#eef1f9', color: 'var(--primary)', fontWeight: 600, fontSize: 14, display: 'inline-block' }}>
+              <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" aria-label="Investors Explore GRO8 Club CTA" style={{ textDecoration: 'none', borderRadius: '12px', padding: '14px 28px', backgroundColor: '#eef1f9', color: 'var(--primary)', fontWeight: 600, fontSize: 14, display: 'inline-block' }}>
                 Explore GRO8 Club
               </a>
             </div>
@@ -358,7 +358,7 @@ const InvestorsPage = () => {
             <p style={{ fontSize: 15, fontWeight: 600, color: 'white', opacity: 0.85, maxWidth: 880 }}>
               We're sector-agnostic but technology-obsessed. If you're using tech to create a defensible moat, we want to hear from you.
             </p>
-            <Link to="/portfolio" className="primary-btn" aria-label="View all portfolio companies" style={{ textDecoration: 'none', display: 'inline-block', padding: '10px 24px', fontSize: 14 }}>
+            <Link to="/portfolio" className="primary-btn" aria-label="Investors View All Portfolio CTA" style={{ textDecoration: 'none', display: 'inline-block', padding: '10px 24px', fontSize: 14 }}>
               View All Portfolio →
             </Link>
           </div>
@@ -395,7 +395,7 @@ const InvestorsPage = () => {
                   <img src={t.avatar} alt={`Photo of ${t.author}`} style={{ width: isSmallMobile ? 120 : 160, height: isSmallMobile ? 120 : 180, borderRadius: 20, objectFit: 'cover', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--secondary)', marginBottom: 12 }}>{t.company.toUpperCase()}</div>
+                  <div style={{ fontSize: 13, fontWeight: 700, color: 'white', marginBottom: 12 }}>{t.company.toUpperCase()}</div>
                   <blockquote style={{ margin: 0, padding: 0, border: 'none' }}>
                     <p style={{ fontSize: isSmallMobile ? 14 : 17, color: 'white', lineHeight: 1.6, marginBottom: 24 }}>"{t.quote}"</p>
                   </blockquote>
@@ -455,10 +455,10 @@ const InvestorsPage = () => {
               Connect with enthusiastic innovators who are ambitious to break conformity and redesign the rules of the new world using tech. Join our investor network today.
             </p>
             <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap' }}>
-              <a href="https://forms.gle/RNPwKDHfkdeaffvo7" target="_blank" rel="noopener noreferrer" className="primary-btn" style={{ textDecoration: 'none', display: 'inline-block' }}>
+              <a href="https://forms.gle/RNPwKDHfkdeaffvo7" target="_blank" rel="noopener noreferrer" className="primary-btn" aria-label="Investors Footer Join as Investor CTA" style={{ textDecoration: 'none', display: 'inline-block' }}>
                 Join as Investor →
               </a>
-              <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" style={{ textDecoration: 'none', display: 'inline-block', backgroundColor: '#eef1f9', border: '1px solid rgba(29,47,111,0.15)', color: 'var(--primary)', padding: '12px 28px', borderRadius: 8, fontWeight: 600, fontSize: 14 }}>
+              <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" aria-label="Investors Footer Explore GRO8 Club CTA" style={{ textDecoration: 'none', display: 'inline-block', backgroundColor: '#eef1f9', border: '1px solid rgba(29,47,111,0.15)', color: 'var(--primary)', padding: '12px 28px', borderRadius: 8, fontWeight: 600, fontSize: 14 }}>
                 Explore GRO8 Club
               </a>
             </div>

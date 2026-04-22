@@ -103,10 +103,10 @@ const AboutPage = () => {
                 888vc is an early-stage venture capital firm backing founders building category-defining, technology-led businesses. A peer network of leaders across the globe.
               </p>
               <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-                <Link to="/portfolio" className="primary-btn" style={{ textDecoration: 'none', display: 'inline-block' }}>
+                <Link to="/portfolio" className="primary-btn" aria-label="About Us View Portfolio CTA" style={{ textDecoration: 'none', display: 'inline-block' }}>
                   View Portfolio →
                 </Link>
-                <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" className="secondary-btn" style={{ textDecoration: 'none', borderRadius: '14px', padding: '14px 28px', display: 'inline-block', borderColor: 'rgba(29,47,111,0.15)', color: 'var(--primary)', fontWeight: 700 }}>
+                <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" className="secondary-btn" aria-label="About Us Join our Community CTA" style={{ textDecoration: 'none', borderRadius: '14px', padding: '14px 28px', display: 'inline-block', borderColor: 'rgba(29,47,111,0.15)', color: 'var(--primary)', fontWeight: 700 }}>
                   Join our Community
                 </a>
               </div>
@@ -216,7 +216,7 @@ const AboutPage = () => {
                 overflow: 'hidden',
                 aspectRatio: '3/4'
               }}>
-                <img src={SITE_CONTENT.team.founder.image} alt="Rohit Bafna, Founder and CEO of 888VC" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+                <img src={SITE_CONTENT.team.founder.image} alt={`Photo of ${SITE_CONTENT.team.founder.name}`} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
               </div>
               <div style={{
                 position: 'absolute',
@@ -317,7 +317,7 @@ const AboutPage = () => {
             {SITE_CONTENT.team.members.map((member, i) => (
               <motion.div key={i} whileHover={!motionEnabled ? {} : { y: -10 }} style={{ backgroundColor: 'white', border: '1px solid rgba(29,47,111,0.08)', borderRadius: '20px', overflow: 'hidden' }}>
                 <div style={{ aspectRatio: '1/1.2', overflow: 'hidden' }}>
-                  <img src={member.image} alt={`Photo of ${member.name}, ${member.role}`} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+                  <img src={member.image} alt={`Photo of ${member.name}`} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
                 </div>
                 <div style={{ padding: '20px' }}>
                   <h3 className="text-navy font-bold" style={{ fontSize: '16px', marginBottom: '8px' }}>{member.name}</h3>
@@ -344,7 +344,7 @@ const AboutPage = () => {
             ].map((angel, i) => (
               <motion.div key={i} style={{ backgroundColor: 'white', padding: '32px', borderRadius: '24px', textAlign: 'center', border: '1px solid rgba(29,47,111,0.08)' }}>
                 <div style={{ width: '80px', height: '80px', borderRadius: '50%', overflow: 'hidden', margin: '0 auto 24px' }}>
-                  <img src={angel.img} alt={`Photo of ${angel.name}, ${angel.title}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={angel.img} alt={`Photo of ${angel.name}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <h3 className="text-navy font-bold" style={{ fontSize: '18px', marginBottom: '8px' }}>{angel.name}</h3>
                 <div className="text-orange" style={{ fontSize: '12px', fontWeight: 500 }}>{angel.title}</div>
@@ -375,7 +375,7 @@ const AboutPage = () => {
           <div style={{ fontSize: '12px', fontWeight: 700, marginBottom: '24px', letterSpacing: '1px', opacity: 0.75 }}>GLOBAL PRESENCE</div>
           <h2 style={{ fontSize: '42px', fontWeight: 800, marginBottom: '48px', maxWidth: '800px', margin: '0 auto 48px', lineHeight: '1.2' }}>
             A global community of <br/>
-            investors and founders<span className="text-orange">.</span>
+            investors and founders.
           </h2>
 
           <div style={{
@@ -424,10 +424,10 @@ const AboutPage = () => {
             Whether you're building something extraordinary or looking for your next investment — the 888vc community is where ambition meets capital.
           </p>
           <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" className="primary-btn" style={{ textDecoration: 'none', display: 'inline-block' }}>
+            <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" className="primary-btn" aria-label="About Us Apply as Startup CTA" style={{ textDecoration: 'none', display: 'inline-block' }}>
               Apply as Startup →
             </a>
-            <a href="https://forms.gle/RNPwKDHfkdeaffvo7" target="_blank" rel="noopener noreferrer" className="secondary-btn" style={{
+            <a href="https://forms.gle/RNPwKDHfkdeaffvo7" target="_blank" rel="noopener noreferrer" className="secondary-btn" aria-label="About Us Join as Investor CTA" style={{
                 textDecoration: 'none',
                 display: 'inline-block',
                 borderColor: 'rgba(255,255,255,0.3)',

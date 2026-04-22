@@ -139,7 +139,7 @@ export const ValueProps = () => {
               <div style={{ padding: '32px' }}>
                 <h3 className="text-xl text-navy" style={{ marginBottom: '16px' }}>{card.title}</h3>
                 <p className="text-base text-muted" style={{ marginBottom: '24px', lineHeight: '1.7' }}>{card.description}</p>
-                <Link to={card.href} aria-label={`${card.cta} — ${card.title}`} className="text-orange font-bold text-base" style={{ fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
+                <Link to={card.href} aria-label={`Homepage ${card.title} ${card.cta.replace(' →', '')} CTA`} className="text-orange font-bold text-base" style={{ fontWeight: 700, display: 'inline-flex', alignItems: 'center', gap: '8px' }}>
                   {card.cta}
                 </Link>
               </div>

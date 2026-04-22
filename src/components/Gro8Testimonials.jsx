@@ -135,7 +135,7 @@ export const Testimonials = () => {
 
               {/* Content Side */}
               <div style={{ display: 'flex', flexDirection: 'column', flex: 1, justifyContent: 'center' }}>
-                <div className="text-xs font-bold" style={{ marginBottom: '16px', color: 'var(--secondary)', letterSpacing: '2px' }}>{item.company.toUpperCase()}</div>
+                <div className="text-xs font-bold" style={{ marginBottom: '16px', color: 'white', letterSpacing: '2px' }}>{item.company.toUpperCase()}</div>
                 <blockquote style={{ flex: 1, marginBottom: '24px', margin: 0, padding: 0, border: 'none' }}>
                   <p className="text-lg" style={{ 
                     fontStyle: 'normal', 

@@ -139,16 +139,16 @@ export const Team = () => {
             flexWrap: 'wrap'
           }}
         >
-          <div
-            role="img"
+          <img
+            src={founder.image}
+            alt={`Photo of ${founder.name}, Founder & CEO of 888VC`}
             className="mobile-grid-1"
-            aria-label={`Photo of ${founder.name}, ${founder.role}`}
             style={{
               width: isSmallMobile ? '100%' : '260px',
               minHeight: '250px',
-              backgroundImage: `url("${founder.image}")`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'top center'
+              objectFit: 'cover',
+              objectPosition: 'top center',
+              display: 'block'
             }}
           />
           <div style={{ padding: '40px', flex: 1, minWidth: '280px' }}>
@@ -180,7 +180,7 @@ export const Team = () => {
             >
               <img
                 src={member.image}
-                alt={`Photo of ${member.name}, ${member.role}`}
+                alt={`Photo of ${member.name}`}
                 style={{ width: '100%', height: '180px', objectFit: 'cover', objectPosition: 'top', display: 'block' }}
               />
               <div style={{ padding: '20px' }}>

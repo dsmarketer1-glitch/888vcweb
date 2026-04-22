@@ -173,7 +173,7 @@ const StartupPage = () => {
               The 888vc × GRO8 AI-Enabled 12-Week Venture Accelerator — integrating capital, mentorship, and global networks to take your startup from product to scale.
             </p>
             <div style={{ display: 'flex', gap: 16, marginBottom: 24, flexWrap: 'wrap' }}>
-              <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" className="primary-btn" style={{ textDecoration: 'none', display: 'inline-block' }}>
+              <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" className="primary-btn" aria-label="Startup Apply Now CTA" style={{ textDecoration: 'none', display: 'inline-block' }}>
                 Apply Now →
               </a>
             </div>
@@ -283,7 +283,7 @@ const StartupPage = () => {
 
           {/* Timeline line */}
           <div style={{ position: 'relative' }}>
-            {!isMobile && <div style={{ position: 'absolute', top: 46, left: 86, right: 86, height: 2, backgroundColor: '#eb3a1b', opacity: 0.35 }} aria-hidden="true" />}
+            {!isMobile && <div style={{ position: 'absolute', top: 46, left: 86, right: 86, height: 2, backgroundColor: 'var(--secondary)', opacity: 0.35 }} aria-hidden="true" />}
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(240px, 1fr))', gap: 22 }}>
               {phases.map((p, i) => (
                 <motion.div key={i} initial={!motionEnabled ? {} : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
@@ -329,7 +329,7 @@ const StartupPage = () => {
               ))}
             </div>
 
-            <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" className="primary-btn" style={{ textDecoration: 'none', display: 'inline-block', padding: '10px 28px', fontSize: 14 }}>
+            <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" className="primary-btn" aria-label="Startup Apply for Next Cohort CTA" style={{ textDecoration: 'none', display: 'inline-block', padding: '10px 28px', fontSize: 14 }}>
               Apply for Next Cohort →
             </a>
           </div>
@@ -417,7 +417,7 @@ const StartupPage = () => {
             <Link to="/portfolio" aria-label="View full portfolio of 50+ companies" style={{ display: 'block', textDecoration: 'none' }}>
               <div style={{ backgroundColor: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 14, overflow: 'hidden', height: '100%' }}>
                 <div style={{ height: 140, overflow: 'hidden' }}>
-                  <img src={imgPF5} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={imgPF5} alt="Sanfe portfolio showcase" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <div style={{ padding: '8px 15px 14px' }}>
                   <div style={{ fontSize: 18, fontWeight: 700, color: 'white' }}>50+ Companies →</div>

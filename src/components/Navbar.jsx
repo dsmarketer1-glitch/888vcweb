@@ -115,23 +115,25 @@ export const Navbar = () => {
         width: '100%'
       }}
     >
-      <Link to="/" aria-label="888VC Home" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-        <img src="/assets/logo.svg" alt="" aria-hidden="true" style={{ height: isMobile ? '36px' : '42px', width: 'auto' }} />
-        <span className="visually-hidden">888VC Home</span>
+      <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+        <img src="/assets/logo.svg" alt="888VC Home" style={{ height: isMobile ? '36px' : '42px', width: 'auto' }} />
       </Link>
 
       {/* Desktop Links */}
       {!isMobile && (
-        <div style={{
+        <ul style={{
           display: 'flex',
           gap: '32px',
           marginLeft: 'auto',
-          marginRight: '32px'
+          marginRight: '32px',
+          listStyle: 'none',
+          padding: 0,
+          margin: '0 32px 0 auto'
         }}>
           {links.map((link, i) => {
             const active = isActive(link);
             return (
-              <div 
+              <li 
                 key={i} 
                 style={{ position: 'relative' }}
                 onMouseEnter={() => link.hasDropdown && setActiveDropdown(i)}
@@ -159,7 +161,7 @@ export const Navbar = () => {
                 </Link>
 
                 {link.hasDropdown && activeDropdown === i && (
-                  <div 
+                  <ul 
                     role="menu"
                     style={{
                       position: 'absolute',
@@ -171,14 +173,13 @@ export const Navbar = () => {
                       padding: '12px 0',
                       minWidth: '220px',
                       zIndex: 1001,
-                      border: '1px solid var(--border-muted)'
+                      border: '1px solid var(--border-muted)',
+                      listStyle: 'none'
                     }}
                   >
                     {link.dropdownItems.map((item, idx) => {
                       const isExternal = item.href.startsWith('http');
                       const linkProps = {
-                        key: idx,
-                        role: "menuitem",
                         style: {
                           display: 'block',
                           padding: '12px 24px',
@@ -191,22 +192,26 @@ export const Navbar = () => {
                         }
                       };
 
-                      return isExternal ? (
-                        <a href={item.href} target="_blank" rel="noopener noreferrer" {...linkProps}>
-                          {item.label}
-                        </a>
-                      ) : (
-                        <Link to={item.href} {...linkProps}>
-                          {item.label}
-                        </Link>
+                      return (
+                        <li key={idx} role="none">
+                          {isExternal ? (
+                            <a href={item.href} target="_blank" rel="noopener noreferrer" role="menuitem" {...linkProps}>
+                              {item.label}
+                            </a>
+                          ) : (
+                            <Link to={item.href} role="menuitem" {...linkProps}>
+                              {item.label}
+                            </Link>
+                          )}
+                        </li>
                       );
                     })}
-                  </div>
+                  </ul>
                 )}
-              </div>
+              </li>
             );
           })}
-        </div>
+        </ul>
       )}
 
 
@@ -214,6 +219,7 @@ export const Navbar = () => {
         <Link 
           to={ctaHref} 
           className="primary-btn" 
+          aria-label="Navbar Join Our Community CTA"
           style={{ 
             fontSize: '12px', 
             textDecoration: 'none' 
@@ -259,40 +265,44 @@ export const Navbar = () => {
             }}
           >
 
-            {links.map((link, i) => (
-              <div key={i}>
-                <Link
-                  to={link.href}
-                  style={{
-                    fontSize: '18px',
-                    fontWeight: 600,
-                    color: isActive(link) ? 'var(--secondary)' : 'var(--primary)',
-                    display: 'block',
-                    padding: '8px 0'
-                  }}
-                  onClick={() => !link.hasDropdown && setIsMenuOpen(false)}
-                >
-                  {link.label}
-                </Link>
-                {link.hasDropdown && (
-                  <div style={{ marginTop: '12px', paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                    {link.dropdownItems.map((item, idx) => (
-                      <Link
-                        key={idx}
-                        to={item.href}
-                        style={{ fontSize: '16px', color: 'var(--text-secondary)', fontWeight: 500, padding: '4px 0' }}
-                        onClick={() => setIsMenuOpen(false)}
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
+            <ul style={{ display: 'flex', flexDirection: 'column', gap: '20px', listStyle: 'none', padding: 0 }}>
+              {links.map((link, i) => (
+                <li key={i}>
+                  <Link
+                    to={link.href}
+                    style={{
+                      fontSize: '18px',
+                      fontWeight: 600,
+                      color: isActive(link) ? 'var(--secondary)' : 'var(--primary)',
+                      display: 'block',
+                      padding: '8px 0'
+                    }}
+                    onClick={() => !link.hasDropdown && setIsMenuOpen(false)}
+                  >
+                    {link.label}
+                  </Link>
+                  {link.hasDropdown && (
+                    <ul style={{ marginTop: '12px', paddingLeft: '16px', display: 'flex', flexDirection: 'column', gap: '16px', listStyle: 'none' }}>
+                      {link.dropdownItems.map((item, idx) => (
+                        <li key={idx}>
+                          <Link
+                            to={item.href}
+                            style={{ fontSize: '16px', color: 'var(--text-secondary)', fontWeight: 500, padding: '4px 0' }}
+                            onClick={() => setIsMenuOpen(false)}
+                          >
+                            {item.label}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </li>
+              ))}
+            </ul>
             <Link 
               to={ctaHref} 
               className="primary-btn" 
+              aria-label="Mobile Menu Join Our Community CTA"
               style={{ 
                 width: '100%', 
                 justifyContent: 'center', 

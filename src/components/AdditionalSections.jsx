@@ -52,7 +52,7 @@ export const SuperAngels = () => {
             >
               <img
                 src={angel.image}
-                alt={`Photo of ${angel.name}, ${angel.role}`}
+                alt={`Photo of ${angel.name}`}
                 style={{
                   width: '100px',
                   height: '100px',
@@ -211,16 +211,17 @@ export const News = () => {
             href={featured.url} 
             target="_blank" 
             rel="noopener noreferrer"
+            aria-label={`Homepage News: Read more about ${featured.title}`}
             style={{ textDecoration: 'none', display: 'block' }}
           >
             <motion.article
               whileHover={!motionEnabled ? {} : { y: -8, boxShadow: '0 20px 40px rgba(0,0,0,0.08)' }}
               style={{ backgroundColor: 'white', borderRadius: '24px', overflow: 'hidden', boxShadow: '0 10px 30px rgba(0,0,0,0.03)', transition: 'all 0.3s ease' }}
             >
-              <div
-                role="img"
-                aria-label={featured.title}
-                style={{ height: '320px', backgroundImage: `url("${featured.image}")`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+              <img
+                src={featured.image}
+                alt={`Cover image for: ${featured.title}`}
+                style={{ width: '100%', height: '320px', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
               />
               <div style={{ padding: '40px' }}>
                 <div className="text-xs text-orange font-bold" style={{ marginBottom: '16px', letterSpacing: '1px' }}>{featured.category}</div>
@@ -240,16 +241,17 @@ export const News = () => {
                 href={item.url} 
                 target="_blank" 
                 rel="noopener noreferrer"
+                aria-label={`Homepage News: Read more about ${item.title}`}
                 style={{ textDecoration: 'none', display: 'block' }}
               >
                 <motion.article
                   whileHover={!motionEnabled ? {} : { x: 10, backgroundColor: '#fff', boxShadow: '0 8px 25px rgba(0,0,0,0.05)' }}
                   style={{ backgroundColor: 'white', borderRadius: '20px', display: 'flex', overflow: 'hidden', boxShadow: '0 4px 15px rgba(0,0,0,0.02)', transition: 'all 0.3s ease' }}
                 >
-                  <div
-                    role="img"
-                    aria-label={item.title}
-                    style={{ width: isSmallMobile ? '100px' : '160px', minWidth: isSmallMobile ? '100px' : '160px', backgroundImage: `url("${item.image}")`, backgroundSize: 'cover', backgroundPosition: 'center' }}
+                  <img
+                    src={item.image}
+                    alt={`Cover image for: ${item.title}`}
+                    style={{ width: isSmallMobile ? '100px' : '160px', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
                   />
                   <div style={{ padding: '24px', flex: 1 }}>
                     <div className="text-xs text-orange font-bold" style={{ marginBottom: '10px' }}>{item.category}</div>
@@ -305,10 +307,10 @@ export const CTABanner = () => {
           Whether you're building or investing — join the 888vc community where ambition meets capital.
         </p>
         <div style={{ display: 'flex', gap: '24px', justifyContent: 'center', flexWrap: 'wrap' }}>
-          <Link to="/startup" className="primary-btn" style={{ padding: '16px 40px', fontSize: '16px', display: 'inline-block', textDecoration: 'none' }}>
+          <Link to="/startup" className="primary-btn" aria-label="Homepage Bottom CTA Apply as Startup CTA" style={{ padding: '16px 40px', fontSize: '16px', display: 'inline-block', textDecoration: 'none' }}>
             Apply as Startup →
           </Link>
-          <Link to="/investors" className="secondary-btn" style={{ padding: '16px 40px', fontSize: '16px', display: 'inline-block', textDecoration: 'none' }}>
+          <Link to="/investors" className="secondary-btn" aria-label="Homepage Bottom CTA Join as Investor CTA" style={{ padding: '16px 40px', fontSize: '16px', display: 'inline-block', textDecoration: 'none' }}>
             Join as Investor
           </Link>
         </div>
@@ -335,9 +337,9 @@ export const Footer = () => {
         </p>
       </div>
       <div>
-        <h4 className="text-sm text-orange" style={{ marginBottom: '28px', letterSpacing: '1px' }}>PAGES</h4>
+        <h4 className="text-sm" style={{ marginBottom: '28px', letterSpacing: '1px', color: 'white' }}>PAGES</h4>
         <nav aria-label="Footer navigation">
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '15px' }}>
+          <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '15px', listStyle: 'none', padding: 0 }}>
             {[
               { label: 'About Us', path: '/about' },
               { label: 'Investors', path: '/investors' },
@@ -347,40 +349,43 @@ export const Footer = () => {
               { label: 'Blogs', path: '#' },
               { label: 'Join GRO8', path: '#' }
             ].map(link => (
-              <Link key={link.label} to={link.path} style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none', transition: 'color 0.3s ease' }}>
-                {link.label}
-              </Link>
+              <li key={link.label}>
+                <Link to={link.path} style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none', transition: 'color 0.3s ease' }}>
+                  {link.label}
+                </Link>
+              </li>
             ))}
-          </div>
+          </ul>
         </nav>
       </div>
       <div>
-        <h4 className="text-sm text-orange" style={{ marginBottom: '28px', letterSpacing: '1px' }}>CONTACT</h4>
+        <h4 className="text-sm" style={{ marginBottom: '28px', letterSpacing: '1px', color: 'white' }}>CONTACT</h4>
         <address style={{ fontStyle: 'normal', lineHeight: '2', fontSize: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
           <p style={{ color: 'rgba(255,255,255,0.85)' }}>NETWORK888 ACCELERATOR LLP</p>
           <p style={{ color: 'rgba(255,255,255,0.85)' }}>Whitefield, Bengaluru 560066</p>
-          <a href="tel:+919731227263" style={{ color: 'var(--secondary)', fontWeight: 600, textDecoration: 'none' }}>+91 97312 27263</a>
-          <a href="mailto:info@888vc.co" style={{ color: 'var(--secondary)', fontWeight: 600, textDecoration: 'none' }}>info@888vc.co</a>
+          <a href="tel:+919731227263" style={{ color: 'white', fontWeight: 600, textDecoration: 'none' }}>+91 97312 27263</a>
+          <a href="mailto:info@888vc.co" style={{ color: 'white', fontWeight: 600, textDecoration: 'none' }}>info@888vc.co</a>
         </address>
       </div>
       <div>
-         <h4 className="text-sm text-orange" style={{ marginBottom: '28px', letterSpacing: '1px' }}>FOLLOW</h4>
-         <div style={{ display: 'flex', gap: '20px' }}>
+         <h4 className="text-sm" style={{ marginBottom: '28px', letterSpacing: '1px', color: 'white' }}>FOLLOW</h4>
+         <ul style={{ display: 'flex', gap: '20px', listStyle: 'none', padding: 0 }}>
             {[
               { name: 'LinkedIn', url: '#' },
               { name: 'Twitter', url: '#' },
               { name: 'Instagram', url: '#' }
             ].map(social => (
-              <a
-                key={social.name}
-                href={social.url}
-                aria-label={`Follow 888VC on ${social.name}`}
-                style={{ fontSize: '14px', color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}
-              >
-                {social.name}
-              </a>
+              <li key={social.name}>
+                <a
+                  href={social.url}
+                  aria-label={`Follow 888VC on ${social.name}`}
+                  style={{ fontSize: '14px', color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}
+                >
+                  {social.name}
+                </a>
+              </li>
             ))}
-         </div>
+         </ul>
       </div>
     </div>
     <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '40px', display: 'flex', justifyContent: 'space-between', fontSize: '14px', fontWeight: 500, flexWrap: 'wrap', gap: '16px' }}>

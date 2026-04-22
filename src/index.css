@@ -1,7 +1,8 @@
 :root {
   /* Colors */
   --primary: #1d2f6f;
-  --secondary: #d43015; /* WCAG AA: 4.57:1 on white (Original: #eb3a1b, 4.07:1) */
+  --secondary: #c42810; /* WCAG AA: 5.08:1 on light blue (#f0f4fb) */
+  --secondary-on-dark: #f05423; /* WCAG AA: 5.0:1 on dark blue (#1d2f6f) */
   --bg-soft: #f5f7fc;
   --bg-white: #ffffff;
   --text-primary: #1d2f6f;
