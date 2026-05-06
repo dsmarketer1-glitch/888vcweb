@@ -59,7 +59,7 @@ const sectors = ["Deeptech", "AI", "Manufacturing", "Consumer", "Semiconductor",
 
 
 const PortfolioPage = () => {
-  usePageTitle('Portfolio — 888VC');
+  usePageTitle('888VC Portfolio — 50+ Startup Investments in AI, Deeptech, Fintech & More');
   const { motionEnabled } = useAccessibility();
   const isMobile = useIsMobile(1024);
   const isSmallMobile = useIsMobile(768);
@@ -82,7 +82,7 @@ const PortfolioPage = () => {
               <p className="text-lg text-muted" style={{ maxWidth: '560px', marginBottom: '40px' }}>
                 From seed to Series A and beyond — 50+ companies, $1Bn+ in combined valuation, backed by 888vc and the world's best co-investors.
               </p>
-              <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" className="primary-btn" aria-label="Portfolio Join Our Community CTA" style={{ textDecoration: 'none' }}>
+              <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" className="primary-btn" aria-label="Join the 888VC investor community on Gro8 (opens in a new tab)" style={{ textDecoration: 'none' }}>
                 Join Our Community →
               </a>
             </div>
@@ -115,28 +115,33 @@ const PortfolioPage = () => {
       <div style={{ borderBottom: '1px solid var(--border-muted)', backgroundColor: 'white', position: 'sticky', top: isMobile ? '60px' : '70px', zIndex: 100 }}>
         <div className="container" style={{ display: 'flex', alignItems: isMobile ? 'flex-start' : 'center', justifyContent: 'space-between', padding: '16px 0', flexDirection: isMobile ? 'column' : 'row', gap: '20px' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '24px', flexWrap: 'wrap' }}>
-            <div style={{ fontSize: '14px', fontWeight: 700, color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '1px' }}>Invested Sectors</div>
-            <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }}>
+            <h3 style={{ fontSize: '14px', fontWeight: 700, color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '1px', margin: 0 }}>Invested Sectors</h3>
+            <ul className="a11y-list" style={{ display: 'flex', gap: '8px', flexWrap: 'wrap' }} role="list">
               {sectors.map(sector => (
-                <div
-                  key={sector}
-                  style={{
-                    padding: '8px 20px',
-                    borderRadius: '24px',
-                    fontSize: '13px',
-                    fontWeight: 600,
-                    backgroundColor: '#f0f4ff',
-                    color: 'var(--primary)',
-                    border: '1px solid rgba(29, 47, 111, 0.08)',
-                    whiteSpace: 'nowrap'
-                  }}
-                >
-                  {sector}
-                </div>
+                <li key={sector}>
+                  <button
+                    type="button"
+                    className="a11y-tag"
+                    aria-pressed="false"
+                    aria-label={`Filter by ${sector}`}
+                    style={{
+                      padding: '8px 20px',
+                      borderRadius: '24px',
+                      fontSize: '13px',
+                      fontWeight: 600,
+                      backgroundColor: '#f0f4ff',
+                      color: 'var(--primary)',
+                      border: '1px solid rgba(29, 47, 111, 0.08)',
+                      whiteSpace: 'nowrap',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    {sector}
+                  </button>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
-          <div className="text-sm text-navy" style={{ fontWeight: 600 }}>{portfolioData.length} companies</div>
         </div>
       </div>
 
@@ -146,10 +151,11 @@ const PortfolioPage = () => {
           <div className="text-orange text-sm font-bold" style={{ marginBottom: '12px' }}>OUR PORTFOLIO</div>
           <h2 className="text-3xl text-navy" style={{ marginBottom: '60px' }}>Companies we've backed</h2>
 
-          <div id="portfolio-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
+          <ul id="portfolio-grid" className="a11y-list" role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
             {portfolioData.map((item, i) => (
+              <li key={item.name} style={{ listStyle: 'none' }}>
               <motion.article
-                key={item.name}
+                
                 initial={!motionEnabled ? {} : { opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.4 }}
@@ -164,14 +170,13 @@ const PortfolioPage = () => {
                 }}
               >
                 <div
-                  role="img"
-                  aria-label={`${item.name} cover image`}
+                  aria-hidden="true"
                   style={{ height: '180px', backgroundImage: `url("${item.image}")`, backgroundSize: 'cover', backgroundPosition: 'center', position: 'relative' }}
                 >
                   {/* Company Logo — Top Left */}
-                  <div style={{ position: 'absolute', top: '15px', left: '15px', backgroundColor: 'white', padding: '8px', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', zIndex: 3 }}>
-                    <img src={item.logo} alt={`${item.name} logo`} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
-                  </div>
+                  <button type="button" className="overlay-action" aria-label={`Open ${item.name} project details`} style={{ position: 'absolute', top: '15px', left: '15px', backgroundColor: 'white', padding: '8px', borderRadius: '8px', boxShadow: '0 2px 10px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '40px', height: '40px', zIndex: 3, border: '1px solid transparent', cursor: 'pointer' }}>
+                    <img src={item.logo} alt="" aria-hidden="true" style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }} />
+                  </button>
 
                   {/* Floating Founder Card — Floating Right */}
                   <div style={{
@@ -194,32 +199,33 @@ const PortfolioPage = () => {
                       overflow: 'hidden',
                       marginBottom: '8px'
                     }}>
-                      <img src={item.founderPhoto} alt={`Photo of ${item.founderName}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <img src={item.founderPhoto} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     </div>
-                    {/* Name (Just the name) */}
-                    <div style={{ fontSize: '11px', fontWeight: 800, color: 'var(--primary)', lineHeight: '1.2' }}>
+                    {/* Founder Name */}
+                    <button type="button" className="author-tag" aria-label={`View author ${item.founderName}`} style={{ fontSize: '11px', fontWeight: 800, color: 'var(--primary)', lineHeight: '1.2', background: 'transparent', border: 'none', padding: 0, cursor: 'pointer', font: 'inherit' }}>
                       {item.founderName}
-                    </div>
+                    </button>
                   </div>
                 </div>
                 
                 <div style={{ padding: '40px 24px 24px' }}>
                   <div style={{ display: 'flex', gap: '8px', marginBottom: '16px', flexWrap: 'wrap' }}>
-                    <span style={{ backgroundColor: 'var(--bg-soft)', padding: '4px 12px', borderRadius: '12px', fontSize: '11px', color: 'var(--text-secondary)', fontWeight: 600 }}>{item.category}</span>
-                    <span style={{ backgroundColor: 'white', border: '1px solid var(--secondary)', padding: '4px 12px', borderRadius: '12px', fontSize: '11px', color: 'var(--secondary)', fontWeight: 600 }}>{item.stage}</span>
+                    <button type="button" className="tag" aria-pressed="false" aria-label={`Filter by ${item.category}`} style={{ backgroundColor: 'var(--bg-soft)', padding: '4px 12px', borderRadius: '12px', fontSize: '11px', color: 'var(--text-secondary)', fontWeight: 600, border: 'none', cursor: 'pointer' }}>{item.category}</button>
+                    <button type="button" className="tag-outline" aria-pressed="false" aria-label={`Filter by ${item.stage}`} style={{ backgroundColor: 'white', border: '1px solid var(--secondary)', padding: '4px 12px', borderRadius: '12px', fontSize: '11px', color: 'var(--secondary)', fontWeight: 600, cursor: 'pointer' }}>{item.stage}</button>
                   </div>
                   
                   <h3 className="text-xl text-navy" style={{ marginBottom: '8px', fontWeight: 800 }}>{item.name}</h3>
-                  <div className="text-xs text-muted" style={{ marginBottom: '24px' }}>Co-invested: {item.coInvested}</div>
+                  <p className="text-xs text-muted" style={{ marginBottom: '24px' }}>Co-invested: {item.coInvested}</p>
 
                   <a href={item.url} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${item.name} website`} className="text-orange font-bold text-sm" style={{ display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
                     Visit Website <span style={{ fontSize: '16px' }}>→</span>
                   </a>
                 </div>
               </motion.article>
+              </li>
             ))}
 
-          </div>
+          </ul>
         </div>
       </section>
 
@@ -229,27 +235,31 @@ const PortfolioPage = () => {
           <div className="text-orange text-sm font-bold" style={{ marginBottom: '12px' }}>SUCCESS STORIES</div>
           <h2 className="text-3xl text-navy" style={{ marginBottom: '60px' }}>Portfolio milestones that matter.</h2>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px' }}>
-            <motion.article whileHover={!motionEnabled ? {} : { y: -5 }} style={{ backgroundColor: 'var(--primary)', color: 'white', padding: '40px', borderRadius: '24px' }}>
-              <div style={{ fontSize: '11px', fontWeight: 700, opacity: 0.7, marginBottom: '24px' }}>ACQUISITION</div>
-              <h3 style={{ fontSize: '24px', fontWeight: 800, marginBottom: '8px' }}>Finly</h3>
-              <div style={{ fontSize: '36px', fontWeight: 800, marginBottom: '24px' }}>Acquired</div>
-              <p style={{ fontSize: '15px', opacity: 0.85, lineHeight: '1.7', marginBottom: '32px' }}>
-                Finly's AP automation platform was successfully acquired by a large Fintech company in the US — a landmark exit that validated our early conviction.
-              </p>
-              <div style={{ fontSize: '12px', opacity: 0.5 }}>B2B SaaS · Exit via Acquisition</div>
-            </motion.article>
+          <ul className="a11y-list" role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: '32px', listStyle: 'none', padding: 0, margin: 0 }}>
+            <li>
+              <motion.article whileHover={!motionEnabled ? {} : { y: -5 }} style={{ backgroundColor: 'var(--primary)', color: 'white', padding: '40px', borderRadius: '24px' }}>
+                <div style={{ fontSize: '11px', fontWeight: 700, opacity: 0.7, marginBottom: '24px' }}>ACQUISITION</div>
+                <h3 style={{ fontSize: '24px', fontWeight: 800, marginBottom: '8px' }}>Finly</h3>
+                <div style={{ fontSize: '36px', fontWeight: 800, marginBottom: '24px' }}>Acquired</div>
+                <p style={{ fontSize: '15px', opacity: 0.85, lineHeight: '1.7', marginBottom: '32px' }}>
+                  Finly's AP automation platform was successfully acquired by a large Fintech company in the US — a landmark exit that validated our early conviction.
+                </p>
+                <p style={{ fontSize: '12px', opacity: 0.5 }}>B2B SaaS · Exit via Acquisition</p>
+              </motion.article>
+            </li>
 
-            <motion.article whileHover={!motionEnabled ? {} : { y: -5 }} style={{ backgroundColor: 'white', padding: '40px', borderRadius: '24px', border: '1px solid var(--border-muted)' }}>
-              <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--secondary)', marginBottom: '24px' }}>SERIES A</div>
-              <h3 className="text-navy" style={{ fontSize: '24px', fontWeight: 800, marginBottom: '8px' }}>Rooter</h3>
-              <div className="text-navy" style={{ fontSize: '32px', fontWeight: 800, marginBottom: '24px' }}>Series A ✓</div>
-              <p className="text-muted" style={{ fontSize: '15px', lineHeight: '1.7', marginBottom: '32px' }}>
-                Rooter raised a strong Series A round with marquee investors — validating 888vc's early conviction in India's gaming content sector.
-              </p>
-              <div className="text-muted" style={{ fontSize: '12px' }}>Gaming · Series A</div>
-            </motion.article>
-          </div>
+            <li>
+              <motion.article whileHover={!motionEnabled ? {} : { y: -5 }} style={{ backgroundColor: 'white', padding: '40px', borderRadius: '24px', border: '1px solid var(--border-muted)' }}>
+                <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--secondary)', marginBottom: '24px' }}>SERIES A</div>
+                <h3 className="text-navy" style={{ fontSize: '24px', fontWeight: 800, marginBottom: '8px' }}>Rooter</h3>
+                <div className="text-navy" style={{ fontSize: '32px', fontWeight: 800, marginBottom: '24px' }}>Series A ✓</div>
+                <p className="text-muted" style={{ fontSize: '15px', lineHeight: '1.7', marginBottom: '32px' }}>
+                  Rooter raised a strong Series A round with marquee investors — validating 888vc's early conviction in India's gaming content sector.
+                </p>
+                <p className="text-muted" style={{ fontSize: '12px' }}>Gaming · Series A</p>
+              </motion.article>
+            </li>
+          </ul>
         </div>
       </section>
 
@@ -262,7 +272,7 @@ const PortfolioPage = () => {
           <p className="text-lg text-white" style={{ opacity: 0.85, marginBottom: '40px' }}>
             50+ startup investments · $100Mn+ syndicated · Cross-border India–US community
           </p>
-          <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" className="primary-btn" aria-label="Portfolio Join Us CTA" style={{ textDecoration: 'none', display: 'inline-block', padding: '16px 40px', fontSize: '16px' }}>
+          <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" className="primary-btn" aria-label="Join 888VC as an investor — submit application form (opens in a new tab)" style={{ textDecoration: 'none', display: 'inline-block', padding: '16px 40px', fontSize: '16px' }}>
             Join Us →
           </a>
         </div>

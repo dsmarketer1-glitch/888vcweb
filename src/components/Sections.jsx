@@ -107,35 +107,37 @@ export const ValueProps = () => {
           <p className="text-lg text-muted" style={{ maxWidth: '680px', marginBottom: '60px', fontSize: isSmallMobile ? '16px' : '18px' }}>{description}</p>
         </motion.div>
 
-        <div style={{
+        <ul className="a11y-list" role="list" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-          gap: '24px'
+          gap: '24px',
+          listStyle: 'none',
+          padding: 0,
+          margin: 0
         }}>
           {cards.map((card, i) => (
-            <motion.div
-              key={i}
-              initial={!motionEnabled ? {} : { opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: !motionEnabled ? 0 : i * 0.2, duration: 0.6 }}
-              whileHover={!motionEnabled ? {} : { y: -10, scale: 1.02 }}
-              style={{
-                backgroundColor: 'white',
-                borderRadius: '20px',
-                overflow: 'hidden',
-                boxShadow: '0 10px 30px rgba(29, 47, 111, 0.05)'
-              }}
-            >
-              <div
-                role="img"
-                aria-label={card.title + ' illustration'}
+            <li key={i}>
+              <motion.div
+                initial={!motionEnabled ? {} : { opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: !motionEnabled ? 0 : i * 0.2, duration: 0.6 }}
+                whileHover={!motionEnabled ? {} : { y: -10, scale: 1.02 }}
                 style={{
-                  height: '200px',
-                  backgroundImage: `url("${card.image}")`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center'
+                  backgroundColor: 'white',
+                  borderRadius: '20px',
+                  overflow: 'hidden',
+                  boxShadow: '0 10px 30px rgba(29, 47, 111, 0.05)'
                 }}
-              />
+              >
+                <div
+                  aria-hidden="true"
+                  style={{
+                    height: '200px',
+                    backgroundImage: `url("${card.image}")`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center'
+                  }}
+                />
               <div style={{ padding: '32px' }}>
                 <h3 className="text-xl text-navy" style={{ marginBottom: '16px' }}>{card.title}</h3>
                 <p className="text-base text-muted" style={{ marginBottom: '24px', lineHeight: '1.7' }}>{card.description}</p>
@@ -143,9 +145,10 @@ export const ValueProps = () => {
                   {card.cta}
                 </Link>
               </div>
-            </motion.div>
+              </motion.div>
+            </li>
           ))}
-        </div>
+        </ul>
       </motion.div>
     </section>
   );

@@ -58,15 +58,20 @@ export const Hero = () => {
           style={{ width: '100%', height: '100%' }}
         >
           {/* Parallax Background */}
-          <motion.div style={{
-            position: 'absolute',
-            inset: 0,
-            backgroundImage: `url("${slides[currentSlide].bgImage}")`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            opacity: 0.4,
-            y: y1
-          }} aria-hidden="true" />
+          <motion.img 
+            src={slides[currentSlide].bgImage}
+            alt={slides[currentSlide].altText || ""}
+            style={{
+              position: 'absolute',
+              inset: 0,
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover',
+              objectPosition: 'center',
+              opacity: 0.4,
+              y: y1
+            }} 
+          />
 
           <div style={{
             position: 'absolute',

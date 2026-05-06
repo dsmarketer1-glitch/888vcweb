@@ -32,22 +32,26 @@ export const SITE_CONTENT = {
       {
         eyebrow: "EARLY-STAGE VENTURE CAPITAL · INDIA × US",
         title: "Backing Those Who Dare to Build Beyond Limits",
-        bgImage: "/assets/webimages/Homepage/Hero/1.JPG"
+        bgImage: "/assets/webimages/Homepage/Hero/1.JPG",
+        altText: "Founders and investors networking at an 888VC event"
       },
       {
         eyebrow: "DYNAMIC SECTOR FOCUS · GLOBAL IMPACT",
         title: "Backing Those Who Dare to Redefine Industries",
-        bgImage: "/assets/webimages/Homepage/Hero/2.JPG"
+        bgImage: "/assets/webimages/Homepage/Hero/2.JPG",
+        altText: "Industry leaders speaking at a panel discussion"
       },
       {
         eyebrow: "CROSS-BORDER ACCELERATION · INDIA × US",
         title: "Backing Those Who Dare to Go Cross-Border",
-        bgImage: "/assets/webimages/Homepage/Hero/3.JPG"
+        bgImage: "/assets/webimages/Homepage/Hero/3.JPG",
+        altText: "Team collaborating in a modern workspace — 888VC portfolio"
       },
       {
         eyebrow: "LONG-TERM VISION · STRATEGIC CAPITAL",
         title: "Backing Those Who Dare to Create Generational Companies",
-        bgImage: "/assets/webimages/Homepage/Hero/4.jpg"
+        bgImage: "/assets/webimages/Homepage/Hero/4.jpg",
+        altText: "Group of founders working in a startup office, illustrating collaboration at 888VC"
       }
     ]
   },
@@ -185,14 +189,14 @@ export const SITE_CONTENT = {
         category: "VCCIRCLE", 
         title: "Cross-Border Investment Platform 888VC Floats Maiden VC Fund", 
         date: "Sep 22, 2025", 
-        image: "https://assets.vccircle.com/uploads/2022/08/Venturecapitalrfxl.jpg",
+        image: "/assets/webimages/News/venture_capital_no_text.png",
         url: "https://www.vccircle.com/crossborder-investment-platform-888vc-floats-maiden-vc-fund"
       },
       { 
         category: "TICE NEWS", 
         title: "888VC Bets Big On India’s Deeptech With Maiden ₹175 Cr Fund", 
         date: "Sep 22, 2025", 
-        image: "https://img-cdn.publive.online/fit-in/1200x675/tice-news-prod/media/media_files/2025/09/22/888vc-bets-big-on-indian-deeptech-startups-2025-09-22-21-23-00.jpg",
+        image: "/assets/webimages/News/deeptech_founder_no_text.png",
         url: "https://www.tice.news/tice-trending/888vc-bets-big-on-indias-deeptech-with-maiden-175-cr-fund-10490304"
       },
       { 

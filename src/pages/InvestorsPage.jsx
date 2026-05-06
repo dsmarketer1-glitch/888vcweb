@@ -90,7 +90,7 @@ const sectorColors = ['var(--secondary)', '#1d2f6f', '#2aa86b', '#e67e22', '#9b5
 /* ═══════════════════════════════ COMPONENT ═══════════════════════════════ */
 
 const InvestorsPage = () => {
-  usePageTitle('For Investors — 888VC');
+  usePageTitle('888VC — Investors | Join Our Network');
   const { motionEnabled } = useAccessibility();
   const isMobile = useIsMobile(1024);
   const isSmallMobile = useIsMobile(768);
@@ -109,9 +109,9 @@ const InvestorsPage = () => {
         <div className="container hero-grid" style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 480px', gap: isMobile ? '40px' : '60px', alignItems: 'start' }}>
           {/* Left */}
           <motion.div initial={!motionEnabled ? {} : { opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <div style={{ backgroundColor: 'rgba(235,58,27,0.1)', display: 'inline-block', padding: '6px 20px', borderRadius: 15, marginBottom: 24 }}>
+            <button type="button" className="badge" style={{ backgroundColor: 'rgba(235,58,27,0.1)', border: 'none', display: 'inline-block', padding: '6px 20px', borderRadius: 15, marginBottom: 24, cursor: 'default' }}>
               <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--primary)' }}>INVEST IN INDIA'S NEXT WAVE</span>
-            </div>
+            </button>
 
             <h1 style={{ fontSize: isSmallMobile ? '38px' : (isMobile ? '48px' : 68), fontWeight: 800, lineHeight: 1.1, marginBottom: 24 }}>
               <span style={{ color: 'var(--primary)', display: 'block' }}>Back the builders</span>
@@ -133,14 +133,16 @@ const InvestorsPage = () => {
 
             {/* Trust Badges */}
             <div style={{ borderTop: '1px solid rgba(29,47,111,0.12)', paddingTop: 16 }}>
-              <div style={{ display: 'flex', gap: 32, flexWrap: 'wrap' }}>
+              <ul className="a11y-list features" role="list" style={{ display: 'flex', gap: 32, flexWrap: 'wrap', listStyle: 'none', padding: 0, margin: 0 }}>
                 {['Syndicate SPV structure', 'India × US cross-border', 'Start from $25K per deal'].map((t, i) => (
-                  <div key={i} style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                    <div style={{ width: 16, height: 16, borderRadius: 8, backgroundColor: 'var(--secondary)' }} aria-hidden="true" />
-                    <span style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-secondary)' }}>{t}</span>
-                  </div>
+                  <li key={i}>
+                    <button type="button" className="feature-btn" aria-label={t} style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'transparent', border: 'none', padding: 0, cursor: 'default' }}>
+                      <div className="feature-icon" style={{ width: 16, height: 16, borderRadius: 8, backgroundColor: 'var(--secondary)' }} aria-hidden="true" />
+                      <span className="feature-text" style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-secondary)' }}>{t}</span>
+                    </button>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           </motion.div>
 
@@ -152,8 +154,10 @@ const InvestorsPage = () => {
               { val: '1000', suf: '+', label: 'ANGELS & CXOS', color: 'var(--primary)', accent: false, icon: Users },
               { val: '100', pre: '$', suf: 'Mn+', label: 'SYNDICATED DEALS', color: 'var(--primary)', accent: false, icon: Handshake },
             ].map((s, i) => (
-              <motion.div
+              <motion.button
                 key={i}
+                type="button"
+                aria-label={`${s.label}: ${s.pre || ''}${s.val}${s.suf || ''}`}
                 initial={!motionEnabled ? {} : { opacity: 0, x: 40 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 + i * 0.1 }}
@@ -167,6 +171,9 @@ const InvestorsPage = () => {
                   gap: 20,
                   position: 'relative',
                   overflow: 'hidden',
+                  cursor: 'default',
+                  textAlign: 'left',
+                  width: '100%'
                 }}
               >
                 {s.accent && <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: 4, backgroundColor: 'var(--secondary)' }} aria-hidden="true" />}
@@ -179,7 +186,7 @@ const InvestorsPage = () => {
                   </div>
                   <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)' }}>{s.label}</div>
                 </div>
-              </motion.div>
+              </motion.button>
             ))}
           </div>
         </div>
@@ -187,14 +194,14 @@ const InvestorsPage = () => {
 
       {/* ──────────────── 2 · STATS STRIP ──────────────── */}
       <section aria-label="Key statistics" style={{ backgroundColor: 'var(--primary)', padding: isMobile ? '40px 0' : '36px 0' }}>
-        <div className="container" style={{ display: 'grid', gridTemplateColumns: isSmallMobile ? 'repeat(2, 1fr)' : (isMobile ? 'repeat(3, 1fr)' : 'repeat(6, 1fr)'), gap: '24px', alignItems: 'center' }}>
+        <div className="container ticker-container" style={{ display: 'grid', gridTemplateColumns: isSmallMobile ? 'repeat(2, 1fr)' : (isMobile ? 'repeat(3, 1fr)' : 'repeat(6, 1fr)'), gap: '24px', alignItems: 'center' }}>
           {statsStrip.map((s, i) => (
-            <div key={i} style={{ textAlign: 'center' }}>
+            <button key={i} type="button" className="ticker-item" aria-label={`${s.label}: ${s.prefix || ''}${s.value}${s.suffix || ''}`} style={{ textAlign: 'center', background: 'transparent', border: 'none', padding: 0, color: 'inherit', cursor: 'default' }}>
               <div style={{ fontSize: isSmallMobile ? '28px' : 34, fontWeight: 800, color: 'white' }}>
                 <CountUp value={s.value} prefix={s.prefix} suffix={s.suffix} />
               </div>
               <div style={{ fontSize: 11, fontWeight: 500, color: 'white', marginTop: 4 }}>{s.label}</div>
-            </div>
+            </button>
           ))}
         </div>
       </section>
@@ -209,8 +216,11 @@ const InvestorsPage = () => {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 24 }}>
             {whyCards.map((c, i) => (
-              <motion.div
+              <motion.button
                 key={i}
+                type="button"
+                className="info-card"
+                aria-label={c.title}
                 initial={!motionEnabled ? {} : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.08 }}
@@ -222,6 +232,9 @@ const InvestorsPage = () => {
                   display: 'flex',
                   gap: 16,
                   alignItems: 'flex-start',
+                  textAlign: 'left',
+                  cursor: 'default',
+                  width: '100%'
                 }}
               >
                 <div style={{ width: 44, height: 44, borderRadius: 12, backgroundColor: c.dark ? 'rgba(255,255,255,0.1)' : 'rgba(235,58,27,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }} aria-hidden="true">
@@ -231,7 +244,7 @@ const InvestorsPage = () => {
                   <h3 style={{ fontSize: 17, fontWeight: 700, color: c.dark ? 'white' : 'var(--primary)', marginBottom: 8, margin: '0 0 8px 0' }}>{c.title}</h3>
                   <div style={{ fontSize: 13, lineHeight: 1.6, color: c.dark ? 'white' : '#000' }}>{c.desc}</div>
                 </div>
-              </motion.div>
+              </motion.button>
             ))}
           </div>
         </div>
@@ -327,9 +340,10 @@ const InvestorsPage = () => {
             Sector-agnostic at heart — deeply focused on technology-led companies creating defensible competitive advantages.
           </p>
 
-          <div style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginBottom: 32 }}>
+          <ul className="a11y-list" role="list" style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginBottom: 32, listStyle: 'none', padding: 0, margin: '0 0 32px 0' }}>
             {sectors.map((s, i) => (
-              <div key={s} style={{
+              <li key={s}>
+              <button type="button" className="a11y-tag" aria-label={`Sector: ${s}`} style={{
                 backgroundColor: '#f5f7fc',
                 border: '1px solid rgba(29,47,111,0.1)',
                 borderRadius: 12,
@@ -337,12 +351,14 @@ const InvestorsPage = () => {
                 display: 'flex',
                 alignItems: 'center',
                 gap: 10,
+                cursor: 'default'
               }}>
-                <div style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: sectorColors[i % sectorColors.length] }} aria-hidden="true" />
+                <span style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: sectorColors[i % sectorColors.length], display: 'inline-block' }} aria-hidden="true" />
                 <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--primary)' }}>{s}</span>
-              </div>
+              </button>
+              </li>
             ))}
-          </div>
+          </ul>
 
           {/* Sector CTA Strip */}
           <div style={{
@@ -392,7 +408,7 @@ const InvestorsPage = () => {
                 }}
               >
                 <div style={{ flexShrink: 0 }}>
-                  <img src={t.avatar} alt={`Photo of ${t.author}`} style={{ width: isSmallMobile ? 120 : 160, height: isSmallMobile ? 120 : 180, borderRadius: 20, objectFit: 'cover', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }} />
+                  <img src={t.avatar} alt="" aria-hidden="true" style={{ width: isSmallMobile ? 120 : 160, height: isSmallMobile ? 120 : 180, borderRadius: 20, objectFit: 'cover', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }} />
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ fontSize: 13, fontWeight: 700, color: 'white', marginBottom: 12 }}>{t.company.toUpperCase()}</div>
@@ -429,13 +445,33 @@ const InvestorsPage = () => {
                   borderRadius: 18,
                   padding: '20px 24px 24px',
                   textAlign: 'center',
+                  width: '100%',
+                  display: 'block'
                 }}
               >
                 <div style={{ width: 80, height: 80, borderRadius: '50%', overflow: 'hidden', margin: '0 auto 16px' }}>
-                  <img src={a.img} alt={`Photo of ${a.name}, ${a.role}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={a.img} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <h3 style={{ fontSize: 15, fontWeight: 700, color: 'var(--primary)', margin: 0 }}>{a.name}</h3>
-                <div style={{ fontSize: 12, fontWeight: 500, color: 'var(--secondary)', marginTop: 4 }}>{a.role}</div>
+                <button 
+                  type="button" 
+                  className="investor-role" 
+                  aria-label={`Role: ${a.role}`} 
+                  style={{ 
+                    fontSize: 12, 
+                    fontWeight: 500, 
+                    color: 'var(--secondary)', 
+                    marginTop: 4, 
+                    margin: '4px 0 0',
+                    background: 'none',
+                    border: 'none',
+                    padding: 0,
+                    cursor: 'default',
+                    font: 'inherit'
+                  }}
+                >
+                  {a.role}
+                </button>
               </motion.div>
             ))}
           </div>

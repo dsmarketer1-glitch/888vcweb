@@ -45,7 +45,7 @@ const imgNetworking = '/assets/webimages/Startup/WHO%20SHOULD%20JOIN/888vc2.jpg'
 
 // Portfolio thumbs
 const imgPF0 = '/assets/webimages/Startup/PORTFOLIO/Rooter.png';
-const imgPF1 = '/assets/webimages/Startup/PORTFOLIO/G.O.A.T%20Brand%20Labs.png';
+const imgPF1 = '/assets/webimages/Portfolio/Thumbnail/GOAT%20Brand%20Labs.jpg';
 const imgPF2 = '/assets/webimages/Startup/PORTFOLIO/EcoRatings.png';
 const imgPF3 = '/assets/webimages/Startup/PORTFOLIO/GetCrest%20ai.png';
 const imgPF4 = '/assets/webimages/Startup/PORTFOLIO/Pick%20My%20Work.png';
@@ -143,7 +143,7 @@ const angels = [
 ];
 
 const StartupPage = () => {
-  usePageTitle('For Startups — 888VC');
+  usePageTitle('888VC — Startups | Apply to GRO8 Accelerator');
   const { motionEnabled } = useAccessibility();
   const isMobile = useIsMobile(1024);
   const isSmallMobile = useIsMobile(768);
@@ -162,9 +162,9 @@ const StartupPage = () => {
         <div className="container hero-grid" style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 572px', gap: isMobile ? '40px' : 40, alignItems: 'start' }}>
           {/* Left */}
           <motion.div initial={!motionEnabled ? {} : { opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <div style={{ backgroundColor: 'rgba(235,58,27,0.1)', display: 'inline-block', padding: '6px 20px', borderRadius: 15, marginBottom: 24 }}>
-              <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--secondary)' }}>888VC × GRO8 AI-ENABLED ACCELERATOR</span>
-            </div>
+            <button type="button" aria-label="888VC by GRO8: AI-enabled accelerator" style={{ backgroundColor: 'rgba(235,58,27,0.06)', display: 'inline-block', padding: '6px 20px', borderRadius: 15, marginBottom: 24, border: 'none', cursor: 'pointer' }}>
+              <span style={{ fontSize: 11, fontWeight: 700, color: '#c42810' }}>888VC × GRO8 AI-ENABLED ACCELERATOR</span>
+            </button>
             <h1 style={{ fontSize: isSmallMobile ? '38px' : (isMobile ? '48px' : 68), fontWeight: 800, lineHeight: 1.1, marginBottom: 24 }}>
               <span style={{ color: 'var(--primary)', display: 'block' }}>Built for Founders</span>
               <span style={{ color: 'var(--secondary)' }}>Who Build Beyond.</span>
@@ -177,11 +177,12 @@ const StartupPage = () => {
                 Apply Now →
               </a>
             </div>
-            <div style={{ display: 'flex', gap: 10, flexWrap: 'wrap' }}>
-              {['12 Weeks', 'India × US × UAE', 'AI-Enabled', 'Demo Day: 200+ Investors'].map((b, i) => (
-                <div key={i} style={{ backgroundColor: 'white', padding: '6px 16px', borderRadius: 14, fontSize: 12, fontWeight: 600, color: 'var(--text-secondary)' }}>{b}</div>
-              ))}
-            </div>
+            <ul className="a11y-list" role="list" style={{ display: 'flex', gap: 10, flexWrap: 'wrap', listStyle: 'none', padding: 0, margin: 0 }}>
+              <li><button type="button" className="pill" aria-label="Duration: 12 weeks" style={{ backgroundColor: '#ffffff', padding: '6px 16px', borderRadius: 14, fontSize: 12, fontWeight: 600, color: '#333', border: '1px solid transparent', cursor: 'pointer' }}>12 Weeks</button></li>
+              <li><button type="button" className="geo-pill" aria-label="Available in India, United States, United Arab Emirates" style={{ backgroundColor: '#fff', padding: '6px 16px', borderRadius: 14, fontSize: 12, fontWeight: 600, color: '#444', border: 'none', cursor: 'pointer' }}>India × US × UAE</button></li>
+              <li><button type="button" className="feature-badge" aria-label="Feature: AI-Enabled" style={{ backgroundColor: '#fff', padding: '6px 16px', borderRadius: 14, fontSize: 12, fontWeight: 600, color: '#444', border: '1px solid transparent', cursor: 'pointer' }}>AI-Enabled</button></li>
+              <li><button type="button" className="promo-pill" aria-label="Demo Day: over 200 investors" style={{ backgroundColor: '#fff', padding: '6px 16px', borderRadius: 14, fontSize: 12, fontWeight: 600, color: '#444', border: 'none', cursor: 'pointer' }}>Demo Day: 200+ Investors</button></li>
+            </ul>
           </motion.div>
 
           {/* Right — Cards */}
@@ -194,10 +195,12 @@ const StartupPage = () => {
           >
             {/* Demo Day card — wide */}
             <div style={{ backgroundColor: 'white', border: '1px solid rgba(29,47,111,0.1)', borderRadius: 16, overflow: 'hidden' }}>
-              <div style={{ height: 120, overflow: 'hidden' }}><img src={imgThumb} alt="Demo Day 2024 — 200+ global investors" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></div>
+              <div style={{ height: 120, overflow: 'hidden' }}><img src={imgThumb} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></div>
               <div style={{ padding: '10px 17px 14px' }}>
                 <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--secondary)', marginBottom: 4 }}>GRO8 ACCELERATOR</div>
-                <div style={{ fontSize: 14, fontWeight: 700, color: 'var(--primary)' }}>Demo Day 2024 — 200+ Global Investors, India × US × UAE</div>
+                <button type="button" className="card-button" aria-label="Open Demo Day 2024 details" style={{ background: 'none', border: 'none', padding: 0, textAlign: 'left', cursor: 'pointer' }}>
+                  <span style={{ fontSize: 14, fontWeight: 700, color: 'var(--primary)' }}>Demo Day 2024 — 200+ Global Investors, India × US × UAE</span>
+                </button>
               </div>
             </div>
             {/* Two small cards */}
@@ -207,7 +210,7 @@ const StartupPage = () => {
                 { img: imgThumb2, tag: 'INVESTOR ACCESS', title: '1:1 Curated VC Introductions' },
               ].map((c, i) => (
                 <div key={i} style={{ backgroundColor: 'white', border: '1px solid rgba(29,47,111,0.1)', borderRadius: 16, overflow: 'hidden' }}>
-                  <div style={{ height: 120, overflow: 'hidden' }}><img src={c.img} alt={c.title} style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></div>
+                  <div style={{ height: 120, overflow: 'hidden' }}><img src={c.img} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></div>
                   <div style={{ padding: '8px 13px 14px' }}>
                     <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--secondary)', marginBottom: 4 }}>{c.tag}</div>
                     <div style={{ fontSize: 13, fontWeight: 700, color: 'var(--primary)' }}>{c.title}</div>
@@ -262,7 +265,7 @@ const StartupPage = () => {
           {/* Right — Image with badge */}
           <div style={{ position: 'relative' }}>
             <div style={{ borderRadius: 24, overflow: 'hidden', height: 496 }}>
-              <img src={imgGroupPhoto} alt="GRO8 accelerator cohort group photo" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={imgGroupPhoto} alt="GRO8 accelerator cohort at demo day, 2023" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
             <div style={{ position: 'absolute', bottom: -20, right: -16, backgroundColor: 'var(--secondary)', borderRadius: 14, padding: '10px 20px', color: 'white' }}>
               <div style={{ fontSize: 28, fontWeight: 800 }}>50+</div>
@@ -335,16 +338,16 @@ const StartupPage = () => {
           </div>
 
           <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: isSmallMobile ? '1fr' : (isMobile ? 'repeat(2, 1fr)' : '264px 1fr'), gap: 16, height: isMobile ? 'auto' : 492 }}>
-            <div style={{ borderRadius: 18, overflow: 'hidden' }}>
-              <img src={imgRohitHeadshot} alt="Rohit Bafna, 888VC founder" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </div>
+            <button type="button" className="profile-card" aria-label="Open profile for Rohit Bafna" style={{ borderRadius: 18, overflow: 'hidden', padding: 0, border: 'none', background: 'none', cursor: 'pointer', display: 'block', height: '100%' }}>
+              <img src={imgRohitHeadshot} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            </button>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-              <div style={{ borderRadius: 18, overflow: 'hidden', flex: 1 }}>
-                <img src={imgDemoDay} alt="GRO8 Demo Day event" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
-              <div style={{ borderRadius: 18, overflow: 'hidden', flex: 1 }}>
-                <img src={imgNetworking} alt="Networking session with investors" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-              </div>
+              <button type="button" className="event-card" aria-label="Open GRO8 Demo Day details" style={{ borderRadius: 18, overflow: 'hidden', flex: 1, padding: 0, border: 'none', background: 'none', cursor: 'pointer', display: 'block' }}>
+                <img src={imgDemoDay} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </button>
+              <button type="button" className="media-card" aria-label="Open networking session gallery" style={{ borderRadius: 18, overflow: 'hidden', flex: 1, padding: 0, border: 'none', background: 'none', cursor: 'pointer', display: 'block' }}>
+                <img src={imgNetworking} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </button>
             </div>
           </div>
         </div>
@@ -370,7 +373,9 @@ const StartupPage = () => {
                 </div>
                 <div>
                   <h3 style={{ fontSize: 15, fontWeight: 700, color: 'white', marginBottom: 4, margin: 0 }}>{ind.title}</h3>
-                  <div style={{ fontSize: 12, color: 'white', opacity: 0.65 }}>{ind.sub}</div>
+                  <button type="button" className="filter-chip" aria-pressed="false" aria-label={`Filter: ${ind.sub}`} style={{ background: 'none', border: 'none', padding: 0, textAlign: 'left', cursor: 'pointer' }}>
+                    <span style={{ fontSize: 12, color: 'white', opacity: 0.65 }}>{ind.sub}</span>
+                  </button>
                 </div>
               </motion.div>
             ))}
@@ -394,7 +399,7 @@ const StartupPage = () => {
               <motion.div key={i} whileHover={!motionEnabled ? {} : { y: -6 }}
                 style={{ backgroundColor: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 14, overflow: 'hidden' }}>
                 <div style={{ height: 140, overflow: 'hidden' }}>
-                  <img src={p.img} alt={`${p.name} — ${p.cat}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={p.img} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <div style={{ padding: '12px 15px 14px' }}>
                   <h3 style={{ fontSize: 14, fontWeight: 700, color: 'white', margin: 0 }}>{p.name}</h3>
@@ -407,17 +412,17 @@ const StartupPage = () => {
           <div className="responsive-stack" style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '284px 1fr', gap: 16 }}>
             <div style={{ backgroundColor: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 14, overflow: 'hidden' }}>
               <div style={{ height: 140, overflow: 'hidden' }}>
-                <img src={imgPF4} alt="PickMyWork — Gig Economy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={imgPF4} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <div style={{ padding: '12px 15px 14px' }}>
-                <div style={{ fontSize: 14, fontWeight: 700, color: 'white' }}>PickMyWork</div>
+                <h3 className="section-title" style={{ fontSize: 14, fontWeight: 700, color: 'white', margin: 0 }}>PickMyWork</h3>
                 <div style={{ fontSize: 11, color: 'white', opacity: 0.65, marginTop: 2 }}>Gig Economy</div>
               </div>
             </div>
             <Link to="/portfolio" aria-label="View full portfolio of 50+ companies" style={{ display: 'block', textDecoration: 'none' }}>
               <div style={{ backgroundColor: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)', borderRadius: 14, overflow: 'hidden', height: '100%' }}>
                 <div style={{ height: 140, overflow: 'hidden' }}>
-                  <img src={imgPF5} alt="Sanfe portfolio showcase" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={imgPF5} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <div style={{ padding: '8px 15px 14px' }}>
                   <div style={{ fontSize: 18, fontWeight: 700, color: 'white' }}>50+ Companies →</div>
@@ -451,7 +456,7 @@ const StartupPage = () => {
                   alignItems: 'center'
                 }}>
                 <div style={{ flexShrink: 0 }}>
-                  <img src={t.avatar} alt={`Photo of ${t.author}`} style={{ width: isSmallMobile ? 120 : 160, height: isSmallMobile ? 120 : 180, borderRadius: 20, objectFit: 'cover', boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }} />
+                  <img src={t.avatar} alt="" aria-hidden="true" style={{ width: isSmallMobile ? 120 : 160, height: isSmallMobile ? 120 : 180, borderRadius: 20, objectFit: 'cover', boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }} />
                 </div>
                 <div style={{ flex: 1 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
@@ -488,11 +493,11 @@ const StartupPage = () => {
               <motion.div key={i} whileHover={!motionEnabled ? {} : { y: -6 }}
                 style={{ backgroundColor: '#f5f7fc', border: '1px solid rgba(29,47,111,0.1)', borderRadius: 18, overflow: 'hidden' }}>
                 <div style={{ height: 184, overflow: 'hidden' }}>
-                  <img src={vp.img} alt={`Photo of ${vp.name}, ${vp.role}`} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+                  <img src={vp.img} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
                 </div>
                 <div style={{ padding: '10px 15px 16px' }}>
                   <h3 style={{ fontSize: 15, fontWeight: 700, color: 'var(--primary)', margin: 0 }}>{vp.name}</h3>
-                  <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--secondary)', marginTop: 2 }}>{vp.role}</div>
+                  <p style={{ fontSize: 11, fontWeight: 700, color: 'var(--secondary)', marginTop: 2, margin: '2px 0 0' }}>{vp.role}</p>
                   <p style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5, marginTop: 8 }}>{vp.bio}</p>
                 </div>
               </motion.div>
@@ -514,10 +519,10 @@ const StartupPage = () => {
               <motion.div key={i} whileHover={!motionEnabled ? {} : { y: -6 }}
                 style={{ backgroundColor: 'white', border: '1px solid rgba(29,47,111,0.1)', borderRadius: 16, padding: '13px 16px 18px', textAlign: 'center' }}>
                 <div style={{ width: 72, height: 72, borderRadius: '50%', overflow: 'hidden', margin: '0 auto 10px' }}>
-                  <img src={a.img} alt={`Photo of ${a.name}, ${a.role1} ${a.role2}`} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+                  <img src={a.img} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
                 </div>
                 <h3 style={{ fontSize: 14, fontWeight: 700, color: 'var(--primary)', margin: 0 }}>{a.name}</h3>
-                <div style={{ fontSize: 12, fontWeight: 500, color: 'var(--secondary)', marginTop: 4, lineHeight: 1.3 }}>{a.role1}<br />{a.role2}</div>
+                <p className="role" style={{ fontSize: 12, fontWeight: 500, color: '#ffffff', background: '#212f6b', padding: '4px 8px', borderRadius: '4px', marginTop: 4, lineHeight: 1.3, margin: '4px auto 0', display: 'inline-block' }}>{a.role1}<br />{a.role2}</p>
               </motion.div>
             ))}
           </div>

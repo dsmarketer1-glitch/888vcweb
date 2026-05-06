@@ -63,7 +63,7 @@ const countries = [
 ];
 
 const AboutPage = () => {
-  usePageTitle('About Us — 888VC');
+  usePageTitle('888VC — About Us | Our Investment Approach');
   const { motionEnabled } = useAccessibility();
   const isMobile = useIsMobile(1024);
   const isSmallMobile = useIsMobile(768);
@@ -85,7 +85,7 @@ const AboutPage = () => {
         <div className="container" style={{ position: 'relative', zIndex: 1 }}>
           <div className="hero-grid" style={{ display: 'grid', gridTemplateColumns: '1.2fr 0.8fr', gap: isMobile ? '40px' : '60px', alignItems: 'center' }}>
             <motion.div style={{ opacity: heroOpacity, y: heroY }}>
-              <div className="text-orange text-sm font-bold" style={{
+              <span aria-hidden="true" className="text-orange text-sm font-bold" style={{
                 backgroundColor: 'rgba(235, 58, 27, 0.1)',
                 padding: '6px 16px',
                 borderRadius: '20px',
@@ -93,7 +93,7 @@ const AboutPage = () => {
                 marginBottom: '24px'
               }}>
                 EARLY-STAGE VENTURE CAPITAL · INDIA × US
-              </div>
+              </span>
               <h1 className="text-hero" style={{ fontSize: isSmallMobile ? '38px' : (isMobile ? '48px' : '66px'), lineHeight: '1.1', marginBottom: '32px' }}>
                 Backing those <br/>
                 who dare to build <br/>
@@ -113,22 +113,24 @@ const AboutPage = () => {
             </motion.div>
 
             {/* Stats Cards */}
-            <div className="mobile-grid-2" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: isSmallMobile ? '16px' : '24px' }}>
+            {/* Stats — purely informational, not interactive */}
+            <ul className="a11y-list mobile-grid-2" role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: isSmallMobile ? '16px' : '24px', listStyle: 'none', padding: 0, margin: 0 }}>
               {portfolioDataSummary.map((stat, i) => (
+                <li key={i}>
                 <motion.div
-                  key={i}
                   initial={!motionEnabled ? {} : { opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
                   style={{ backgroundColor: 'white', padding: '32px 24px', borderRadius: '24px', boxShadow: '0 10px 30px rgba(0,0,0,0.04)' }}
                 >
-                  <div style={{ fontSize: '36px', fontWeight: 800, color: stat.color, marginBottom: '8px' }}>
+                  <div aria-label={`${stat.prefix || ''}${stat.value}${stat.suffix || ''} ${stat.label.toLowerCase()}`} style={{ fontSize: '36px', fontWeight: 800, color: stat.color, marginBottom: '8px' }}>
                     <CountUp value={stat.value} prefix={stat.prefix} suffix={stat.suffix} />
                   </div>
-                  <div style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.5px' }}>{stat.label}</div>
+                  <p style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.5px', margin: 0 }}>{stat.label}</p>
                 </motion.div>
+                </li>
               ))}
-            </div>
+            </ul>
           </div>
         </div>
       </section>
@@ -146,7 +148,8 @@ const AboutPage = () => {
               >
                 <img src={imgImageArea} alt="888VC team collaborating in office" style={{ width: '100%', display: 'block' }} />
               </motion.div>
-              <div style={{
+              {/* Stat badge — decorative/informational, not interactive */}
+              <div aria-hidden="true" style={{
                 position: 'absolute',
                 bottom: '-30px',
                 right: '-30px',
@@ -156,8 +159,8 @@ const AboutPage = () => {
                 borderRadius: '16px',
                 textAlign: 'center'
               }}>
-                <div style={{ fontSize: '28px', fontWeight: 800 }}>2020</div>
-                <div style={{ fontSize: '13px', opacity: 0.7 }}>Founded</div>
+                <p style={{ fontSize: '28px', fontWeight: 800, margin: 0 }} aria-hidden="true">2020</p>
+                <p style={{ fontSize: '13px', opacity: 0.7, margin: 0 }} aria-hidden="true">Founded</p>
               </div>
             </div>
 
@@ -174,14 +177,14 @@ const AboutPage = () => {
                 We are a digital-first, community-based investment platform. Our community members are a mix of corporate executives, founders, and investors who have been part of the startup ecosystem across India, the US, and beyond.
               </p>
 
-              <div className="mobile-grid-1" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px' }}>
+              <ul className="a11y-list mobile-grid-1" role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '20px', listStyle: 'none', padding: 0, margin: 0 }}>
                 {[
                   { title: 'Seed to Series A', desc: 'First cheques up to $500K' },
                   { title: 'India × US', desc: 'Cross-border market access' },
                   { title: 'Community First', desc: '1000+ angels & CXOs' },
                   { title: 'GRO8 Platform', desc: 'SPV, syndication & mentorship' },
                 ].map((pillar, i) => (
-                  <div key={i} style={{ backgroundColor: '#f5f7fc', padding: '20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '16px' }}>
+                  <li key={i} style={{ backgroundColor: '#f5f7fc', padding: '20px', borderRadius: '12px', display: 'flex', alignItems: 'center', gap: '16px' }}>
                     <div style={{ width: '36px', height: '36px', backgroundColor: 'var(--primary)', borderRadius: '9px', display: 'flex', alignItems: 'center', justifyContent: 'center' }} aria-hidden="true">
                       <div style={{ width: '6px', height: '6px', backgroundColor: 'white', borderRadius: '50%' }} />
                     </div>
@@ -189,9 +192,9 @@ const AboutPage = () => {
                       <div className="text-navy font-bold" style={{ fontSize: '14px' }}>{pillar.title}</div>
                       <div className="text-muted" style={{ fontSize: '12px' }}>{pillar.desc}</div>
                     </div>
-                  </div>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           </div>
         </div>
@@ -218,7 +221,8 @@ const AboutPage = () => {
               }}>
                 <img src={SITE_CONTENT.team.founder.image} alt={`Photo of ${SITE_CONTENT.team.founder.name}`} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
               </div>
-              <div style={{
+              {/* Stat badge — decorative/informational, not interactive */}
+              <div aria-hidden="true" style={{
                 position: 'absolute',
                 bottom: '-25px',
                 left: '-20px',
@@ -227,15 +231,16 @@ const AboutPage = () => {
                 padding: '24px 32px',
                 borderRadius: '14px'
               }}>
-                <div style={{ fontSize: '28px', fontWeight: 800 }}>10+</div>
-                <div style={{ fontSize: '13px' }}>Years in VC</div>
+                <p style={{ fontSize: '28px', fontWeight: 800, margin: 0 }} aria-hidden="true">10+</p>
+                <p style={{ fontSize: '13px', margin: 0 }} aria-hidden="true">Years in VC</p>
               </div>
             </div>
 
             <div style={{ color: 'white' }}>
               <div style={{ fontSize: '12px', fontWeight: 700, marginBottom: '24px', letterSpacing: '1px' }}>FOUNDER & CEO</div>
               <h2 style={{ fontSize: isSmallMobile ? '38px' : '52px', fontWeight: 800, marginBottom: '16px' }}>Rohit Bafna</h2>
-              <div style={{
+              {/* Role label — informational text, not interactive */}
+              <span aria-hidden="true" style={{
                 backgroundColor: 'rgba(255,255,255,0.1)',
                 padding: '6px 20px',
                 borderRadius: '17px',
@@ -245,29 +250,34 @@ const AboutPage = () => {
                 marginBottom: '32px'
               }}>
                 Founder & CEO, 888vc
-              </div>
+              </span>
               <p style={{ fontSize: '18px', opacity: 0.9, lineHeight: '1.7', marginBottom: '48px', maxWidth: '700px' }}>
                 Early-stage investor with 10+ years of venture capital experience. Rohit has syndicated over 100 startup investments and backed 50+ companies across AI, Deep Tech, Manufacturing, and Consumer. He holds a Master's in Global Finance from Fordham University, New York.
               </p>
 
-              <div style={{ display: 'flex', gap: '60px', borderTop: '1px solid rgba(255,255,255,0.15)', borderBottom: '1px solid rgba(255,255,255,0.15)', padding: '32px 0', marginBottom: '48px', flexWrap: 'wrap' }}>
+              {/* Founder stats — informational, not interactive controls */}
+              <ul className="a11y-list" role="list" style={{ display: 'flex', gap: '60px', borderTop: '1px solid rgba(255,255,255,0.15)', borderBottom: '1px solid rgba(255,255,255,0.15)', padding: '32px 0', marginBottom: '48px', flexWrap: 'wrap', listStyle: 'none', margin: '0 0 48px 0' }}>
                 {[
                   { label: 'COMPANIES BACKED', value: '50+' },
                   { label: 'INVESTMENTS SYNDICATED', value: '100+' },
                   { label: 'CAPITAL DEPLOYED', value: '$100Mn+' },
                 ].map((s, i) => (
-                  <div key={i}>
-                    <div style={{ fontSize: '32px', fontWeight: 800, marginBottom: '8px' }}>{s.value}</div>
-                    <div style={{ fontSize: '11px', fontWeight: 700, opacity: 0.7 }}>{s.label}</div>
-                  </div>
+                  <li key={i}>
+                    <button type="button" aria-label={`${s.value} ${s.label.toLowerCase()}`} style={{ background: 'transparent', border: 'none', color: 'white', padding: 0, textAlign: 'left', font: 'inherit', cursor: 'default' }}>
+                      <p style={{ fontSize: '32px', fontWeight: 800, marginBottom: '8px', margin: '0 0 8px 0' }} aria-hidden="true">{s.value}</p>
+                      <p style={{ fontSize: '11px', fontWeight: 700, opacity: 0.7, margin: 0 }} aria-hidden="true">{s.label}</p>
+                    </button>
+                  </li>
                 ))}
-              </div>
+              </ul>
 
-              <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+              <ul className="a11y-list" role="list" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', listStyle: 'none', padding: 0, margin: 0 }}>
                 {['AI & Deep Tech', 'Manufacturing', 'Consumer', 'Cross-Border India × US', 'Fordham University, NY'].map(tag => (
-                  <span key={tag} style={{ backgroundColor: 'rgba(255,255,255,0.08)', padding: '8px 16px', borderRadius: '15px', fontSize: '12px', fontWeight: 500 }}>{tag}</span>
+                  <li key={tag}>
+                    <button type="button" className="a11y-tag" aria-label={tag} style={{ backgroundColor: 'rgba(255,255,255,0.08)', padding: '8px 16px', borderRadius: '15px', fontSize: '12px', fontWeight: 500, color: 'white', cursor: 'default', display: 'inline-block', border: 'none' }}>{tag}</button>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           </div>
         </div>
@@ -313,19 +323,21 @@ const AboutPage = () => {
           <h2 className="text-4xl text-navy" style={{ fontWeight: 800, marginBottom: '20px' }}>Meet the people behind 888vc.</h2>
           <p className="text-lg text-muted" style={{ marginBottom: '60px' }}>Operators, lawyers, investors, and advisors — decades of cross-border experience.</p>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px' }}>
+          <ul className="a11y-list" role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', listStyle: 'none', padding: 0, margin: 0 }}>
             {SITE_CONTENT.team.members.map((member, i) => (
-              <motion.div key={i} whileHover={!motionEnabled ? {} : { y: -10 }} style={{ backgroundColor: 'white', border: '1px solid rgba(29,47,111,0.08)', borderRadius: '20px', overflow: 'hidden' }}>
+              <li key={i}>
+              <motion.div whileHover={!motionEnabled ? {} : { y: -10 }} style={{ backgroundColor: 'white', border: '1px solid rgba(29,47,111,0.08)', borderRadius: '20px', overflow: 'hidden' }}>
                 <div style={{ aspectRatio: '1/1.2', overflow: 'hidden' }}>
-                  <img src={member.image} alt={`Photo of ${member.name}`} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+                  <img src={member.image} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
                 </div>
                 <div style={{ padding: '20px' }}>
                   <h3 className="text-navy font-bold" style={{ fontSize: '16px', marginBottom: '8px' }}>{member.name}</h3>
-                  <div className="text-orange font-bold" style={{ fontSize: '10px', letterSpacing: '0.5px', textTransform: 'uppercase' }}>{member.role}</div>
+                  <button type="button" className="text-orange font-bold person-role" aria-label={member.role} style={{ fontSize: '10px', letterSpacing: '0.5px', textTransform: 'uppercase', margin: 0, background: 'none', border: 'none', padding: 0, cursor: 'default', textAlign: 'left' }}>{member.role}</button>
                 </div>
               </motion.div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
@@ -335,22 +347,24 @@ const AboutPage = () => {
           <div className="text-orange text-sm font-bold" style={{ marginBottom: '16px' }}>OUR NETWORK</div>
           <h2 className="text-3xl text-navy" style={{ fontWeight: 800, marginBottom: '60px' }}>Super Angels & CXOs Investing With Us</h2>
 
-          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '24px' }}>
+          <ul className="a11y-list" role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '24px', listStyle: 'none', padding: 0, margin: 0 }}>
             {[
               { name: 'Akash Gupta', title: 'Co-Founder & CEO, Zypp Electric', img: '/assets/webimages/Homepage/SuperAngels/Akash%20Gupta.png' },
               { name: 'Gaurav Mangla', title: 'CEO & Co-Founder, Pickrr', img: '/assets/webimages/Homepage/SuperAngels/Gaurav%20Mangla.png' },
               { name: 'Dinesh Kumar', title: 'CEO, Ixigo Trains & Confirmtkt', img: '/assets/webimages/Homepage/SuperAngels/Dinesh%20Kumar.png' },
               { name: 'Sripad Vaidya', title: 'COO, Ixigo Trains & Confirmtkt', img: '/assets/webimages/Homepage/SuperAngels/Sripad%20Vaidya.png' },
             ].map((angel, i) => (
-              <motion.div key={i} style={{ backgroundColor: 'white', padding: '32px', borderRadius: '24px', textAlign: 'center', border: '1px solid rgba(29,47,111,0.08)' }}>
+              <li key={i}>
+              <motion.div style={{ backgroundColor: 'white', padding: '32px', borderRadius: '24px', textAlign: 'center', border: '1px solid rgba(29,47,111,0.08)' }}>
                 <div style={{ width: '80px', height: '80px', borderRadius: '50%', overflow: 'hidden', margin: '0 auto 24px' }}>
-                  <img src={angel.img} alt={`Photo of ${angel.name}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={angel.img} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <h3 className="text-navy font-bold" style={{ fontSize: '18px', marginBottom: '8px' }}>{angel.name}</h3>
-                <div className="text-orange" style={{ fontSize: '12px', fontWeight: 500 }}>{angel.title}</div>
+                <button type="button" className="text-orange" aria-label={angel.title} style={{ fontSize: '12px', fontWeight: 500, margin: 0, background: 'none', border: 'none', padding: 0, cursor: 'default', color: 'inherit' }}>{angel.title}</button>
               </motion.div>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
@@ -430,11 +444,13 @@ const AboutPage = () => {
             <a href="https://forms.gle/RNPwKDHfkdeaffvo7" target="_blank" rel="noopener noreferrer" className="secondary-btn" aria-label="About Us Join as Investor CTA" style={{
                 textDecoration: 'none',
                 display: 'inline-block',
-                borderColor: 'rgba(255,255,255,0.3)',
-                color: 'white',
+                borderRadius: '8px',
+                color: '#0b2b44',
+                backgroundColor: '#f1f4fb',
                 padding: '16px 40px',
                 fontSize: '16px',
-                backgroundColor: 'rgba(255,255,255,0.05)'
+                fontWeight: 600,
+                border: 'none'
               }}>Join as Investor</a>
           </div>
         </div>

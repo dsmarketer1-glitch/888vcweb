@@ -19,7 +19,6 @@ export const Ticker = () => {
       style={{
         backgroundColor: 'var(--primary)',
         height: '38px',
-        overflow: 'hidden',
         display: 'flex',
         alignItems: 'center',
         position: 'relative',
@@ -30,8 +29,10 @@ export const Ticker = () => {
       onFocus={() => setIsPaused(true)}
       onBlur={() => setIsPaused(false)}
     >
-      <motion.div
+      <motion.ul
         className="ticker-content"
+        role="list"
+        aria-label="Investment updates"
         animate={(isPaused || !motionEnabled) ? {} : { x: [0, -1000] }}
         transition={{
           duration: 30,
@@ -45,18 +46,42 @@ export const Ticker = () => {
           fontSize: '12px',
           fontWeight: 500,
           display: 'flex',
-          gap: isMobile ? '24px' : '40px'
+          gap: isMobile ? '24px' : '40px',
+          listStyle: 'none',
+          padding: 0,
+          margin: 0,
+          width: 'max-content'
         }}
       >
         {SITE_CONTENT.ticker.concat(SITE_CONTENT.ticker).map((text, i) => (
-          <span key={i}>{text}</span>
+          <li key={i} role="listitem">
+            <button
+              type="button"
+              className="ticker-item"
+              aria-label={text}
+              style={{
+                background: 'transparent',
+                border: 'none',
+                color: 'inherit',
+                font: 'inherit',
+                cursor: 'default',
+                padding: 0,
+                outlineOffset: '2px'
+              }}
+              onFocus={() => setIsPaused(true)}
+              onBlur={() => setIsPaused(false)}
+            >
+              {text}
+            </button>
+          </li>
         ))}
-      </motion.div>
+      </motion.ul>
 
       <button
         className="marquee-pause-btn"
         onClick={() => setIsPaused(!isPaused)}
-        aria-label={isPaused ? 'Play ticker' : 'Pause ticker'}
+        aria-label={isPaused ? 'Play ticker animation' : 'Pause ticker animation'}
+        aria-pressed={isPaused}
         style={{
           position: 'absolute',
           right: '8px',
@@ -66,7 +91,7 @@ export const Ticker = () => {
           opacity: 0.8
         }}
       >
-        {isPaused ? '▶' : '❚❚'}
+        <span aria-hidden="true">{isPaused ? '▶' : '❚❚'}</span>
       </button>
     </div>
   );
@@ -115,8 +140,8 @@ export const Navbar = () => {
         width: '100%'
       }}
     >
-      <Link to="/" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
-        <img src="/assets/logo.svg" alt="888VC Home" style={{ height: isMobile ? '36px' : '42px', width: 'auto' }} />
+      <Link to="/" aria-label="888VC — Go to homepage" style={{ display: 'flex', alignItems: 'center', textDecoration: 'none' }}>
+        <img src="/assets/logo.svg" alt="888VC logo" style={{ height: isMobile ? '36px' : '42px', width: 'auto' }} />
       </Link>
 
       {/* Desktop Links */}

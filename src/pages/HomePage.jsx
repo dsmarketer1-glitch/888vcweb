@@ -7,7 +7,7 @@ import { SuperAngels, News, CTABanner, PartnersMarquee } from '../components/Add
 import usePageTitle from '../hooks/usePageTitle';
 
 const HomePage = () => {
-  usePageTitle('888VC — Backing Those Who Dare to Build Beyond Limits');
+  usePageTitle('888VC — Home | Venture Capital for Early-Stage Founders');
 
   return (
     <main id="main-content" role="main">

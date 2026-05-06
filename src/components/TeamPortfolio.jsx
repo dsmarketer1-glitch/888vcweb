@@ -33,37 +33,39 @@ export const Portfolio = () => {
           <Link to="/portfolio" aria-label="View all portfolio companies" className="text-navy font-bold text-lg" style={{ marginBottom: isMobile ? '0' : '10px' }}>View All →</Link>
         </div>
 
-        <div className="mobile-grid-1" style={{
+        <ul className="a11y-list mobile-grid-1" role="list" style={{
           display: 'grid',
           gridTemplateColumns: isSmallMobile ? '1fr' : 'repeat(auto-fit, minmax(240px, 1fr))',
-          gap: '20px'
+          gap: '20px',
+          listStyle: 'none',
+          padding: 0,
+          margin: 0
         }}>
           {items.map((item, i) => (
-            <motion.div
-              key={i}
-              initial={!motionEnabled ? {} : { opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
-              whileHover={!motionEnabled ? {} : { scale: 1.02 }}
-              style={{
-                backgroundColor: 'var(--bg-soft)',
-                borderRadius: '14px',
-                overflow: 'hidden',
-                position: 'relative',
-                boxShadow: '0 4px 15px rgba(29, 47, 111, 0.05)'
-              }}
-            >
-              <div
-                role="img"
-                aria-label={`${item.name} — ${item.category}`}
+            <li key={i}>
+              <motion.div
+                initial={!motionEnabled ? {} : { opacity: 0, scale: 0.95 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
+                whileHover={!motionEnabled ? {} : { scale: 1.02 }}
                 style={{
-                  height: '140px',
-                  backgroundImage: `url("${item.image}")`,
-                  backgroundSize: 'cover',
-                  backgroundPosition: 'center',
-                  position: 'relative'
+                  backgroundColor: 'var(--bg-soft)',
+                  borderRadius: '14px',
+                  overflow: 'hidden',
+                  position: 'relative',
+                  boxShadow: '0 4px 15px rgba(29, 47, 111, 0.05)'
                 }}
               >
+                <div
+                  aria-hidden="true"
+                  style={{
+                    height: '140px',
+                    backgroundImage: `url("${item.image}")`,
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    position: 'relative'
+                  }}
+                >
                 {/* Floating Founder Card */}
                 <div style={{
                   position: 'absolute',
@@ -85,7 +87,7 @@ export const Portfolio = () => {
                     overflow: 'hidden',
                     marginBottom: '8px'
                   }}>
-                    <img src={item.founderPhoto} alt={`Photo of ${item.founderName}`} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src={item.founderPhoto} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                   {/* Name (Just the name) */}
                   <div style={{ fontSize: '11px', fontWeight: 800, color: 'var(--primary)', lineHeight: '1.2', wordBreak: 'break-word' }}>
@@ -97,9 +99,10 @@ export const Portfolio = () => {
                 <h3 className="text-base text-navy font-bold" style={{ fontWeight: 700, marginBottom: '4px' }}>{item.name}</h3>
                 <p className="text-xs text-muted" style={{ fontWeight: 500 }}>{item.category}</p>
               </div>
-            </motion.div>
+              </motion.div>
+            </li>
           ))}
-        </div>
+        </ul>
       </motion.div>
     </section>
   );
@@ -159,14 +162,18 @@ export const Team = () => {
         </motion.div>
 
         {/* Team Members Grid */}
-        <div className="mobile-grid-1" style={{
+        <ul className="a11y-list mobile-grid-1" role="list" style={{
           display: 'grid',
           gridTemplateColumns: isSmallMobile ? '1fr' : 'repeat(auto-fit, minmax(180px, 1fr))',
-          gap: '20px'
+          gap: '20px',
+          listStyle: 'none',
+          padding: 0,
+          margin: 0
         }}>
           {members.map((member, i) => (
+            <li key={i} style={{ listStyle: 'none' }}>
             <motion.div
-              key={i}
+              
               initial={!motionEnabled ? {} : { opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
@@ -180,7 +187,8 @@ export const Team = () => {
             >
               <img
                 src={member.image}
-                alt={`Photo of ${member.name}`}
+                alt=""
+                aria-hidden="true"
                 style={{ width: '100%', height: '180px', objectFit: 'cover', objectPosition: 'top', display: 'block' }}
               />
               <div style={{ padding: '20px' }}>
@@ -188,8 +196,9 @@ export const Team = () => {
                 <p className="text-xs text-orange" style={{ marginTop: '6px', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.5px' }}>{member.role}</p>
               </div>
             </motion.div>
+            </li>
           ))}
-        </div>
+        </ul>
       </motion.div>
     </section>
   );

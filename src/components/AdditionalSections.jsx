@@ -29,30 +29,34 @@ export const SuperAngels = () => {
         <div className="text-orange text-sm" style={{ marginBottom: '12px' }}>OUR NETWORK</div>
         <h2 className="text-4xl text-navy" style={{ marginBottom: '60px', fontSize: isSmallMobile ? '32px' : undefined }}>Super Angels & CXOs Investing With Us</h2>
 
-        <div className="mobile-grid-1" style={{
+        <ul className="a11y-list mobile-grid-1" role="list" style={{
           display: 'grid',
           gridTemplateColumns: isSmallMobile ? 'repeat(2, 1fr)' : 'repeat(auto-fit, minmax(220px, 1fr))',
-          gap: '24px'
+          gap: '24px',
+          listStyle: 'none',
+          padding: 0,
+          margin: 0
         }}>
           {angels.map((angel, i) => (
-            <motion.div
-              key={i}
-              initial={!motionEnabled ? {} : { opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
-              whileHover={!motionEnabled ? {} : { y: -8, boxShadow: '0 15px 35px rgba(29, 47, 111, 0.08)' }}
-              style={{
-                backgroundColor: 'white',
-                borderRadius: '24px',
-                padding: '40px 24px',
-                textAlign: 'center',
-                boxShadow: '0 4px 25px rgba(29, 47, 111, 0.04)',
-                transition: 'all 0.3s ease'
-              }}
-            >
+            <li key={i}>
+              <motion.div
+                initial={!motionEnabled ? {} : { opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
+                whileHover={!motionEnabled ? {} : { y: -8, boxShadow: '0 15px 35px rgba(29, 47, 111, 0.08)' }}
+                style={{
+                  backgroundColor: 'white',
+                  borderRadius: '24px',
+                  padding: '40px 24px',
+                  textAlign: 'center',
+                  boxShadow: '0 4px 25px rgba(29, 47, 111, 0.04)',
+                  transition: 'all 0.3s ease'
+                }}
+              >
               <img
                 src={angel.image}
-                alt={`Photo of ${angel.name}`}
+                alt=""
+                aria-hidden="true"
                 style={{
                   width: '100px',
                   height: '100px',
@@ -74,9 +78,10 @@ export const SuperAngels = () => {
               }}>
                 <span className="text-sm text-muted font-bold">{angel.company}</span>
               </div>
-            </motion.div>
+              </motion.div>
+            </li>
           ))}
-        </div>
+        </ul>
       </motion.div>
     </section>
   );
@@ -129,11 +134,11 @@ export const PartnersMarquee = () => {
             paddingLeft: '40px',
             alignItems: 'center'
           }}
-          aria-hidden="true"
         >
-          {partners.concat(partners).concat(partners).map((partner, i) => (
+          {/* WCAG 1.1.1 / 4.1.2 — First set: informative logos with descriptive alt text */}
+          {partners.map((partner, i) => (
             <img 
-              key={i} 
+              key={`original-${i}`} 
               src={partner.logo} 
               alt={partner.name} 
               style={{ 
@@ -146,19 +151,30 @@ export const PartnersMarquee = () => {
               onMouseLeave={(e) => e.target.style.filter = 'grayscale(100%) opacity(0.7)'}
             />
           ))}
-        </motion.div>
-
-        {/* Screen reader accessible partner list */}
-        <ul className="visually-hidden">
-          {partners.map((partner, i) => (
-            <li key={i}>{partner.name}</li>
+          {/* Duplicate sets for infinite scroll animation — decorative duplicates hidden from AT */}
+          {partners.concat(partners).map((partner, i) => (
+            <img 
+              key={`dup-${i}`} 
+              src={partner.logo} 
+              alt="" 
+              aria-hidden="true"
+              style={{ 
+                height: '45px', 
+                width: 'auto', 
+                filter: 'grayscale(100%) opacity(0.7)',
+                transition: 'filter 0.3s ease'
+              }}
+              onMouseEnter={(e) => e.target.style.filter = 'grayscale(0%) opacity(1)'}
+              onMouseLeave={(e) => e.target.style.filter = 'grayscale(100%) opacity(0.7)'}
+            />
           ))}
-        </ul>
+        </motion.div>
 
         {/* WCAG 2.2.2 Pause button */}
         <button
           className="marquee-pause-btn"
           onClick={() => setIsPaused(!isPaused)}
+          aria-pressed={isPaused}
           aria-label={isPaused ? 'Play partner marquee' : 'Pause partner marquee'}
           style={{
             position: 'absolute',
@@ -234,11 +250,11 @@ export const News = () => {
           </a>
 
           {/* News List */}
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '24px' }}>
+          <ul className="a11y-list" role="list" style={{ display: 'flex', flexDirection: 'column', gap: '24px', listStyle: 'none', padding: 0, margin: 0 }}>
             {list.map((item, i) => (
-              <a 
-                key={i} 
-                href={item.url} 
+              <li key={i}>
+                <a 
+                  href={item.url} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 aria-label={`Homepage News: Read more about ${item.title}`}
@@ -259,9 +275,10 @@ export const News = () => {
                     <div className="text-xs text-muted" style={{ fontWeight: 500 }}><time>{item.date}</time></div>
                   </div>
                 </motion.article>
-              </a>
+                </a>
+              </li>
             ))}
-          </div>
+          </ul>
         </div>
       </motion.div>
     </section>
@@ -360,11 +377,13 @@ export const Footer = () => {
       </div>
       <div>
         <h4 className="text-sm" style={{ marginBottom: '28px', letterSpacing: '1px', color: 'white' }}>CONTACT</h4>
-        <address style={{ fontStyle: 'normal', lineHeight: '2', fontSize: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-          <p style={{ color: 'rgba(255,255,255,0.85)' }}>NETWORK888 ACCELERATOR LLP</p>
-          <p style={{ color: 'rgba(255,255,255,0.85)' }}>Whitefield, Bengaluru 560066</p>
-          <a href="tel:+919731227263" style={{ color: 'white', fontWeight: 600, textDecoration: 'none' }}>+91 97312 27263</a>
-          <a href="mailto:info@888vc.co" style={{ color: 'white', fontWeight: 600, textDecoration: 'none' }}>info@888vc.co</a>
+        <address style={{ fontStyle: 'normal', lineHeight: '2', fontSize: '15px' }}>
+          <ul className="a11y-list" role="list" style={{ display: 'flex', flexDirection: 'column', gap: '10px', listStyle: 'none', padding: 0, margin: 0 }}>
+            <li style={{ color: 'rgba(255,255,255,0.85)' }}>NETWORK888 ACCELERATOR LLP</li>
+            <li style={{ color: 'rgba(255,255,255,0.85)' }}>Whitefield, Bengaluru 560066</li>
+            <li><a href="tel:+919731227263" style={{ color: 'white', fontWeight: 600, textDecoration: 'none' }}>+91 97312 27263</a></li>
+            <li><a href="mailto:info@888vc.co" style={{ color: 'white', fontWeight: 600, textDecoration: 'none' }}>info@888vc.co</a></li>
+          </ul>
         </address>
       </div>
       <div>
@@ -391,8 +410,8 @@ export const Footer = () => {
     <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '40px', display: 'flex', justifyContent: 'space-between', fontSize: '14px', fontWeight: 500, flexWrap: 'wrap', gap: '16px' }}>
       <div style={{ color: 'rgba(255,255,255,0.85)' }}>© 2025 888 VC. All rights reserved.</div>
       <div style={{ display: 'flex', gap: '32px' }}>
-        <a href="#" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}>Privacy Policy</a>
-        <a href="#" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}>Terms of Service</a>
+        <a href="#" aria-label="Privacy Policy" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}>Privacy Policy</a>
+        <a href="#" aria-label="Terms of Service" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}>Terms of Service</a>
       </div>
     </div>
     </footer>
