@@ -95,18 +95,18 @@ const AboutPage = () => {
                 EARLY-STAGE VENTURE CAPITAL · INDIA × US
               </span>
               <h1 className="text-hero" style={{ fontSize: isSmallMobile ? '38px' : (isMobile ? '48px' : '66px'), lineHeight: '1.1', marginBottom: '32px' }}>
-                Backing those <br/>
-                who dare to build <br/>
+                Backing those <br />
+                who dare to build <br />
                 <span className="text-orange">beyond limits.</span>
               </h1>
-              <p className="text-lg text-muted" style={{ maxWidth: '600px', marginBottom: '48px', lineHeight: '1.6' }}>
+              <p className="text-lg text-muted" style={{ maxWidth: '600px', marginBottom: '48px', lineHeight: '1.6', color: '#4A5568' }}>
                 888vc is an early-stage venture capital firm backing founders building category-defining, technology-led businesses. A peer network of leaders across the globe.
               </p>
-              <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap' }}>
-                <Link to="/portfolio" className="primary-btn" aria-label="About Us View Portfolio CTA" style={{ textDecoration: 'none', display: 'inline-block' }}>
+              <div style={{ display: 'flex', gap: '20px', flexWrap: 'wrap', alignItems: 'center' }}>
+                <Link to="/portfolio" className="primary-btn" aria-label="About Us View Portfolio CTA" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#A01D0A', color: '#FFFFFF', paddingTop: '14px', paddingBottom: '14px' }}>
                   View Portfolio →
                 </Link>
-                <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" className="secondary-btn" aria-label="About Us Join our Community CTA" style={{ textDecoration: 'none', borderRadius: '14px', padding: '14px 28px', display: 'inline-block', borderColor: 'rgba(29,47,111,0.15)', color: 'var(--primary)', fontWeight: 700 }}>
+                <a href="https://gro8.club/" target="_blank" rel="noopener noreferrer" className="secondary-btn" aria-label="About Us Join our Community CTA" style={{ textDecoration: 'none', borderRadius: '14px', padding: '14px 28px', display: 'inline-block', borderColor: 'rgba(29,47,111,0.15)', color: '#111F4E', fontWeight: 700 }}>
                   Join our Community
                 </a>
               </div>
@@ -114,10 +114,10 @@ const AboutPage = () => {
 
             {/* Stats Cards */}
             {/* Stats — purely informational, not interactive */}
-            <ul className="a11y-list mobile-grid-2" role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: isSmallMobile ? '16px' : '24px', listStyle: 'none', padding: 0, margin: 0 }}>
+            <div className="a11y-list mobile-grid-2" style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: isSmallMobile ? '16px' : '24px', listStyle: 'none', padding: 0, margin: 0 }}>
               {portfolioDataSummary.map((stat, i) => (
-                <li key={i}>
                 <motion.div
+                  key={i}
                   initial={!motionEnabled ? {} : { opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
@@ -128,9 +128,8 @@ const AboutPage = () => {
                   </div>
                   <p style={{ fontSize: '11px', fontWeight: 700, color: 'var(--text-secondary)', letterSpacing: '0.5px', margin: 0 }}>{stat.label}</p>
                 </motion.div>
-                </li>
               ))}
-            </ul>
+            </div>
           </div>
         </div>
       </section>
@@ -146,7 +145,7 @@ const AboutPage = () => {
                 transition={{ duration: 0.8 }}
                 style={{ borderRadius: '24px', overflow: 'hidden', boxShadow: '0 20px 60px rgba(0,0,0,0.1)' }}
               >
-                <img src={imgImageArea} alt="888VC team collaborating in office" style={{ width: '100%', display: 'block' }} />
+                <img src={imgImageArea} alt="" style={{ width: '100%', display: 'block' }} />
               </motion.div>
               {/* Stat badge — decorative/informational, not interactive */}
               <div aria-hidden="true" style={{
@@ -167,13 +166,13 @@ const AboutPage = () => {
             <div>
               <div className="text-orange text-sm font-bold" style={{ marginBottom: '16px' }}>OUR STORY</div>
               <h2 className="text-4xl text-navy" style={{ fontSize: '42px', lineHeight: '1.2', marginBottom: '32px', fontWeight: 800 }}>
-                A community built on <br/>
+                A community built on <br />
                 conviction, not just capital.
               </h2>
-              <p className="text-lg text-muted" style={{ marginBottom: '24px', lineHeight: '1.7' }}>
+              <p className="text-lg text-muted" style={{ marginBottom: '24px', lineHeight: '1.7', color: '#4A5568' }}>
                 888vc was founded on a simple but powerful idea — that the best founders don't just need money. They need a network of believers who will open doors, share hard-won knowledge, and stand behind them through every stage.
               </p>
-              <p className="text-lg text-muted" style={{ marginBottom: '48px', lineHeight: '1.7' }}>
+              <p className="text-lg text-muted" style={{ marginBottom: '48px', lineHeight: '1.7', color: '#4A5568' }}>
                 We are a digital-first, community-based investment platform. Our community members are a mix of corporate executives, founders, and investors who have been part of the startup ecosystem across India, the US, and beyond.
               </p>
 
@@ -190,7 +189,7 @@ const AboutPage = () => {
                     </div>
                     <div>
                       <div className="text-navy font-bold" style={{ fontSize: '14px' }}>{pillar.title}</div>
-                      <div className="text-muted" style={{ fontSize: '12px' }}>{pillar.desc}</div>
+                      <div className="text-muted" style={{ fontSize: '12px', color: '#4A5568' }}>{pillar.desc}</div>
                     </div>
                   </li>
                 ))}
@@ -219,7 +218,7 @@ const AboutPage = () => {
                 overflow: 'hidden',
                 aspectRatio: '3/4'
               }}>
-                <img src={SITE_CONTENT.team.founder.image} alt={`Photo of ${SITE_CONTENT.team.founder.name}`} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+                <img src={SITE_CONTENT.team.founder.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
               </div>
               {/* Stat badge — decorative/informational, not interactive */}
               <div aria-hidden="true" style={{
@@ -263,10 +262,10 @@ const AboutPage = () => {
                   { label: 'CAPITAL DEPLOYED', value: '$100Mn+' },
                 ].map((s, i) => (
                   <li key={i}>
-                    <button type="button" aria-label={`${s.value} ${s.label.toLowerCase()}`} style={{ background: 'transparent', border: 'none', color: 'white', padding: 0, textAlign: 'left', font: 'inherit', cursor: 'default' }}>
+                    <div aria-label={`${s.value} ${s.label.toLowerCase()}`} style={{ background: 'transparent', border: 'none', color: 'white', padding: 0, textAlign: 'left', font: 'inherit', cursor: 'default' }}>
                       <p style={{ fontSize: '32px', fontWeight: 800, marginBottom: '8px', margin: '0 0 8px 0' }} aria-hidden="true">{s.value}</p>
                       <p style={{ fontSize: '11px', fontWeight: 700, opacity: 0.7, margin: 0 }} aria-hidden="true">{s.label}</p>
-                    </button>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -274,7 +273,7 @@ const AboutPage = () => {
               <ul className="a11y-list" role="list" style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', listStyle: 'none', padding: 0, margin: 0 }}>
                 {['AI & Deep Tech', 'Manufacturing', 'Consumer', 'Cross-Border India × US', 'Fordham University, NY'].map(tag => (
                   <li key={tag}>
-                    <button type="button" className="a11y-tag" aria-label={tag} style={{ backgroundColor: 'rgba(255,255,255,0.08)', padding: '8px 16px', borderRadius: '15px', fontSize: '12px', fontWeight: 500, color: 'white', cursor: 'default', display: 'inline-block', border: 'none' }}>{tag}</button>
+                    <div className="a11y-tag" aria-label={tag} style={{ backgroundColor: 'rgba(255,255,255,0.08)', padding: '8px 16px', borderRadius: '15px', fontSize: '12px', fontWeight: 500, color: 'white', cursor: 'default', display: 'inline-block', border: 'none' }}>{tag}</div>
                   </li>
                 ))}
               </ul>
@@ -288,7 +287,7 @@ const AboutPage = () => {
         <div className="container">
           <div className="text-orange text-sm font-bold" style={{ marginBottom: '16px' }}>OUR PHILOSOPHY</div>
           <h2 className="text-4xl text-navy" style={{ fontWeight: 800, marginBottom: '24px' }}>How we think about building companies.</h2>
-          <p className="text-lg text-muted" style={{ maxWidth: '700px', marginBottom: '64px' }}>
+          <p className="text-lg text-muted" style={{ maxWidth: '700px', marginBottom: '64px', color: '#4A5568' }}>
             Four core beliefs that guide every investment decision and every relationship we build with founders.
           </p>
 
@@ -306,9 +305,9 @@ const AboutPage = () => {
                 whileHover={!motionEnabled ? {} : { y: -5 }}
                 style={{ backgroundColor: 'white', padding: '40px', borderRadius: '24px', border: '1px solid rgba(29,47,111,0.08)' }}
               >
-                <div style={{ fontSize: '40px', fontWeight: 800, color: '#eef1f9', marginBottom: '-15px' }} aria-hidden="true">{belief.id}</div>
+                <div style={{ fontSize: '40px', fontWeight: 800, color: '#5A6B8A', marginBottom: '-15px' }} aria-hidden="true">{belief.id}</div>
                 <h3 className="text-navy" style={{ fontSize: '20px', fontWeight: 800, marginBottom: '16px', position: 'relative', zIndex: 1 }}>{belief.title}</h3>
-                <p className="text-sm text-muted" style={{ marginBottom: '24px', lineHeight: '1.6' }}>{belief.desc}</p>
+                <p className="text-sm text-muted" style={{ marginBottom: '24px', lineHeight: '1.6', color: '#4A5568' }}>{belief.desc}</p>
                 <span style={{ backgroundColor: '#f5f7fc', padding: '4px 12px', borderRadius: '11px', fontSize: '11px', color: 'var(--text-secondary)', fontWeight: 700 }}>{belief.tag}</span>
               </motion.div>
             ))}
@@ -321,20 +320,20 @@ const AboutPage = () => {
         <div className="container">
           <div className="text-orange text-sm font-bold" style={{ marginBottom: '16px' }}>THE TEAM</div>
           <h2 className="text-4xl text-navy" style={{ fontWeight: 800, marginBottom: '20px' }}>Meet the people behind 888vc.</h2>
-          <p className="text-lg text-muted" style={{ marginBottom: '60px' }}>Operators, lawyers, investors, and advisors — decades of cross-border experience.</p>
+          <p className="text-lg text-muted" style={{ marginBottom: '60px', color: '#4A5568' }}>Operators, lawyers, investors, and advisors — decades of cross-border experience.</p>
 
           <ul className="a11y-list" role="list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '20px', listStyle: 'none', padding: 0, margin: 0 }}>
             {SITE_CONTENT.team.members.map((member, i) => (
               <li key={i}>
-              <motion.div whileHover={!motionEnabled ? {} : { y: -10 }} style={{ backgroundColor: 'white', border: '1px solid rgba(29,47,111,0.08)', borderRadius: '20px', overflow: 'hidden' }}>
-                <div style={{ aspectRatio: '1/1.2', overflow: 'hidden' }}>
-                  <img src={member.image} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
-                </div>
-                <div style={{ padding: '20px' }}>
-                  <h3 className="text-navy font-bold" style={{ fontSize: '16px', marginBottom: '8px' }}>{member.name}</h3>
-                  <button type="button" className="text-orange font-bold person-role" aria-label={member.role} style={{ fontSize: '10px', letterSpacing: '0.5px', textTransform: 'uppercase', margin: 0, background: 'none', border: 'none', padding: 0, cursor: 'default', textAlign: 'left' }}>{member.role}</button>
-                </div>
-              </motion.div>
+                <motion.div whileHover={!motionEnabled ? {} : { y: -10 }} style={{ backgroundColor: 'white', border: '1px solid rgba(29,47,111,0.08)', borderRadius: '20px', overflow: 'hidden' }}>
+                  <div style={{ aspectRatio: '1/1.2', overflow: 'hidden' }}>
+                    <img src={member.image} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'top' }} />
+                  </div>
+                  <div style={{ padding: '20px' }}>
+                    <span className="text-navy font-bold" style={{ fontSize: '16px', marginBottom: '8px', display: 'block' }}>{member.name}</span>
+                    <div className="text-orange font-bold person-role" aria-label={member.role} style={{ fontSize: '10px', letterSpacing: '0.5px', textTransform: 'uppercase', margin: 0, background: 'none', border: 'none', padding: 0, cursor: 'default', textAlign: 'left' }}>{member.role}</div>
+                  </div>
+                </motion.div>
               </li>
             ))}
           </ul>
@@ -355,13 +354,13 @@ const AboutPage = () => {
               { name: 'Sripad Vaidya', title: 'COO, Ixigo Trains & Confirmtkt', img: '/assets/webimages/Homepage/SuperAngels/Sripad%20Vaidya.png' },
             ].map((angel, i) => (
               <li key={i}>
-              <motion.div style={{ backgroundColor: 'white', padding: '32px', borderRadius: '24px', textAlign: 'center', border: '1px solid rgba(29,47,111,0.08)' }}>
-                <div style={{ width: '80px', height: '80px', borderRadius: '50%', overflow: 'hidden', margin: '0 auto 24px' }}>
-                  <img src={angel.img} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                </div>
-                <h3 className="text-navy font-bold" style={{ fontSize: '18px', marginBottom: '8px' }}>{angel.name}</h3>
-                <button type="button" className="text-orange" aria-label={angel.title} style={{ fontSize: '12px', fontWeight: 500, margin: 0, background: 'none', border: 'none', padding: 0, cursor: 'default', color: 'inherit' }}>{angel.title}</button>
-              </motion.div>
+                <motion.div style={{ backgroundColor: 'white', padding: '32px', borderRadius: '24px', textAlign: 'center', border: '1px solid rgba(29,47,111,0.08)' }}>
+                  <div style={{ width: '80px', height: '80px', borderRadius: '50%', overflow: 'hidden', margin: '0 auto 24px' }}>
+                    <img src={angel.img} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                  <span className="text-navy font-bold" style={{ fontSize: '18px', marginBottom: '8px', display: 'block' }}>{angel.name}</span>
+                  <div className="text-orange" aria-label={angel.title} style={{ fontSize: '12px', fontWeight: 500, margin: 0, background: 'none', border: 'none', padding: 0, cursor: 'default', color: 'inherit' }}>{angel.title}</div>
+                </motion.div>
               </li>
             ))}
           </ul>
@@ -388,20 +387,22 @@ const AboutPage = () => {
         <div className="container" style={{ position: 'relative', zIndex: 1, textAlign: 'center' }}>
           <div style={{ fontSize: '12px', fontWeight: 700, marginBottom: '24px', letterSpacing: '1px', opacity: 0.75 }}>GLOBAL PRESENCE</div>
           <h2 style={{ fontSize: '42px', fontWeight: 800, marginBottom: '48px', maxWidth: '800px', margin: '0 auto 48px', lineHeight: '1.2' }}>
-            A global community of <br/>
+            A global community of <br />
             investors and founders.
           </h2>
 
-          <div style={{
+          <ul style={{
             display: 'flex',
             justifyContent: 'center',
             gap: '16px',
             flexWrap: 'wrap',
             maxWidth: '900px',
-            margin: '0 auto'
+            margin: '0 auto',
+            listStyle: 'none',
+            padding: 0
           }}>
             {countries.map((country, i) => (
-              <motion.div
+              <motion.li
                 key={i}
                 initial={!motionEnabled ? {} : { opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -419,9 +420,9 @@ const AboutPage = () => {
               >
                 <span style={{ fontSize: '18px' }} aria-hidden="true">{country.flag}</span>
                 <span style={{ fontSize: '14px', fontWeight: 600 }}>{country.name}</span>
-              </motion.div>
+              </motion.li>
             ))}
-          </div>
+          </ul>
         </div>
       </section>
 
@@ -437,21 +438,21 @@ const AboutPage = () => {
           <p className="text-lg text-white" style={{ opacity: 0.85, marginBottom: '48px', maxWidth: '850px', margin: '0 auto 48px', lineHeight: '1.6' }}>
             Whether you're building something extraordinary or looking for your next investment — the 888vc community is where ambition meets capital.
           </p>
-          <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap' }}>
-            <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" className="primary-btn" aria-label="About Us Apply as Startup CTA" style={{ textDecoration: 'none', display: 'inline-block' }}>
+          <div style={{ display: 'flex', gap: '20px', justifyContent: 'center', flexWrap: 'wrap', alignItems: 'center' }}>
+            <a href="https://forms.gle/hsN1ATiCtFPYZibo8" target="_blank" rel="noopener noreferrer" className="primary-btn" aria-label="About Us Apply as Startup CTA" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', justifyContent: 'center', backgroundColor: '#A01D0A', color: '#FFFFFF', paddingTop: '16px', paddingBottom: '16px' }}>
               Apply as Startup →
             </a>
             <a href="https://forms.gle/RNPwKDHfkdeaffvo7" target="_blank" rel="noopener noreferrer" className="secondary-btn" aria-label="About Us Join as Investor CTA" style={{
-                textDecoration: 'none',
-                display: 'inline-block',
-                borderRadius: '8px',
-                color: '#0b2b44',
-                backgroundColor: '#f1f4fb',
-                padding: '16px 40px',
-                fontSize: '16px',
-                fontWeight: 600,
-                border: 'none'
-              }}>Join as Investor</a>
+              textDecoration: 'none',
+              display: 'inline-block',
+              borderRadius: '8px',
+              color: '#0b2b44',
+              backgroundColor: '#f1f4fb',
+              padding: '16px 40px',
+              fontSize: '16px',
+              fontWeight: 600,
+              border: 'none'
+            }}>Join as Investor</a>
           </div>
         </div>
 

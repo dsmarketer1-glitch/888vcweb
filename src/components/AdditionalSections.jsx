@@ -124,7 +124,7 @@ export const PartnersMarquee = () => {
         onFocus={() => setIsPaused(true)}
         onBlur={() => setIsPaused(false)}
       >
-        <motion.div
+        <motion.ul
           animate={(isPaused || !motionEnabled) ? {} : { x: [0, -1500] }}
           transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
           style={{
@@ -132,43 +132,47 @@ export const PartnersMarquee = () => {
             gap: '100px',
             whiteSpace: 'nowrap',
             paddingLeft: '40px',
-            alignItems: 'center'
+            alignItems: 'center',
+            listStyle: 'none',
+            margin: 0,
+            padding: 0
           }}
         >
           {/* WCAG 1.1.1 / 4.1.2 — First set: informative logos with descriptive alt text */}
           {partners.map((partner, i) => (
-            <img 
-              key={`original-${i}`} 
-              src={partner.logo} 
-              alt={partner.name} 
-              style={{ 
-                height: '45px', 
-                width: 'auto', 
-                filter: 'grayscale(100%) opacity(0.7)',
-                transition: 'filter 0.3s ease'
-              }}
-              onMouseEnter={(e) => e.target.style.filter = 'grayscale(0%) opacity(1)'}
-              onMouseLeave={(e) => e.target.style.filter = 'grayscale(100%) opacity(0.7)'}
-            />
+            <li key={`original-${i}`}>
+              <img 
+                src={partner.logo} 
+                alt={partner.name} 
+                style={{ 
+                  height: '45px', 
+                  width: 'auto', 
+                  filter: 'grayscale(100%) opacity(0.7)',
+                  transition: 'filter 0.3s ease'
+                }}
+                onMouseEnter={(e) => e.target.style.filter = 'grayscale(0%) opacity(1)'}
+                onMouseLeave={(e) => e.target.style.filter = 'grayscale(100%) opacity(0.7)'}
+              />
+            </li>
           ))}
           {/* Duplicate sets for infinite scroll animation — decorative duplicates hidden from AT */}
           {partners.concat(partners).map((partner, i) => (
-            <img 
-              key={`dup-${i}`} 
-              src={partner.logo} 
-              alt="" 
-              aria-hidden="true"
-              style={{ 
-                height: '45px', 
-                width: 'auto', 
-                filter: 'grayscale(100%) opacity(0.7)',
-                transition: 'filter 0.3s ease'
-              }}
-              onMouseEnter={(e) => e.target.style.filter = 'grayscale(0%) opacity(1)'}
-              onMouseLeave={(e) => e.target.style.filter = 'grayscale(100%) opacity(0.7)'}
-            />
+            <li key={`dup-${i}`} aria-hidden="true">
+              <img 
+                src={partner.logo} 
+                alt="" 
+                style={{ 
+                  height: '45px', 
+                  width: 'auto', 
+                  filter: 'grayscale(100%) opacity(0.7)',
+                  transition: 'filter 0.3s ease'
+                }}
+                onMouseEnter={(e) => e.target.style.filter = 'grayscale(0%) opacity(1)'}
+                onMouseLeave={(e) => e.target.style.filter = 'grayscale(100%) opacity(0.7)'}
+              />
+            </li>
           ))}
-        </motion.div>
+        </motion.ul>
 
         {/* WCAG 2.2.2 Pause button */}
         <button

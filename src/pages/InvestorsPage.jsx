@@ -109,9 +109,9 @@ const InvestorsPage = () => {
         <div className="container hero-grid" style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 480px', gap: isMobile ? '40px' : '60px', alignItems: 'start' }}>
           {/* Left */}
           <motion.div initial={!motionEnabled ? {} : { opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <button type="button" className="badge" style={{ backgroundColor: 'rgba(235,58,27,0.1)', border: 'none', display: 'inline-block', padding: '6px 20px', borderRadius: 15, marginBottom: 24, cursor: 'default' }}>
+            <div className="badge" style={{ backgroundColor: 'rgba(235,58,27,0.1)', border: 'none', display: 'inline-block', padding: '6px 20px', borderRadius: 15, marginBottom: 24, cursor: 'default' }}>
               <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--primary)' }}>INVEST IN INDIA'S NEXT WAVE</span>
-            </button>
+            </div>
 
             <h1 style={{ fontSize: isSmallMobile ? '38px' : (isMobile ? '48px' : 68), fontWeight: 800, lineHeight: 1.1, marginBottom: 24 }}>
               <span style={{ color: 'var(--primary)', display: 'block' }}>Back the builders</span>
@@ -136,10 +136,10 @@ const InvestorsPage = () => {
               <ul className="a11y-list features" role="list" style={{ display: 'flex', gap: 32, flexWrap: 'wrap', listStyle: 'none', padding: 0, margin: 0 }}>
                 {['Syndicate SPV structure', 'India × US cross-border', 'Start from $25K per deal'].map((t, i) => (
                   <li key={i}>
-                    <button type="button" className="feature-btn" aria-label={t} style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'transparent', border: 'none', padding: 0, cursor: 'default' }}>
+                    <div className="feature-tag" style={{ display: 'flex', alignItems: 'center', gap: 8, background: 'transparent', border: 'none', padding: 0, cursor: 'default' }}>
                       <div className="feature-icon" style={{ width: 16, height: 16, borderRadius: 8, backgroundColor: 'var(--secondary)' }} aria-hidden="true" />
                       <span className="feature-text" style={{ fontSize: 13, fontWeight: 600, color: 'var(--text-secondary)' }}>{t}</span>
-                    </button>
+                    </div>
                   </li>
                 ))}
               </ul>
@@ -154,10 +154,8 @@ const InvestorsPage = () => {
               { val: '1000', suf: '+', label: 'ANGELS & CXOS', color: 'var(--primary)', accent: false, icon: Users },
               { val: '100', pre: '$', suf: 'Mn+', label: 'SYNDICATED DEALS', color: 'var(--primary)', accent: false, icon: Handshake },
             ].map((s, i) => (
-              <motion.button
+              <motion.div
                 key={i}
-                type="button"
-                aria-label={`${s.label}: ${s.pre || ''}${s.val}${s.suf || ''}`}
                 initial={!motionEnabled ? {} : { opacity: 0, x: 40 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.2 + i * 0.1 }}
@@ -186,7 +184,7 @@ const InvestorsPage = () => {
                   </div>
                   <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-secondary)' }}>{s.label}</div>
                 </div>
-              </motion.button>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -196,12 +194,12 @@ const InvestorsPage = () => {
       <section aria-label="Key statistics" style={{ backgroundColor: 'var(--primary)', padding: isMobile ? '40px 0' : '36px 0' }}>
         <div className="container ticker-container" style={{ display: 'grid', gridTemplateColumns: isSmallMobile ? 'repeat(2, 1fr)' : (isMobile ? 'repeat(3, 1fr)' : 'repeat(6, 1fr)'), gap: '24px', alignItems: 'center' }}>
           {statsStrip.map((s, i) => (
-            <button key={i} type="button" className="ticker-item" aria-label={`${s.label}: ${s.prefix || ''}${s.value}${s.suffix || ''}`} style={{ textAlign: 'center', background: 'transparent', border: 'none', padding: 0, color: 'inherit', cursor: 'default' }}>
+            <div key={i} className="ticker-item" style={{ textAlign: 'center', background: 'transparent', border: 'none', padding: 0, color: 'inherit', cursor: 'default' }}>
               <div style={{ fontSize: isSmallMobile ? '28px' : 34, fontWeight: 800, color: 'white' }}>
                 <CountUp value={s.value} prefix={s.prefix} suffix={s.suffix} />
               </div>
               <div style={{ fontSize: 11, fontWeight: 500, color: 'white', marginTop: 4 }}>{s.label}</div>
-            </button>
+            </div>
           ))}
         </div>
       </section>
@@ -216,11 +214,9 @@ const InvestorsPage = () => {
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', gap: 24 }}>
             {whyCards.map((c, i) => (
-              <motion.button
+              <motion.div
                 key={i}
-                type="button"
                 className="info-card"
-                aria-label={c.title}
                 initial={!motionEnabled ? {} : { opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.08 }}
@@ -242,9 +238,9 @@ const InvestorsPage = () => {
                 </div>
                 <div>
                   <h3 style={{ fontSize: 17, fontWeight: 700, color: c.dark ? 'white' : 'var(--primary)', marginBottom: 8, margin: '0 0 8px 0' }}>{c.title}</h3>
-                  <div style={{ fontSize: 13, lineHeight: 1.6, color: c.dark ? 'white' : '#000' }}>{c.desc}</div>
+                  <p style={{ fontSize: 13, lineHeight: 1.6, color: c.dark ? 'white' : '#000', margin: 0 }}>{c.desc}</p>
                 </div>
-              </motion.button>
+              </motion.div>
             ))}
           </div>
         </div>
@@ -272,7 +268,10 @@ const InvestorsPage = () => {
                   transition={{ delay: i * 0.1 }}
                 >
                   {/* Circle */}
-                  <div style={{ width: 72, height: 72, borderRadius: '50%', backgroundColor: 'var(--secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 28px', position: 'relative', zIndex: 2 }} aria-hidden="true">
+                  <div 
+                    aria-label={`Step ${s.num}`}
+                    style={{ width: 72, height: 72, borderRadius: '50%', backgroundColor: 'var(--secondary)', display: 'flex', alignItems: 'center', justifyContent: 'center', margin: '0 auto 28px', position: 'relative', zIndex: 2 }}
+                  >
                     <span style={{ fontSize: 18, fontWeight: 700, color: 'white' }}>{s.num}</span>
                   </div>
                   <h3 style={{ fontSize: 15, fontWeight: 700, color: 'var(--primary)', marginBottom: 8, margin: '0 0 8px 0' }}>{s.title}</h3>
@@ -343,7 +342,7 @@ const InvestorsPage = () => {
           <ul className="a11y-list" role="list" style={{ display: 'flex', gap: 14, flexWrap: 'wrap', marginBottom: 32, listStyle: 'none', padding: 0, margin: '0 0 32px 0' }}>
             {sectors.map((s, i) => (
               <li key={s}>
-              <button type="button" className="a11y-tag" aria-label={`Sector: ${s}`} style={{
+              <div className="a11y-tag" style={{
                 backgroundColor: '#f5f7fc',
                 border: '1px solid rgba(29,47,111,0.1)',
                 borderRadius: 12,
@@ -355,12 +354,13 @@ const InvestorsPage = () => {
               }}>
                 <span style={{ width: 10, height: 10, borderRadius: '50%', backgroundColor: sectorColors[i % sectorColors.length], display: 'inline-block' }} aria-hidden="true" />
                 <span style={{ fontSize: 14, fontWeight: 600, color: 'var(--primary)' }}>{s}</span>
-              </button>
+              </div>
               </li>
             ))}
           </ul>
 
           {/* Sector CTA Strip */}
+          <style>{`.cta-link-focus:focus-visible { outline-color: #FFD166 !important; }`}</style>
           <div style={{
             backgroundColor: 'var(--primary)',
             borderRadius: 16,
@@ -374,7 +374,7 @@ const InvestorsPage = () => {
             <p style={{ fontSize: 15, fontWeight: 600, color: 'white', opacity: 0.85, maxWidth: 880 }}>
               We're sector-agnostic but technology-obsessed. If you're using tech to create a defensible moat, we want to hear from you.
             </p>
-            <Link to="/portfolio" className="primary-btn" aria-label="Investors View All Portfolio CTA" style={{ textDecoration: 'none', display: 'inline-block', padding: '10px 24px', fontSize: 14 }}>
+            <Link to="/portfolio" className="primary-btn cta-link-focus" aria-label="Investors View All Portfolio CTA" style={{ textDecoration: 'none', display: 'inline-block', padding: '10px 24px', fontSize: 14 }}>
               View All Portfolio →
             </Link>
           </div>
@@ -453,10 +453,8 @@ const InvestorsPage = () => {
                   <img src={a.img} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <h3 style={{ fontSize: 15, fontWeight: 700, color: 'var(--primary)', margin: 0 }}>{a.name}</h3>
-                <button 
-                  type="button" 
+                <div 
                   className="investor-role" 
-                  aria-label={`Role: ${a.role}`} 
                   style={{ 
                     fontSize: 12, 
                     fontWeight: 500, 
@@ -471,7 +469,7 @@ const InvestorsPage = () => {
                   }}
                 >
                   {a.role}
-                </button>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -531,7 +529,7 @@ const InvestorsPage = () => {
             <div style={{ borderRadius: 14, overflow: 'hidden' }}>
               <img
                 src="/assets/webimages/Investors/GET%20STARTED%20CTA/Image%20Placeholder.jpg"
-                alt="Team working together on investment strategy"
+                alt=""
                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
               />
             </div>
