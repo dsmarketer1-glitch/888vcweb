@@ -411,7 +411,7 @@ const InvestorsPage = () => {
                   <img src={t.avatar} alt="" aria-hidden="true" style={{ width: isSmallMobile ? 120 : 160, height: isSmallMobile ? 120 : 180, borderRadius: 20, objectFit: 'cover', boxShadow: '0 8px 24px rgba(0,0,0,0.2)' }} />
                 </div>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: 13, fontWeight: 700, color: 'white', marginBottom: 12 }}>{t.company.toUpperCase()}</div>
+                  <h2 style={{ fontSize: 13, fontWeight: 700, color: 'white', marginBottom: 12 }}>{t.company.toUpperCase()}</h2>
                   <blockquote style={{ margin: 0, padding: 0, border: 'none' }}>
                     <p style={{ fontSize: isSmallMobile ? 14 : 17, color: 'white', lineHeight: 1.6, marginBottom: 24 }}>"{t.quote}"</p>
                   </blockquote>
@@ -452,7 +452,7 @@ const InvestorsPage = () => {
                 <div style={{ width: 80, height: 80, borderRadius: '50%', overflow: 'hidden', margin: '0 auto 16px' }}>
                   <img src={a.img} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
-                <h3 style={{ fontSize: 15, fontWeight: 700, color: 'var(--primary)', margin: 0 }}>{a.name}</h3>
+                <span style={{ fontSize: 15, fontWeight: 700, color: 'var(--primary)', margin: 0, display: 'block' }}>{a.name}</span>
                 <div 
                   className="investor-role" 
                   style={{ 
