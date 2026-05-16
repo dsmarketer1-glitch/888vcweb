@@ -162,9 +162,9 @@ const StartupPage = () => {
         <div className="container hero-grid" style={{ position: 'relative', zIndex: 1, display: 'grid', gridTemplateColumns: isMobile ? '1fr' : '1fr 572px', gap: isMobile ? '40px' : 40, alignItems: 'start' }}>
           {/* Left */}
           <motion.div initial={!motionEnabled ? {} : { opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7 }}>
-            <button type="button" aria-label="888VC by GRO8: AI-enabled accelerator" style={{ backgroundColor: 'rgba(235,58,27,0.06)', display: 'inline-block', padding: '6px 20px', borderRadius: 15, marginBottom: 24, border: 'none', cursor: 'pointer' }}>
+            <span aria-label="888VC by GRO8: AI-enabled accelerator" style={{ backgroundColor: 'rgba(235,58,27,0.06)', display: 'inline-block', padding: '6px 20px', borderRadius: 15, marginBottom: 24, border: 'none' }}>
               <span style={{ fontSize: 11, fontWeight: 700, color: '#c42810' }}>888VC × GRO8 AI-ENABLED ACCELERATOR</span>
-            </button>
+            </span>
             <h1 style={{ fontSize: isSmallMobile ? '38px' : (isMobile ? '48px' : 68), fontWeight: 800, lineHeight: 1.1, marginBottom: 24 }}>
               <span style={{ color: 'var(--primary)', display: 'block' }}>Built for Founders</span>
               <span style={{ color: 'var(--secondary)' }}>Who Build Beyond.</span>
@@ -178,10 +178,10 @@ const StartupPage = () => {
               </a>
             </div>
             <ul className="a11y-list" role="list" style={{ display: 'flex', gap: 10, flexWrap: 'wrap', listStyle: 'none', padding: 0, margin: 0 }}>
-              <li><button type="button" className="pill" aria-label="Duration: 12 weeks" style={{ backgroundColor: '#ffffff', padding: '6px 16px', borderRadius: 14, fontSize: 12, fontWeight: 600, color: '#333', border: '1px solid transparent', cursor: 'pointer' }}>12 Weeks</button></li>
-              <li><button type="button" className="geo-pill" aria-label="Available in India, United States, United Arab Emirates" style={{ backgroundColor: '#fff', padding: '6px 16px', borderRadius: 14, fontSize: 12, fontWeight: 600, color: '#444', border: 'none', cursor: 'pointer' }}>India × US × UAE</button></li>
-              <li><button type="button" className="feature-badge" aria-label="Feature: AI-Enabled" style={{ backgroundColor: '#fff', padding: '6px 16px', borderRadius: 14, fontSize: 12, fontWeight: 600, color: '#444', border: '1px solid transparent', cursor: 'pointer' }}>AI-Enabled</button></li>
-              <li><button type="button" className="promo-pill" aria-label="Demo Day: over 200 investors" style={{ backgroundColor: '#fff', padding: '6px 16px', borderRadius: 14, fontSize: 12, fontWeight: 600, color: '#444', border: 'none', cursor: 'pointer' }}>Demo Day: 200+ Investors</button></li>
+              <li><span className="pill" aria-label="Duration: 12 weeks" style={{ backgroundColor: '#ffffff', padding: '6px 16px', borderRadius: 14, fontSize: 12, fontWeight: 600, color: '#333', border: '1px solid transparent', display: 'inline-block' }}>12 Weeks</span></li>
+              <li><span className="geo-pill" aria-label="Available in India, United States, United Arab Emirates" style={{ backgroundColor: '#fff', padding: '6px 16px', borderRadius: 14, fontSize: 12, fontWeight: 600, color: '#444', border: 'none', display: 'inline-block' }}>India × US × UAE</span></li>
+              <li><span className="feature-badge" aria-label="Feature: AI-Enabled" style={{ backgroundColor: '#fff', padding: '6px 16px', borderRadius: 14, fontSize: 12, fontWeight: 600, color: '#444', border: '1px solid transparent', display: 'inline-block' }}>AI-Enabled</span></li>
+              <li><span className="promo-pill" aria-label="Demo Day: over 200 investors" style={{ backgroundColor: '#fff', padding: '6px 16px', borderRadius: 14, fontSize: 12, fontWeight: 600, color: '#444', border: 'none', display: 'inline-block' }}>Demo Day: 200+ Investors</span></li>
             </ul>
           </motion.div>
 
@@ -265,7 +265,7 @@ const StartupPage = () => {
           {/* Right — Image with badge */}
           <div style={{ position: 'relative' }}>
             <div style={{ borderRadius: 24, overflow: 'hidden', height: 496 }}>
-              <img src={imgGroupPhoto} alt="GRO8 accelerator cohort at demo day, 2023" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              <img src={imgGroupPhoto} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
             </div>
             <div style={{ position: 'absolute', bottom: -20, right: -16, backgroundColor: 'var(--secondary)', borderRadius: 14, padding: '10px 20px', color: 'white' }}>
               <div style={{ fontSize: 28, fontWeight: 800 }}>50+</div>
@@ -291,11 +291,7 @@ const StartupPage = () => {
               {phases.map((p, i) => (
                 <motion.div key={i} initial={!motionEnabled ? {} : { opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: !motionEnabled ? 0 : i * 0.1 }}
                   style={{ backgroundColor: 'white', border: '1px solid rgba(29,47,111,0.1)', borderRadius: 18, padding: 15, position: 'relative', zIndex: 2 }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
-                    <div style={{ width: 60, height: 60, borderRadius: '50%', backgroundColor: p.color, display: 'flex', alignItems: 'center', justifyContent: 'center' }} aria-hidden="true">
-                      <span style={{ fontSize: 18, fontWeight: 800, color: 'white' }}>{p.weeks}</span>
-                    </div>
-                  </div>
+
                   <div style={{ fontSize: 10, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 4 }}>Weeks {p.weeks}</div>
                   <h3 style={{ fontSize: 15, fontWeight: 700, color: 'var(--primary)', marginBottom: 6, margin: 0 }}>{p.title}</h3>
                   <p style={{ fontSize: 12, color: 'var(--text-secondary)', lineHeight: 1.5, marginBottom: 10 }}>{p.desc}</p>
@@ -402,7 +398,7 @@ const StartupPage = () => {
                   <img src={p.img} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <div style={{ padding: '12px 15px 14px' }}>
-                  <h3 style={{ fontSize: 14, fontWeight: 700, color: 'white', margin: 0 }}>{p.name}</h3>
+                  <span style={{ fontSize: 14, fontWeight: 700, color: 'white', margin: 0, display: 'block' }}>{p.name}</span>
                   <div style={{ fontSize: 11, color: 'white', opacity: 0.65, marginTop: 2 }}>{p.cat}</div>
                 </div>
               </motion.div>
@@ -415,7 +411,7 @@ const StartupPage = () => {
                 <img src={imgPF4} alt="" aria-hidden="true" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <div style={{ padding: '12px 15px 14px' }}>
-                <h3 className="section-title" style={{ fontSize: 14, fontWeight: 700, color: 'white', margin: 0 }}>PickMyWork</h3>
+                <span className="section-title" style={{ fontSize: 14, fontWeight: 700, color: 'white', margin: 0, display: 'block' }}>PickMyWork</span>
                 <div style={{ fontSize: 11, color: 'white', opacity: 0.65, marginTop: 2 }}>Gig Economy</div>
               </div>
             </div>
@@ -461,7 +457,7 @@ const StartupPage = () => {
                 <div style={{ flex: 1 }}>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 12 }}>
                     <div>
-                      <div style={{ fontSize: 16, fontWeight: 700, color: 'var(--primary)' }}>{t.company}</div>
+                      <h3 style={{ fontSize: 16, fontWeight: 700, color: 'var(--primary)', margin: 0 }}>{t.company}</h3>
                       <div style={{ fontSize: 11, fontWeight: 700, color: 'var(--secondary)' }}>{t.cat}</div>
                     </div>
                   </div>
