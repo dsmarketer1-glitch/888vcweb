@@ -208,6 +208,13 @@ section {
   background: rgba(255, 255, 255, 0.25);
 }
 
+.carousel-pause-btn:focus-visible,
+.marquee-pause-btn:focus-visible {
+  outline: 3px solid #FFD166 !important;
+  outline-offset: 2px;
+  background: rgba(255, 255, 255, 0.25);
+}
+
 /* ─── WCAG 2.3.3 — Reduced Motion (System & App Level) ─── */
 @media (prefers-reduced-motion: reduce) {
   *, ::before, ::after {

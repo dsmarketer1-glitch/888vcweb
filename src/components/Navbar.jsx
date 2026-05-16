@@ -163,27 +163,52 @@ export const Navbar = () => {
                 style={{ position: 'relative' }}
                 onMouseEnter={() => link.hasDropdown && setActiveDropdown(i)}
                 onMouseLeave={() => setActiveDropdown(null)}
-                onFocusCapture={() => link.hasDropdown && setActiveDropdown(i)}
               >
-                <Link
-                  to={link.href}
-                  className={`nav-link ${active ? 'text-orange font-bold' : 'text-navy'}`}
-                  aria-haspopup={link.hasDropdown ? "true" : undefined}
-                  aria-expanded={link.hasDropdown ? activeDropdown === i : undefined}
-                  style={{
-                    fontSize: '15px',
-                    fontWeight: active ? 700 : 500,
-                    textDecoration: 'none',
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    height: '70px',
-                    minWidth: '44px'
-                  }}
-                >
-                  {link.label}
-                  {link.hasDropdown && <span style={{ fontSize: '10px' }} aria-hidden="true">▼</span>}
-                </Link>
+                {link.hasDropdown ? (
+                  <button
+                    className={`nav-link ${active ? 'text-orange font-bold' : 'text-navy'}`}
+                    aria-haspopup="true"
+                    aria-expanded={activeDropdown === i}
+                    aria-current={active ? "page" : undefined}
+                    onClick={() => setActiveDropdown(activeDropdown === i ? null : i)}
+                    style={{
+                      fontSize: '15px',
+                      fontWeight: active ? 700 : 500,
+                      textDecoration: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      height: '70px',
+                      minWidth: '44px',
+                      background: 'transparent',
+                      border: 'none',
+                      padding: 0,
+                      cursor: 'pointer',
+                      fontFamily: 'inherit'
+                    }}
+                  >
+                    {link.label}
+                    <span style={{ fontSize: '10px' }} aria-hidden="true">▼</span>
+                  </button>
+                ) : (
+                  <Link
+                    to={link.href}
+                    className={`nav-link ${active ? 'text-orange font-bold' : 'text-navy'}`}
+                    aria-current={active ? "page" : undefined}
+                    style={{
+                      fontSize: '15px',
+                      fontWeight: active ? 700 : 500,
+                      textDecoration: 'none',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '4px',
+                      height: '70px',
+                      minWidth: '44px'
+                    }}
+                  >
+                    {link.label}
+                  </Link>
+                )}
 
                 {link.hasDropdown && activeDropdown === i && (
                   <ul 
@@ -224,7 +249,7 @@ export const Navbar = () => {
                               {item.label}
                             </a>
                           ) : (
-                            <Link to={item.href} role="menuitem" {...linkProps}>
+                            <Link to={item.href} role="menuitem" aria-current={location.pathname === item.href ? "page" : undefined} {...linkProps}>
                               {item.label}
                             </Link>
                           )}
@@ -295,6 +320,7 @@ export const Navbar = () => {
                 <li key={i}>
                   <Link
                     to={link.href}
+                    aria-current={isActive(link) ? "page" : undefined}
                     style={{
                       fontSize: '18px',
                       fontWeight: 600,
@@ -312,6 +338,7 @@ export const Navbar = () => {
                         <li key={idx}>
                           <Link
                             to={item.href}
+                            aria-current={location.pathname === item.href ? "page" : undefined}
                             style={{ fontSize: '16px', color: 'var(--text-secondary)', fontWeight: 500, padding: '4px 0' }}
                             onClick={() => setIsMenuOpen(false)}
                           >

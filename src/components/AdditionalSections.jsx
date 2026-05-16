@@ -358,8 +358,8 @@ export const Footer = () => {
         </p>
       </div>
       <div>
-        <h4 className="text-sm" style={{ marginBottom: '28px', letterSpacing: '1px', color: 'white' }}>PAGES</h4>
-        <nav aria-label="Footer navigation">
+        <nav aria-label="Pages">
+          <span className="text-sm" style={{ display: 'block', marginBottom: '28px', letterSpacing: '1px', color: 'white' }}>PAGES</span>
           <ul style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '15px', listStyle: 'none', padding: 0 }}>
             {[
               { label: 'About Us', path: '/about' },
@@ -380,43 +380,47 @@ export const Footer = () => {
         </nav>
       </div>
       <div>
-        <h4 className="text-sm" style={{ marginBottom: '28px', letterSpacing: '1px', color: 'white' }}>CONTACT</h4>
-        <address style={{ fontStyle: 'normal', lineHeight: '2', fontSize: '15px' }}>
-          <ul className="a11y-list" role="list" style={{ display: 'flex', flexDirection: 'column', gap: '10px', listStyle: 'none', padding: 0, margin: 0 }}>
-            <li style={{ color: 'rgba(255,255,255,0.85)' }}>NETWORK888 ACCELERATOR LLP</li>
-            <li style={{ color: 'rgba(255,255,255,0.85)' }}>Whitefield, Bengaluru 560066</li>
-            <li><a href="tel:+919731227263" style={{ color: 'white', fontWeight: 600, textDecoration: 'none' }}>+91 97312 27263</a></li>
-            <li><a href="mailto:info@888vc.co" style={{ color: 'white', fontWeight: 600, textDecoration: 'none' }}>info@888vc.co</a></li>
-          </ul>
-        </address>
+        <nav aria-label="Contact">
+          <span className="text-sm" style={{ display: 'block', marginBottom: '28px', letterSpacing: '1px', color: 'white' }}>CONTACT</span>
+          <address style={{ fontStyle: 'normal', lineHeight: '2', fontSize: '15px' }}>
+            <ul className="a11y-list" role="list" style={{ display: 'flex', flexDirection: 'column', gap: '10px', listStyle: 'none', padding: 0, margin: 0 }}>
+              <li style={{ color: 'rgba(255,255,255,0.85)' }}>NETWORK888 ACCELERATOR LLP</li>
+              <li style={{ color: 'rgba(255,255,255,0.85)' }}>Whitefield, Bengaluru 560066</li>
+              <li><a href="tel:+919731227263" style={{ color: 'white', fontWeight: 600, textDecoration: 'none' }}>+91 97312 27263</a></li>
+              <li><a href="mailto:info@888vc.co" style={{ color: 'white', fontWeight: 600, textDecoration: 'none' }}>info@888vc.co</a></li>
+            </ul>
+          </address>
+        </nav>
       </div>
       <div>
-         <h4 className="text-sm" style={{ marginBottom: '28px', letterSpacing: '1px', color: 'white' }}>FOLLOW</h4>
-         <ul style={{ display: 'flex', gap: '20px', listStyle: 'none', padding: 0 }}>
-            {[
-              { name: 'LinkedIn', url: '#' },
-              { name: 'Twitter', url: '#' },
-              { name: 'Instagram', url: '#' }
-            ].map(social => (
-              <li key={social.name}>
-                <a
-                  href={social.url}
-                  aria-label={`Follow 888VC on ${social.name}`}
-                  style={{ fontSize: '14px', color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}
-                >
-                  {social.name}
-                </a>
-              </li>
-            ))}
-         </ul>
+         <nav aria-label="Follow">
+           <span className="text-sm" style={{ display: 'block', marginBottom: '28px', letterSpacing: '1px', color: 'white' }}>FOLLOW</span>
+           <ul style={{ display: 'flex', gap: '20px', listStyle: 'none', padding: 0 }}>
+              {[
+                { name: 'LinkedIn', url: '#' },
+                { name: 'Twitter', url: '#' },
+                { name: 'Instagram', url: '#' }
+              ].map(social => (
+                <li key={social.name}>
+                  <a
+                    href={social.url}
+                    aria-label={`Follow 888VC on ${social.name}`}
+                    style={{ fontSize: '14px', color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}
+                  >
+                    {social.name}
+                  </a>
+                </li>
+              ))}
+           </ul>
+         </nav>
       </div>
     </div>
     <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: '40px', display: 'flex', justifyContent: 'space-between', fontSize: '14px', fontWeight: 500, flexWrap: 'wrap', gap: '16px' }}>
       <div style={{ color: 'rgba(255,255,255,0.85)' }}>© 2025 888 VC. All rights reserved.</div>
-      <div style={{ display: 'flex', gap: '32px' }}>
-        <a href="#" aria-label="Privacy Policy" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}>Privacy Policy</a>
-        <a href="#" aria-label="Terms of Service" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}>Terms of Service</a>
-      </div>
+      <ul style={{ display: 'flex', gap: '32px', listStyle: 'none', padding: 0, margin: 0 }}>
+        <li><a href="#" aria-label="Privacy Policy" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}>Privacy Policy</a></li>
+        <li><a href="#" aria-label="Terms of Service" style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none' }}>Terms of Service</a></li>
+      </ul>
     </div>
     </footer>
   );
