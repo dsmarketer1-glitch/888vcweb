@@ -33,16 +33,15 @@ export const Portfolio = () => {
           <Link to="/portfolio" aria-label="View all portfolio companies" className="text-navy font-bold text-lg" style={{ marginBottom: isMobile ? '0' : '10px' }}>View All →</Link>
         </div>
 
-        <ul className="a11y-list mobile-grid-1" role="list" style={{
+        <div className="a11y-list mobile-grid-1" style={{
           display: 'grid',
           gridTemplateColumns: isSmallMobile ? '1fr' : 'repeat(auto-fit, minmax(240px, 1fr))',
           gap: '20px',
-          listStyle: 'none',
           padding: 0,
           margin: 0
         }}>
           {items.map((item, i) => (
-            <li key={i}>
+            <div key={i}>
               <motion.div
                 initial={!motionEnabled ? {} : { opacity: 0, scale: 0.95 }}
                 whileInView={{ opacity: 1, scale: 1 }}
@@ -96,13 +95,13 @@ export const Portfolio = () => {
                 </div>
               </div>
               <div style={{ padding: '24px 20px 20px', backgroundColor: 'white', position: 'relative' }}>
-                <h3 className="text-base text-navy font-bold" style={{ fontWeight: 700, marginBottom: '4px' }}>{item.name}</h3>
+                <span className="text-base text-navy font-bold" style={{ display: 'block', fontWeight: 700, marginBottom: '4px' }}>{item.name}</span>
                 <p className="text-xs text-muted" style={{ fontWeight: 500 }}>{item.category}</p>
               </div>
               </motion.div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </motion.div>
     </section>
   );
@@ -144,7 +143,7 @@ export const Team = () => {
         >
           <img
             src={founder.image}
-            alt={`Photo of ${founder.name}, Founder & CEO of 888VC`}
+            alt=""
             className="mobile-grid-1"
             style={{
               width: isSmallMobile ? '100%' : '260px',

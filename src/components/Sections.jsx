@@ -107,16 +107,15 @@ export const ValueProps = () => {
           <p className="text-lg text-muted" style={{ maxWidth: '680px', marginBottom: '60px', fontSize: isSmallMobile ? '16px' : '18px' }}>{description}</p>
         </motion.div>
 
-        <ul className="a11y-list" role="list" style={{
+        <div className="a11y-list" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
           gap: '24px',
-          listStyle: 'none',
           padding: 0,
           margin: 0
         }}>
           {cards.map((card, i) => (
-            <li key={i}>
+            <div key={i}>
               <motion.div
                 initial={!motionEnabled ? {} : { opacity: 0, y: 50 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -146,9 +145,9 @@ export const ValueProps = () => {
                 </Link>
               </div>
               </motion.div>
-            </li>
+            </div>
           ))}
-        </ul>
+        </div>
       </motion.div>
     </section>
   );

@@ -294,7 +294,9 @@ footer a:focus-visible {
 
 /* Focus styles for elements on dark backgrounds (var(--primary) sections) */
 [style*="backgroundColor: 'var(--primary)"] a:focus-visible,
-section[style*="primary"] a:focus-visible {
+section[style*="primary"] a:focus-visible,
+section[style*="primary"] button:focus-visible,
+section[style*="primary"] [role="tab"]:focus-visible {
   outline-color: #FFD166;
 }
 

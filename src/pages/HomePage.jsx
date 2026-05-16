@@ -11,6 +11,7 @@ const HomePage = () => {
 
   return (
     <main id="main-content" role="main">
+      <h1 className="sr-only">888VC - homepage</h1>
       <Hero />
       <StatsStrip />
       <ValueProps />

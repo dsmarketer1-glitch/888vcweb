@@ -47,71 +47,80 @@ export const Hero = () => {
         overflow: 'hidden'
       }}
     >
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={currentSlide}
-          initial={!motionEnabled ? {} : { opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={!motionEnabled ? {} : { opacity: 0 }}
-          transition={{ duration: !motionEnabled ? 0 : 1 }}
-          aria-label={`Slide ${currentSlide + 1} of ${slides.length}`}
-          style={{ width: '100%', height: '100%' }}
-        >
-          {/* Parallax Background */}
-          <motion.img 
-            src={slides[currentSlide].bgImage}
-            alt={slides[currentSlide].altText || ""}
-            style={{
+      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+        {slides.map((slide, i) => (
+          <motion.div
+            key={i}
+            initial={!motionEnabled ? {} : { opacity: 0 }}
+            animate={{ 
+              opacity: i === currentSlide ? 1 : 0,
+              zIndex: i === currentSlide ? 1 : 0,
+              pointerEvents: i === currentSlide ? 'auto' : 'none'
+            }}
+            transition={{ duration: !motionEnabled ? 0 : 1 }}
+            aria-label={`Slide ${i + 1} of ${slides.length}`}
+            aria-hidden={i !== currentSlide}
+            style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}
+          >
+            {/* Parallax Background */}
+            <motion.img 
+              src={slide.bgImage}
+              alt={slide.altText || ""}
+              style={{
+                position: 'absolute',
+                inset: 0,
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover',
+                objectPosition: 'center',
+                opacity: 0.4,
+                y: y1
+              }} 
+            />
+
+            <div style={{
               position: 'absolute',
               inset: 0,
-              width: '100%',
+              background: 'rgba(29, 47, 111, 0.45)',
+              zIndex: 1
+            }} aria-hidden="true" />
+
+            <div style={{
+              position: 'relative',
+              zIndex: 2,
               height: '100%',
-              objectFit: 'cover',
-              objectPosition: 'center',
-              opacity: 0.4,
-              y: y1
-            }} 
-          />
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+              padding: '0 20px'
+            }}>
+              <motion.div
+                initial={!motionEnabled ? {} : { opacity: 0, y: 30 }}
+                animate={{ 
+                  opacity: i === currentSlide ? 1 : 0, 
+                  y: i === currentSlide ? 0 : 30 
+                }}
+                transition={{ delay: !motionEnabled ? 0 : 0.5, duration: !motionEnabled ? 0 : 0.8 }}
+              >
+                <div style={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.12)',
+                  borderRadius: '15px',
+                  padding: '6px 20px',
+                  display: 'inline-block',
+                  marginBottom: '24px'
+                }}>
+                  <span className="text-xs" style={{ letterSpacing: '1px' }}>{slide.eyebrow}</span>
+                </div>
 
-          <div style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'rgba(29, 47, 111, 0.45)',
-            zIndex: 1
-          }} aria-hidden="true" />
-
-          <div style={{
-            position: 'relative',
-            zIndex: 2,
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            padding: '0 20px'
-          }}>
-            <motion.div
-              initial={!motionEnabled ? {} : { opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: !motionEnabled ? 0 : 0.5, duration: !motionEnabled ? 0 : 0.8 }}
-            >
-              <div style={{
-                backgroundColor: 'rgba(255, 255, 255, 0.12)',
-                borderRadius: '15px',
-                padding: '6px 20px',
-                display: 'inline-block',
-                marginBottom: '24px'
-              }}>
-                <span className="text-xs" style={{ letterSpacing: '1px' }}>{slides[currentSlide].eyebrow}</span>
-              </div>
-
-              <h1 className="text-hero" style={{ maxWidth: '900px', margin: '0 auto 32px', fontSize: isSmallMobile ? '38px' : undefined }}>
-                {slides[currentSlide].title}
-              </h1>
-            </motion.div>
-          </div>
-        </motion.div>
-      </AnimatePresence>
+                <p className="text-hero" style={{ maxWidth: '900px', margin: '0 auto 32px', fontSize: isSmallMobile ? '38px' : undefined }}>
+                  {slide.title}
+                </p>
+              </motion.div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
 
       {/* Slide Controls — WCAG 2.1.1 Keyboard, 2.5.8 Target Size, 4.1.2 Name/Role/Value */}
       <div style={{
@@ -131,28 +140,29 @@ export const Hero = () => {
           {isPaused ? '▶' : '❚❚'}
         </button>
 
-        <div role="tablist" aria-label="Carousel slides" style={{ display: 'flex', gap: '12px' }}>
+        <ul role="tablist" aria-label="Carousel slides" style={{ display: 'flex', gap: '12px', listStyle: 'none', padding: 0, margin: 0 }}>
           {slides.map((slide, i) => (
-            <button
-              key={i}
-              role="tab"
-              aria-selected={i === currentSlide}
-              aria-label={`Go to slide ${i + 1}: ${slide.title}`}
-              onClick={() => goToSlide(i)}
-              style={{
-                /* WCAG 2.5.8 — minimum 24×24px target */
-                width: '24px',
-                height: '24px',
-                borderRadius: '12px',
-                backgroundColor: i === currentSlide ? 'var(--secondary)' : 'rgba(255,255,255,0.4)',
-                border: 'none',
-                cursor: 'pointer',
-                transition: 'all 0.3s ease',
-                padding: 0
-              }}
-            />
+            <li key={i}>
+              <button
+                role="tab"
+                aria-selected={i === currentSlide}
+                aria-label={`Go to slide ${i + 1}: ${slide.title}`}
+                onClick={() => goToSlide(i)}
+                style={{
+                  /* WCAG 2.5.8 — minimum 24×24px target */
+                  width: '24px',
+                  height: '24px',
+                  borderRadius: '12px',
+                  backgroundColor: i === currentSlide ? 'var(--secondary)' : 'rgba(255,255,255,0.4)',
+                  border: 'none',
+                  cursor: 'pointer',
+                  transition: 'all 0.3s ease',
+                  padding: 0
+                }}
+              />
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
 
       {/* Progress bar */}

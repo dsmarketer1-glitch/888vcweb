@@ -143,7 +143,7 @@ export const PartnersMarquee = () => {
             <li key={`original-${i}`}>
               <img 
                 src={partner.logo} 
-                alt={partner.name} 
+                alt={`${partner.name} logo`} 
                 style={{ 
                   height: '45px', 
                   width: 'auto', 
@@ -240,7 +240,7 @@ export const News = () => {
             >
               <img
                 src={featured.image}
-                alt={`Cover image for: ${featured.title}`}
+                alt=""
                 style={{ width: '100%', height: '320px', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
               />
               <div style={{ padding: '40px' }}>
@@ -270,7 +270,7 @@ export const News = () => {
                 >
                   <img
                     src={item.image}
-                    alt={`Cover image for: ${item.title}`}
+                    alt=""
                     style={{ width: isSmallMobile ? '100px' : '160px', height: '100%', objectFit: 'cover', objectPosition: 'center', display: 'block' }}
                   />
                   <div style={{ padding: '24px', flex: 1 }}>
