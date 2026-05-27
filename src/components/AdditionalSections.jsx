@@ -101,7 +101,9 @@ export const PartnersMarquee = () => {
     { name: 'Venture Catalysts', logo: '/assets/webimages/About%20Us/PartnersMarquee/Venture%20Catalysts.png' }
   ];
 
-  const [isPaused, setIsPaused] = useState(false);
+  const [isManuallyPaused, setIsManuallyPaused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const isPaused = isManuallyPaused || isHovered;
   const { motionEnabled } = useAccessibility();
 
   return (
@@ -119,10 +121,10 @@ export const PartnersMarquee = () => {
           alignItems: 'center',
           position: 'relative'
         }}
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-        onFocus={() => setIsPaused(true)}
-        onBlur={() => setIsPaused(false)}
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        onFocus={() => setIsHovered(true)}
+        onBlur={() => setIsHovered(false)}
       >
         <motion.ul
           animate={(isPaused || !motionEnabled) ? {} : { x: [0, -1500] }}
@@ -160,7 +162,7 @@ export const PartnersMarquee = () => {
             <li key={`dup-${i}`} aria-hidden="true">
               <img 
                 src={partner.logo} 
-                alt="" 
+                alt={`${partner.name} logo`} 
                 style={{ 
                   height: '45px', 
                   width: 'auto', 
@@ -177,7 +179,7 @@ export const PartnersMarquee = () => {
         {/* WCAG 2.2.2 Pause button */}
         <button
           className="marquee-pause-btn"
-          onClick={() => setIsPaused(!isPaused)}
+          onClick={() => setIsManuallyPaused(!isManuallyPaused)}
           aria-pressed={isPaused}
           aria-label={isPaused ? 'Play partner marquee' : 'Pause partner marquee'}
           style={{

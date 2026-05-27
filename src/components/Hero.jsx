@@ -144,6 +144,7 @@ export const Hero = () => {
           {slides.map((slide, i) => (
             <li key={i}>
               <button
+                className="carousel-dot"
                 role="tab"
                 aria-selected={i === currentSlide}
                 aria-label={`Go to slide ${i + 1}: ${slide.title}`}
@@ -153,7 +154,7 @@ export const Hero = () => {
                   width: '24px',
                   height: '24px',
                   borderRadius: '12px',
-                  backgroundColor: i === currentSlide ? 'var(--secondary)' : 'rgba(255,255,255,0.4)',
+                  backgroundColor: i === currentSlide ? '#FF0000' : '#FFFFFF',
                   border: 'none',
                   cursor: 'pointer',
                   transition: 'all 0.3s ease',

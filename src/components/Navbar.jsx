@@ -6,7 +6,9 @@ import { useAccessibility } from '../context/AccessibilityContext';
 import useIsMobile from '../hooks/useIsMobile';
 
 export const Ticker = () => {
-  const [isPaused, setIsPaused] = useState(false);
+  const [isManuallyPaused, setIsManuallyPaused] = useState(false);
+  const [isHovered, setIsHovered] = useState(false);
+  const isPaused = isManuallyPaused || isHovered;
   const { motionEnabled } = useAccessibility();
   const isMobile = useIsMobile(768);
 
@@ -24,10 +26,10 @@ export const Ticker = () => {
         position: 'relative',
         zIndex: 100
       }}
-      onMouseEnter={() => setIsPaused(true)}
-      onMouseLeave={() => setIsPaused(false)}
-      onFocus={() => setIsPaused(true)}
-      onBlur={() => setIsPaused(false)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onFocus={() => setIsHovered(true)}
+      onBlur={() => setIsHovered(false)}
     >
       <motion.ul
         className="ticker-content"
@@ -68,8 +70,8 @@ export const Ticker = () => {
                 padding: 0,
                 outlineOffset: '2px'
               }}
-              onFocus={() => setIsPaused(true)}
-              onBlur={() => setIsPaused(false)}
+              onFocus={() => setIsHovered(true)}
+              onBlur={() => setIsHovered(false)}
             >
               {text}
             </button>
@@ -79,7 +81,7 @@ export const Ticker = () => {
 
       <button
         className="marquee-pause-btn"
-        onClick={() => setIsPaused(!isPaused)}
+        onClick={() => setIsManuallyPaused(!isManuallyPaused)}
         aria-label={isPaused ? 'Play ticker animation' : 'Pause ticker animation'}
         aria-pressed={isPaused}
         style={{

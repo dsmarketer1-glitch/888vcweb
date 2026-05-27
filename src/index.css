@@ -208,10 +208,19 @@ section {
   background: rgba(255, 255, 255, 0.25);
 }
 
+.carousel-pause-btn:focus,
 .carousel-pause-btn:focus-visible,
+.carousel-dot:focus,
+.carousel-dot:focus-visible {
+  outline: 3px solid #ffffff !important;
+  outline-offset: 2px !important;
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.marquee-pause-btn:focus,
 .marquee-pause-btn:focus-visible {
-  outline: 3px solid #FFD166 !important;
-  outline-offset: 2px;
+  outline: 3px solid var(--primary) !important;
+  outline-offset: 2px !important;
   background: rgba(255, 255, 255, 0.25);
 }
 
