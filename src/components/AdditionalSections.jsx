@@ -368,9 +368,7 @@ export const Footer = () => {
               { label: 'Investors', path: '/investors' },
               { label: 'Startup', path: '/startup' },
               { label: 'Portfolio', path: '/portfolio' },
-              { label: 'Events', path: '#' },
-              { label: 'Blogs', path: '#' },
-              { label: 'Join GRO8', path: '#' }
+              { label: 'Accredited Investor', path: '/accredited-investor' }
             ].map(link => (
               <li key={link.label}>
                 <Link to={link.path} style={{ color: 'rgba(255,255,255,0.85)', textDecoration: 'none', transition: 'color 0.3s ease' }}>
@@ -399,9 +397,8 @@ export const Footer = () => {
            <span className="text-sm" style={{ display: 'block', marginBottom: '28px', letterSpacing: '1px', color: 'white' }}>FOLLOW</span>
            <ul style={{ display: 'flex', gap: '20px', listStyle: 'none', padding: 0 }}>
               {[
-                { name: 'LinkedIn', url: '#' },
-                { name: 'Twitter', url: '#' },
-                { name: 'Instagram', url: '#' }
+                { name: 'LinkedIn', url: 'https://www.linkedin.com/company/888vc/' },
+                { name: 'Instagram', url: 'https://www.instagram.com/888vc.co/' }
               ].map(social => (
                 <li key={social.name}>
                   <a

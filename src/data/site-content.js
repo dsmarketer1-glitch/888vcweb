@@ -104,10 +104,10 @@ export const SITE_CONTENT = {
       { name: "Pick My Work", category: "Gig Economy", image: "/assets/webimages/Portfolio/Thumbnail/PickMyWork.png", logo: "/assets/webimages/Portfolio/Logo/Pick%20My%20Work.png", founderName: "Vidyarthi Baddireddy", founderPhoto: "/assets/webimages/Portfolio/Founders/Vidyarthi%20Baddireddy.png" },
       { name: "EcoRatings", category: "ESG / AI", image: "/assets/webimages/Portfolio/Thumbnail/EcoRatings.png", logo: "/assets/webimages/Portfolio/Logo/EcoRatings.png", founderName: "Aditi Balbir", founderPhoto: "/assets/webimages/Portfolio/Founders/Aditi%20Balbir.png" },
       { name: "Datazip", category: "Data / AI", image: "/assets/webimages/Portfolio/Thumbnail/Datazip.png", logo: "/assets/webimages/Portfolio/Logo/Datazip.png", founderName: "Sandeep Devarapalli", founderPhoto: "/assets/webimages/Portfolio/Founders/Sandeep%20Devarapalli.jpeg" },
-      { name: "G.O.A.T Brand Labs", category: "D2C", image: "/assets/webimages/Portfolio/Thumbnail/GOAT%20Brand%20Labs.jpg", logo: "/assets/webimages/Portfolio/Logo/G.O.A.T%20Brand%20Labs.png", badge: "Soonicorn", founderName: "Rishi Vasudev", founderPhoto: "/assets/webimages/Portfolio/Founders/Rishi%20Vasudev.jpg" },
+
       { name: "Sanfe", category: "FemTech", image: "/assets/webimages/Portfolio/Thumbnail/Sanfe.webp", logo: "/assets/webimages/Portfolio/Logo/Sanfe.png", founderName: "Archit Agarwal", founderPhoto: "/assets/webimages/Portfolio/Founders/Archit%20Agarwal.jpeg" },
       { name: "IGoWise", category: "EV / Mobility", image: "/assets/webimages/Portfolio/Thumbnail/IGoWise.png", logo: "/assets/webimages/Portfolio/Logo/IGoWise.png", founderName: "Sravan K Appana", founderPhoto: "/assets/webimages/Portfolio/Founders/Sravan%20K%20Appana.jpeg" },
-      { name: "Rooter", category: "Gaming", image: "/assets/webimages/Portfolio/Thumbnail/Rooter.png", logo: "/assets/webimages/Portfolio/Logo/Rooter.png", badge: "Series A", founderName: "Piyush Kumar", founderPhoto: "/assets/webimages/Portfolio/Founders/Piyush%20Kumar.jpg" }
+      { name: "Drivers4me", category: "Professional Services", image: "/assets/webimages/Portfolio/Thumbnail/Drivers4me.png", logo: "/assets/webimages/Portfolio/Logo/Drivers4me.png", founderName: "Rajarshi Nag", founderPhoto: "/assets/webimages/Portfolio/Founders/Rajarshi%20Nag.jpg" }
     ]
   },
   team: {

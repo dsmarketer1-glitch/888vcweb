@@ -7,6 +7,7 @@ import PortfolioPage from './pages/PortfolioPage';
 import AboutPage from './pages/AboutPage';
 import InvestorsPage from './pages/InvestorsPage';
 import StartupPage from './pages/StartupPage';
+import AccreditedInvestorPage from './pages/AccreditedInvestorPage';
 
 // Helper to scroll to top on route change
 const ScrollToTop = () => {
@@ -40,6 +41,7 @@ function App() {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/investors" element={<InvestorsPage />} />
           <Route path="/startup" element={<StartupPage />} />
+          <Route path="/accredited-investor" element={<AccreditedInvestorPage />} />
         </Routes>
         <Footer />
       </div>

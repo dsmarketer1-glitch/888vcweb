@@ -44,8 +44,7 @@ const imgDemoDay = '/assets/webimages/Startup/WHO%20SHOULD%20JOIN/888vc1.jpg';
 const imgNetworking = '/assets/webimages/Startup/WHO%20SHOULD%20JOIN/888vc2.jpg';
 
 // Portfolio thumbs
-const imgPF0 = '/assets/webimages/Startup/PORTFOLIO/Rooter.png';
-const imgPF1 = '/assets/webimages/Portfolio/Thumbnail/GOAT%20Brand%20Labs.jpg';
+const imgPF0 = '/assets/webimages/Startup/PORTFOLIO/Drivers4me.png';
 const imgPF2 = '/assets/webimages/Startup/PORTFOLIO/EcoRatings.png';
 const imgPF3 = '/assets/webimages/Startup/PORTFOLIO/GetCrest%20ai.png';
 const imgPF4 = '/assets/webimages/Startup/PORTFOLIO/Pick%20My%20Work.png';
@@ -113,8 +112,7 @@ const industries = [
 ];
 
 const portfolio = [
-  { name: 'Rooter', cat: 'Gaming · Series A', img: imgPF0 },
-  { name: 'G.O.A.T Brand Labs', cat: 'D2C · Soonicorn', img: imgPF1 },
+  { name: 'Drivers4me', cat: 'Professional Services', img: imgPF0 },
   { name: 'EcoRatings', cat: 'ESG / AI', img: imgPF2 },
   { name: 'getcrest.ai', cat: 'AI · Supply Chain', img: imgPF3 },
   { name: 'PickMyWork', cat: 'Gig Economy', img: imgPF4 },
